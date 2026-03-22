@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Security Headers via Meta -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+
+  <!-- SEO -->
+  <title>Innova JM | Diseño Web y Publicidad Digital</title>
+  <meta name="description"
+    content="Creamos sitios web profesionales y gestionamos publicidad digital para llevar su negocio al siguiente nivel. Diseño moderno, resultados comprobados." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Innova JM — Diseño Web y Publicidad Digital" />
+  <meta property="og:description"
+    content="Sitios web profesionales y gestión de publicidad que convierten visitas en clientes." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- ============ CURSOR PERSONALIZADO ============ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- ============ LOADER ============ -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <span class="loader-n">Innova</span><span class="loader-rest"> JM</span>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-bar-fill"></div>
+      </div>
+      <p class="loader-text">Iniciando experiencia...</p>
+    </div>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" aria-label="Innova JM inicio">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" fill="none" stroke="url(#logoGrad)" stroke-width="2" />
+            <polygon points="14,7 21,11 21,17 14,21 7,17 7,11" fill="url(#logoGrad)" opacity="0.3" />
+            <circle cx="14" cy="14" r="3" fill="url(#logoGrad)" />
+            <defs>
+              <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4A8FCC" />
+                <stop offset="100%" stop-color="#7FB5E0" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">Innova JM</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+        <a href="#home" class="nav-link active" data-section="home">Home</a>
+        <a href="#nosotros" class="nav-link" data-section="nosotros">Nosotros</a>
+        <a href="#planes" class="nav-link" data-section="planes">Planes</a>
+        <a href="#casos" class="nav-link" data-section="casos">Casos de Éxito</a>
+        <a href="#contacto" class="nav-link" data-section="contacto">Contacto</a>
+      </nav>
+
+      <a href="#contacto" class="nav-cta">
+        <span>Empezar Proyecto</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-progress" id="navProgress"></div>
+  </header>
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+  <!-- ============ HERO / HOME ============ -->
+  <section class="hero" id="home" aria-label="Inicio">
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Costa Rica · Web & Publicidad Digital</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line-reveal">Construimos</span>
+        <span class="line-reveal delay-1 typing-line">
+          <span class="gradient-text" id="typingText"></span>
+        </span>
+        <span class="line-reveal delay-2">que transforman</span>
+        <span class="line-reveal delay-3">negocios.</span>
+      </h1>
+
+      <p class="hero-subtitle line-reveal delay-4">
+        Desarrollo web, publicidad digital y estrategia — todo en un solo equipo.
+      </p>
+
+      <div class="hero-actions line-reveal delay-5">
+        <a href="#casos" class="btn btn-primary">
+          <span>Ver Casos de Éxito</span>
+          <div class="btn-glow"></div>
+        </a>
+        <a href="#nosotros" class="btn btn-ghost">
+          <span>Conocer el Equipo</span>
+        </a>
+      </div>
+
+      <div class="hero-stats line-reveal delay-6">
+        <div class="stat-item">
+          <span class="stat-static">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4.5 16.5c-1.5 1.5-2 4-2 4s2.5-.5 4-2l8.5-8.5-2-2-8.5 8.5z" />
+              <path d="M14 4l6 6-1.5 5.5L17 14l-1.5-1.5L14 4z" />
+              <circle cx="15.5" cy="8.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </span>
+          <span class="stat-label">Experiencia empresarial real</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-static">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="6" />
+              <circle cx="12" cy="12" r="2" />
+              <path d="M22 12h-4M6 12H2M12 6V2M12 22v-4" />
+            </svg>
+          </span>
+          <span class="stat-label">Enfoque total en resultados</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-static">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+              <circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+          </span>
+          <span class="stat-label">Adaptados a sus necesidades</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="mockup-browser">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="browser-url">innovajm.com/su-empresa</div>
+        </div>
+        <div class="browser-content">
+          <div class="mock-hero-bg"></div>
+          <div class="mock-nav"></div>
+          <div class="mock-title"></div>
+          <div class="mock-title short"></div>
+          <div class="mock-btn"></div>
+          <div class="mock-cards">
+            <div class="mock-card"></div>
+            <div class="mock-card"></div>
+            <div class="mock-card"></div>
+          </div>
+        </div>
+      </div>
+      <div class="floating-badge badge-1">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L12.4 7.5H18L13.8 11.1L15.5 17L10 13.7L4.5 17L6.2 11.1L2 7.5H7.6L10 2Z" fill="#FFD700" />
+        </svg>
+        <div>
+          <strong>4.9/5</strong>
+          <small>Rating clientes</small>
+        </div>
+      </div>
+      <div class="floating-badge badge-2">
+        <div class="badge-icon-green">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M3 9L7 13L15 5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div>
+          <strong>Proyecto entregado</strong>
+          <small>eCommerce — 2 semanas</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS (dentro de home) ============ -->
+  <section class="services" id="servicios" aria-label="Servicios">
+    <div class="bg-orb orb-s1" aria-hidden="true" data-speed="22"></div>
+    <div class="bg-orb orb-s2" aria-hidden="true" data-speed="14"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Lo que logramos</div>
+        <h2 class="section-title">Servicios que <span class="gradient-text">generan impacto</span></h2>
+        <p class="section-sub">Todo en un solo equipo.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal" data-delay="0">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="2" y="4" width="28" height="20" rx="3" stroke="url(#sg1)" stroke-width="2" />
+              <path d="M10 28h12M16 24v4" stroke="url(#sg1)" stroke-width="2" stroke-linecap="round" />
+              <path d="M8 12l4 4 8-8" stroke="url(#sg1)" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <defs>
+                <linearGradient id="sg1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#4A8FCC" />
+                  <stop offset="1" stop-color="#7FB5E0" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3>Diseño Web Profesional</h3>
+          <p>Sitios que convierten visitas en contactos y ventas reales.</p>
+          <ul class="card-features">
+            <li>Landing pages que generan contactos</li>
+            <li>eCommerce y tiendas online</li>
+            <li>Integración directa con WhatsApp</li>
+          </ul>
+          <div class="card-arrow">→</div>
+        </div>
+
+        <div class="service-card reveal featured" data-delay="100">
+          <div class="featured-badge">Más popular</div>
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="12" stroke="url(#sg2)" stroke-width="2" />
+              <path d="M16 8v8l5 3" stroke="url(#sg2)" stroke-width="2" stroke-linecap="round" />
+              <path d="M6 16h2M24 16h2M16 6v2M16 24v2" stroke="url(#sg2)" stroke-width="2" stroke-linecap="round" />
+              <defs>
+                <linearGradient id="sg2" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#4A8FCC" />
+                  <stop offset="1" stop-color="#7FB5E0" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3>Publicidad Digital</h3>
+          <p>Campañas con objetivo claro: más conversiones, más contactos.</p>
+          <ul class="card-features">
+            <li>Campañas en redes sociales y buscadores</li>
+            <li>Segmentación por zona y perfil ideal</li>
+            <li>Reportes claros cada semana</li>
+          </ul>
+          <div class="card-arrow">→</div>
+        </div>
+
+        <div class="service-card reveal" data-delay="200">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <path d="M4 26L14 16l6 6 8-14" stroke="url(#sg3)" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <circle cx="24" cy="8" r="3" stroke="url(#sg3)" stroke-width="2" />
+              <defs>
+                <linearGradient id="sg3" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#4A8FCC" />
+                  <stop offset="1" stop-color="#7FB5E0" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3>Estrategia de Negocio Digital</h3>
+          <p>Análisis completo de negocio para diseñar el camino digital más eficiente.</p>
+          <ul class="card-features">
+            <li>Diagnóstico de presencia digital</li>
+            <li>Plan de crecimiento a medida</li>
+            <li>Web + publicidad + seguimiento</li>
+          </ul>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLANES ============ -->
+  <section class="plans" id="planes" aria-label="Planes y precios">
+    <div class="bg-orb orb-pl1" aria-hidden="true" data-speed="12"></div>
+    <div class="container">
+
+      <!-- Banner de ayuda -->
+      <div class="plans-advice reveal">
+        <div class="plans-advice-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4M12 8h.01" />
+          </svg>
+        </div>
+        <div class="plans-advice-text">
+          <strong>¿Cuál plan es el indicado para usted?</strong>
+          <span>Escríbanos por WhatsApp y le recomendamos la mejor opción según su negocio.</span>
+        </div>
+        <a href="https://wa.me/50686264555" class="btn btn-accent" target="_blank" rel="noopener noreferrer">Escribir
+          por WhatsApp</a>
+      </div>
+
+      <!-- SITIOS WEB -->
+      <div class="section-header reveal">
+        <div class="section-tag">Sitios Web</div>
+        <h2 class="section-title">Presencia digital <span class="gradient-text">profesional</span></h2>
+      </div>
+
+      <div class="plans-grid plans-grid--4">
+
+        <div class="plan-card reveal" data-delay="0">
+          <div class="plan-name">Basic Website</div>
+          <div class="plan-price">
+            <span class="price-from">Desde</span>
+            <span class="price-num">$499</span>
+          </div>
+          <div class="plan-tagline">Ideal para negocios que necesitan presencia profesional</div>
+          <div class="plan-focus">Diseñado para atraer nuevos contactos a su negocio</div>
+          <ul class="plan-features">
+            <li>Sitio web informativo</li>
+            <li>Diseño moderno y adaptable (móvil)</li>
+            <li>Sincronización completa de leads</li>
+            <li>Sección de contacto completa</li>
+          </ul>
+          <a href="https://wa.me/50686264555" class="btn btn-ghost btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Quiero este plan</a>
+        </div>
+
+        <div class="plan-card plan-featured reveal" data-delay="100">
+          <div class="plan-badge">Más popular</div>
+          <div class="plan-name">Advanced Website</div>
+          <div class="plan-price">
+            <span class="price-from">Desde</span>
+            <span class="price-num">$699</span>
+          </div>
+          <div class="plan-tagline">Para negocios que quieren gestionar clientes</div>
+          <div class="plan-focus">Diseñado para atraer nuevos contactos a su negocio</div>
+          <ul class="plan-features">
+            <li>Todo lo del Basic +</li>
+            <li>Base de datos de clientes</li>
+            <li>Formularios avanzados</li>
+            <li>Captación de leads</li>
+          </ul>
+          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Quiero este plan</a>
+        </div>
+
+        <div class="plan-card reveal" data-delay="200">
+          <div class="plan-name">Online Store</div>
+          <div class="plan-price">
+            <span class="price-from">Desde</span>
+            <span class="price-num">$899</span>
+          </div>
+          <div class="plan-tagline">Para vender productos en línea</div>
+          <div class="plan-focus">Diseñado para atraer nuevos contactos a su negocio</div>
+          <ul class="plan-features">
+            <li>Tienda online funcional</li>
+            <li>Catálogo de productos</li>
+            <li>Panel de administración</li>
+            <li>Gestión avanzada de pedidos</li>
+          </ul>
+          <a href="https://wa.me/50686264555" class="btn btn-ghost btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Quiero este plan</a>
+        </div>
+
+        <div class="plan-card plan-pro reveal" data-delay="300">
+          <div class="plan-name">Pro Custom Website</div>
+          <div class="plan-price">
+            <span class="price-num price-custom">Personalizado</span>
+          </div>
+          <div class="plan-tagline">Para negocios que quieren algo único y escalable</div>
+          <div class="plan-focus">Diseñado para atraer nuevos contactos a su negocio</div>
+          <ul class="plan-features">
+            <li>Desarrollo completamente a medida</li>
+            <li>Funcionalidades avanzadas</li>
+            <li>Diseño premium</li>
+          </ul>
+          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Quiero cotizar el Pro Plan</a>
+        </div>
+
+      </div>
+
+      <!-- MARKETING DIGITAL -->
+      <div class="section-header reveal plans-mkt-header">
+        <div class="section-tag">Marketing Digital</div>
+        <h2 class="section-title">Publicidad que <span class="gradient-text">genera resultados</span></h2>
+        <p class="section-sub">Nuevos contactos para su negocio, mes a mes.</p>
+      </div>
+
+      <div class="plans-grid plans-grid--3">
+
+        <div class="plan-card reveal" data-delay="0">
+          <div class="plan-name">Basic Ads</div>
+          <div class="plan-price">
+            <span class="price-from">Desde</span>
+            <span class="price-num">$129</span><span class="price-period">/mes</span>
+          </div>
+          <div class="plan-tagline">Para empezar a atraer clientes</div>
+          <div class="plan-focus">Diseñado para atraer nuevos contactos a su negocio</div>
+          <ul class="plan-features">
+            <li>1 campaña activa en redes sociales</li>
+            <li>Configuración completa</li>
+            <li>Segmentación local</li>
+            <li>Enfoque en mensajes o tráfico</li>
+          </ul>
+          <a href="https://wa.me/50686264555" class="btn btn-ghost btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Quiero este plan</a>
+        </div>
+
+        <div class="plan-card plan-featured reveal" data-delay="150">
+          <div class="plan-badge">Más popular</div>
+          <div class="plan-name">Advanced Ads</div>
+          <div class="plan-price">
+            <span class="price-from">Desde</span>
+            <span class="price-num">$249</span><span class="price-period">/mes</span>
+          </div>
+          <div class="plan-tagline">Para escalar resultados</div>
+          <div class="plan-focus">Diseñado para atraer nuevos contactos a su negocio</div>
+          <ul class="plan-features">
+            <li>Hasta 3 campañas activas</li>
+            <li>Optimización continua</li>
+            <li>Diferentes objetivos (clientes, visitas, reconocimiento)</li>
+          </ul>
+          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Quiero este plan</a>
+        </div>
+
+        <div class="plan-card plan-pro reveal" data-delay="300">
+          <div class="plan-name">Pro Ads</div>
+          <div class="plan-price">
+            <span class="price-num price-custom">Personalizado</span>
+          </div>
+          <div class="plan-tagline">Estrategia completa de crecimiento</div>
+          <div class="plan-focus">Diseñado para atraer nuevos contactos a su negocio</div>
+          <ul class="plan-features">
+            <li>Campañas en Meta + TikTok + Google</li>
+            <li>Estrategia completa</li>
+            <li>Optimización avanzada</li>
+            <li>Escalado de resultados</li>
+          </ul>
+          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Cotizar estrategia completa</a>
+        </div>
+
+      </div>
+
+      <p class="plans-note reveal"> Costos de dominio, hosting y herramientas se definen según las
+        necesidades del proyecto.</p>
+    </div>
+  </section>
+
+  <!-- ============ NOSOTROS ============ -->
+  <section class="about" id="nosotros" aria-label="Sobre nosotros">
+    <div class="bg-orb orb-a1" aria-hidden="true" data-speed="18"></div>
+    <div class="bg-orb orb-a2" aria-hidden="true" data-speed="26"></div>
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="founders-grid">
+
+            <!-- Matías -->
+            <div class="founder-card">
+              <div class="founder-header">
+                <div class="founder-avatar" aria-hidden="true">MM</div>
+                <div class="founder-meta">
+                  <div class="founder-name">Matías Meza Víquez</div>
+                  <div class="founder-role">Marketing &amp; Automatizaciones</div>
+                </div>
+              </div>
+              <p class="founder-desc">Estrategia, automatizaciones y campañas de alto impacto.</p>
+              <div class="founder-skills">
+                <span>Estrategia</span>
+                <span>Automatización</span>
+                <span>Análisis</span>
+                <span>Desarrollo</span>
+              </div>
+              <a href="https://wa.me/50686264555" class="founder-contact" target="_blank" rel="noopener noreferrer"
+                aria-label="WhatsApp Matías">
+                <svg width="16" height="16" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                  <path d="M11 2C6 2 2 6 2 11c0 1.6.4 3.1 1.2 4.4L2 20l4.8-1.2A9 9 0 1 0 11 2z" stroke="currentColor"
+                    stroke-width="1.8" stroke-linejoin="round" />
+                  <path d="M8 10c0 3 3 5 5 5l1-1.5-1.5-1-1 .5c-1 0-2-1-2-2l.5-1-1-1.5L8 10z" stroke="currentColor"
+                    stroke-width="1.4" stroke-linecap="round" />
+                </svg>
+                WhatsApp
+              </a>
+            </div>
+
+            <!-- Julián -->
+            <div class="founder-card">
+              <div class="founder-header">
+                <div class="founder-avatar" aria-hidden="true">JF</div>
+                <div class="founder-meta">
+                  <div class="founder-name">Julián Fernández Guzmán</div>
+                  <div class="founder-role">Full Developer</div>
+                </div>
+              </div>
+              <p class="founder-desc">Desarrollo web completo, desde el diseño hasta los resultados.</p>
+              <div class="founder-skills">
+                <span>Desarrollo Web</span>
+                <span>Publicidad</span>
+                <span>UX/UI</span>
+                <span>Estrategia</span>
+              </div>
+              <a href="https://wa.me/50686264555" class="founder-contact" target="_blank" rel="noopener noreferrer"
+                aria-label="WhatsApp Julián">
+                <svg width="16" height="16" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                  <path d="M11 2C6 2 2 6 2 11c0 1.6.4 3.1 1.2 4.4L2 20l4.8-1.2A9 9 0 1 0 11 2z" stroke="currentColor"
+                    stroke-width="1.8" stroke-linejoin="round" />
+                  <path d="M8 10c0 3 3 5 5 5l1-1.5-1.5-1-1 .5c-1 0-2-1-2-2l.5-1-1-1.5L8 10z" stroke="currentColor"
+                    stroke-width="1.4" stroke-linecap="round" />
+                </svg>
+                WhatsApp
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="about-content">
+          <div class="section-tag reveal">Quiénes somos</div>
+          <h2 class="section-title reveal">Experiencia real.<br /><span class="gradient-text">Aplicada a su
+              negocio.</span></h2>
+          <p class="reveal">Somos Matías y Julián. Con experiencia en empresas consolidadas, aplicamos estrategias
+            comprobadas para hacer crecer su negocio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESO ============ -->
+  <section class="process" aria-label="Proceso de trabajo">
+    <div class="process-dots" aria-hidden="true"></div>
+    <div class="bg-orb orb-p1" aria-hidden="true" data-speed="8"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Cómo trabajamos</div>
+        <h2 class="section-title">Proceso <span class="gradient-text">sin complicaciones</span></h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal" data-delay="0">
+          <div class="step-card">
+            <div class="step-num-badge">01</div>
+            <div class="step-num-ghost" aria-hidden="true">01</div>
+            <div class="step-content">
+              <h3>Entendemos su negocio</h3>
+              <p>Análisis completo de situación, objetivos y competencia.</p>
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="150">
+          <div class="step-card">
+            <div class="step-num-badge">02</div>
+            <div class="step-num-ghost" aria-hidden="true">02</div>
+            <div class="step-content">
+              <h3>Diseño &amp; Prototipo</h3>
+              <p>Visualice cómo quedará antes de construir, con total claridad.</p>
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="300">
+          <div class="step-card">
+            <div class="step-num-badge">03</div>
+            <div class="step-num-ghost" aria-hidden="true">03</div>
+            <div class="step-content">
+              <h3>Desarrollo</h3>
+              <p>Rápido, seguro y optimizado para conversión.</p>
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="450">
+          <div class="step-card">
+            <div class="step-num-badge">04</div>
+            <div class="step-num-ghost" aria-hidden="true">04</div>
+            <div class="step-content">
+              <h3>Lanzamiento &amp; Seguimiento</h3>
+              <p>Medimos resultados y ajustamos hasta que funcione.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASOS DE ÉXITO ============ -->
+  <section class="cases" id="casos" aria-label="Casos de éxito">
+    <div class="bg-orb orb-c1" aria-hidden="true" data-speed="20"></div>
+    <div class="bg-orb orb-c2" aria-hidden="true" data-speed="15"></div>
+    <div class="bg-ring ring-c1" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Clientes fundadores</div>
+        <h2 class="section-title">Sea parte de los <span class="gradient-text">primeros</span></h2>
+        <p class="section-sub">Los socios fundadores de Innova JM acceden a condiciones preferenciales de lanzamiento,
+          atención personalizada de alto nivel y el respaldo de un equipo técnico dedicado íntegramente a la excelencia
+          de su proyecto.</p>
+      </div>
+
+      <div class="cases-grid">
+        <div class="case-card reveal" data-delay="0">
+          <div class="case-category">Gimnasios · Restaurantes · Tiendas</div>
+          <div class="case-visual case-v1" aria-hidden="true">
+            <div class="case-mockup">
+              <div class="cm-bar"></div>
+              <div class="cm-hero"></div>
+              <div class="cm-grid">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+          <div class="case-info">
+            <h3>Presencia profesional en internet</h3>
+            <p>Sitio web profesional que genera contactos directamente a su WhatsApp.</p>
+            <div class="case-metrics">
+              <div class="case-metric">
+                <strong>2 sem</strong>
+                <span>Tiempo de entrega</span>
+              </div>
+              <div class="case-metric">
+                <strong>100%</strong>
+                <span>Responsive</span>
+              </div>
+              <div class="case-metric">
+                <strong>SEO</strong>
+                <span>Optimizado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card reveal featured" data-delay="150">
+          <div class="featured-badge">Cliente fundador</div>
+          <div class="case-category">Barberías · Emprendimientos · Servicios</div>
+          <div class="case-visual case-v2" aria-hidden="true">
+            <div class="case-mockup">
+              <div class="cm-bar"></div>
+              <div class="cm-hero dark"></div>
+              <div class="cm-list">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+          <div class="case-info">
+            <h3>Clientes nuevos cada mes</h3>
+            <p>Publicidad dirigida al perfil de cliente ideal de su negocio. Resultados medibles.</p>
+            <div class="case-metrics">
+              <div class="case-metric">
+                <strong>100%</strong>
+                <span>Medible</span>
+              </div>
+              <div class="case-metric">
+                <strong>Semanal</strong>
+                <span>Reportes</span>
+              </div>
+              <div class="case-metric">
+                <strong>Sin</strong>
+                <span>Contratos largos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card reveal" data-delay="300">
+          <div class="case-category">Negocios con años · O recién iniciando</div>
+          <div class="case-visual case-v3" aria-hidden="true">
+            <div class="case-mockup">
+              <div class="cm-bar"></div>
+              <div class="cm-hero warm"></div>
+              <div class="cm-grid small">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+          <div class="case-info">
+            <h3>Todo en un solo equipo</h3>
+            <p>Nos adaptamos a la etapa de su negocio. Web, publicidad o ambos.</p>
+            <div class="case-metrics">
+              <div class="case-metric">
+                <strong>Todo</strong>
+                <span>En un paquete</span>
+              </div>
+              <div class="case-metric">
+                <strong>1 solo</strong>
+                <span>Punto de contacto</span>
+              </div>
+              <div class="case-metric">
+                <strong>Sin</strong>
+                <span>Letra pequeña</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="contact" id="contacto" aria-label="Contacto">
+    <div class="bg-orb orb-ct1" aria-hidden="true" data-speed="18"></div>
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="section-tag">Hablemos</div>
+          <h2 class="section-title">¿Listo para <span class="gradient-text">crecer?</span></h2>
+          <p>La forma más rápida de empezar es por WhatsApp. Respondemos en minutos.</p>
+
+          <a href="https://wa.me/50686264555" class="contact-wa-hero" target="_blank" rel="noopener noreferrer"
+            aria-label="Contactar por WhatsApp +506 8626 4555">
+            <svg width="28" height="28" viewBox="0 0 22 22" fill="none" aria-hidden="true" style="flex-shrink:0">
+              <path d="M11 2C6 2 2 6 2 11c0 1.6.4 3.1 1.2 4.4L2 20l4.8-1.2A9 9 0 1 0 11 2z" stroke="white"
+                stroke-width="1.8" stroke-linejoin="round" />
+              <path d="M8 10c0 3 3 5 5 5l1-1.5-1.5-1-1 .5c-1 0-2-1-2-2l.5-1-1-1.5L8 10z" stroke="white"
+                stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+            <div class="wa-text-block">
+              <span class="wa-main-text">Escribir por WhatsApp</span>
+              <span class="wa-sub-text">+506 8626 4555 · Respuesta en minutos</span>
+            </div>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"
+              style="flex-shrink:0;margin-left:auto;opacity:0.7">
+              <path d="M4 10h12M10 4l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </a>
+
+          <p class="contact-email-small">¿Prefieres correo? <a href="mailto:innovajmz@gmail.com">innovajmz@gmail.com</a>
+          </p>
+
+          <div class="contact-schedule">
+            <svg width="16" height="16" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.8" />
+              <path d="M11 6v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span>Lun–Vie 9:00–18:00</span>
+          </div>
+        </div>
+
+        <div class="contact-form-wrapper reveal">
+          <p class="form-label-secondary">O déjenos sus datos y le contactamos:</p>
+          <form class="contact-form" id="contactForm" novalidate aria-label="Formulario de contacto">
+            <div class="form-status" id="formStatus" aria-live="polite" role="status"></div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">Nombre *</label>
+                <input type="text" id="fname" name="nombre" placeholder="Su nombre" required autocomplete="given-name"
+                  maxlength="60" />
+                <span class="field-error" id="fnameError" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label for="femail">Email *</label>
+                <input type="email" id="femail" name="email" placeholder="correo@ejemplo.com" required
+                  autocomplete="email" maxlength="100" />
+                <span class="field-error" id="femailError" role="alert"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fcompany">Empresa</label>
+              <input type="text" id="fcompany" name="empresa" placeholder="Nombre de su empresa"
+                autocomplete="organization" maxlength="80" />
+            </div>
+
+            <div class="form-group">
+              <label for="fservice">Servicio de interés *</label>
+              <div class="select-wrapper">
+                <select id="fservice" name="servicio" required>
+                  <option value="" disabled selected>Selecciona un servicio</option>
+                  <option value="web">Diseño Web Profesional</option>
+                  <option value="ads">Gestión de Publicidad</option>
+                  <option value="estrategia">Estrategia Digital 360°</option>
+                  <option value="combo">Combo Web + Publicidad</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <svg class="select-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <span class="field-error" id="fserviceError" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="fmessage">Cuéntenos su proyecto *</label>
+              <textarea id="fmessage" name="mensaje" placeholder="¿Qué desea lograr? Describa su negocio y objetivos..."
+                required maxlength="1000" rows="5"></textarea>
+              <div class="char-counter"><span id="charCount">0</span>/1000</div>
+              <span class="field-error" id="fmessageError" role="alert"></span>
+            </div>
+
+            <div class="form-honeypot" aria-hidden="true">
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+              <span id="btnText">Enviar Mensaje</span>
+              <svg class="btn-arrow" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              <div class="btn-glow"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" aria-label="Pie de página">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="nav-logo" aria-label="Innova JM inicio">
+            <div class="logo-icon">
+              <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" fill="none" stroke="url(#fLogoGrad)"
+                  stroke-width="2" />
+                <polygon points="14,7 21,11 21,17 14,21 7,17 7,11" fill="url(#fLogoGrad)" opacity="0.3" />
+                <circle cx="14" cy="14" r="3" fill="url(#fLogoGrad)" />
+                <defs>
+                  <linearGradient id="fLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00d4ff" />
+                    <stop offset="100%" stop-color="#7c3aed" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <span class="logo-text">Innova JM</span>
+          </a>
+          <p>Diseño web y publicidad digital para negocios que quieren crecer. Costa Rica.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram Innova JM" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2" />
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn Innova JM" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" stroke-width="2" />
+                <path d="M7 10v8M7 7v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M11 18v-5c0-1.5 1-3 3-3s3 1.5 3 3v5" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" />
+                <path d="M11 10v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter/X Innova JM" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 4l16 16M4 20L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="#servicios">Diseño Web</a></li>
+            <li><a href="#servicios">Gestión de Ads</a></li>
+            <li><a href="#servicios">Estrategia Digital</a></li>
+            <li><a href="#casos">Casos de Éxito</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#" aria-label="Política de privacidad">Privacidad</a></li>
+            <li><a href="#" aria-label="Términos y condiciones">Términos</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:innovajmz@gmail.com">innovajmz@gmail.com</a></li>
+            <li><a href="https://wa.me/50686264555" rel="noopener noreferrer">+506 8626 4555</a></li>
+            <li><span>Lun–Vie 9:00–18:00</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="footerYear"></span> Innova JM. Todos los derechos reservados.</p>
+        <p class="footer-made">Hecho con <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"
+            aria-hidden="true" style="display:inline;vertical-align:middle;color:var(--blue)">
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg> para negocios que quieren crecer</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M10 16V4M4 10l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </button>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
