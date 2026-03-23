@@ -467,10 +467,9 @@ input, textarea, select { font-family: inherit; }
 
 /* Fix layout shift del typing text */
 .hero-title .typing-line {
-  min-height: 1.2em;
+  height: 1.2em;
   display: block;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  overflow: hidden;
 }
 
 /* ---- SECTION HEADERS ---- */
@@ -1270,7 +1269,7 @@ input, textarea, select { font-family: inherit; }
    BENEFITS — Stars + Glowing Cards
    ============================================================ */
 .benefits {
-  padding: var(--section-padding);
+  padding: 120px 0;
   position: relative;
   overflow: hidden;
 }

@@ -240,11 +240,11 @@ function triggerHeroAnimations() {
   if (!el) return;
 
   const words = [
-    'páginas que venden',
-    'anuncios que convierten',
-    'una web efectiva',
-    'publicidad que atrae',
-    'clientes por WhatsApp',
+    'páginas web',
+    'anuncios efectivos',
+    'presencia digital',
+    'su vitrina online',
+    'el sistema ideal',
   ];
 
   let wordIdx = 0;
