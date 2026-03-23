@@ -1356,6 +1356,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: 50%;
   border: 1px dashed rgba(74,143,204,.2);
   animation: orbRotate var(--od, 6s) linear infinite;
+  pointer-events: none;
 }
 .orb-sat {
   position: absolute;
@@ -1365,6 +1366,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: 50%;
   background: #7FB5E0;
   box-shadow: 0 0 8px #4A8FCC, 0 0 16px rgba(74,143,204,.5);
+  pointer-events: none;
 }
 @keyframes orbRotate { to { transform: rotate(360deg); } }
 
@@ -2553,6 +2555,16 @@ input, textarea, select { font-family: inherit; }
 }
 
 .plan-cta { margin-top: auto; }
+
+.plan-summary {
+  font-size: 0.78rem;
+  color: var(--text-3);
+  font-style: italic;
+  line-height: 1.55;
+  margin-bottom: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
 
 .plans-note {
   text-align: center;
