@@ -1405,11 +1405,11 @@ input, textarea, select { font-family: inherit; }
 
 /* Overlay */
 .orb-overlay {
-  position: absolute; inset: 0; z-index: 20;
+  position: fixed; inset: 0; z-index: 9000;
   display: flex; align-items: center; justify-content: center;
-  border-radius: var(--radius-lg);
-  background: rgba(9,22,40,.88);
-  backdrop-filter: blur(18px);
+  background: rgba(9,22,40,.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease;
 }
@@ -1426,11 +1426,15 @@ input, textarea, select { font-family: inherit; }
 }
 .orb-close:hover { background: rgba(74,143,204,.22); }
 .orb-overlay-body {
-  max-width: 480px; padding: 0 40px; text-align: center;
-  transform: translateY(20px);
+  max-width: 520px; width: 90vw; padding: 48px 40px;
+  text-align: center;
+  background: rgba(15,34,54,.8);
+  border: 1px solid rgba(74,143,204,.25);
+  border-radius: var(--radius-lg);
+  transform: translateY(20px) scale(.97);
   transition: transform .4s ease;
 }
-.orb-overlay.active .orb-overlay-body { transform: translateY(0); }
+.orb-overlay.active .orb-overlay-body { transform: translateY(0) scale(1); }
 .orb-overlay-num {
   font-size: .7rem; font-weight: 700;
   letter-spacing: .15em; color: #7FB5E0; margin-bottom: 16px;
