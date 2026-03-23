@@ -241,10 +241,10 @@ function triggerHeroAnimations() {
 
   const words = [
     'páginas que venden',
-    'negocios que crecen',
-    'presencia digital',
-    'más contactos',
-    'resultados medibles',
+    'anuncios que convierten',
+    'una web efectiva',
+    'publicidad que atrae',
+    'clientes por WhatsApp',
   ];
 
   let wordIdx = 0;
