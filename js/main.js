@@ -733,41 +733,28 @@ if ('IntersectionObserver' in window) {
   tick();
 })();
 
-// ---- Benefits tabs (auto-cycle + click) ----
-(function () {
-  const tabs   = document.querySelectorAll('.btab');
-  const panels = document.querySelectorAll('.btab-panel');
-  if (!tabs.length) return;
+// ---- Flip cards — tilt on hover + flip on click ----
+document.querySelectorAll('.bflip-card').forEach(card => {
+  const inner = card.querySelector('.bflip-inner');
 
-  let current = 0;
-  let timer;
-  const DURATION = 4000;
-
-  function activate(idx) {
-    tabs.forEach((t, i) => {
-      const isActive = i === idx;
-      t.classList.toggle('active', isActive);
-      t.setAttribute('aria-selected', String(isActive));
-      const fill = t.querySelector('.btab-bar-fill');
-      if (fill) {
-        fill.style.animation = 'none';
-        fill.offsetHeight;
-        if (isActive) fill.style.animation = `btabProgress ${DURATION}ms linear forwards`;
-      }
-    });
-    panels.forEach((p, i) => p.classList.toggle('active', i === idx));
-    current = idx;
-  }
-
-  function startTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => activate((current + 1) % tabs.length), DURATION);
-  }
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => { activate(i); startTimer(); });
+  card.addEventListener('mousemove', e => {
+    if (card.classList.contains('flipped')) return;
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    inner.style.transition = 'transform 0.1s ease';
+    inner.style.transform  = `perspective(1200px) rotateY(${x * 12}deg) rotateX(${y * -12}deg)`;
   });
 
-  activate(0);
-  startTimer();
-})();
+  card.addEventListener('mouseleave', () => {
+    if (card.classList.contains('flipped')) return;
+    inner.style.transition = 'transform 0.55s ease';
+    inner.style.transform  = '';
+  });
+
+  card.addEventListener('click', () => {
+    inner.style.transition = 'transform 0.65s cubic-bezier(0.4,0,0.2,1)';
+    inner.style.transform  = '';
+    card.classList.toggle('flipped');
+  });
+});
