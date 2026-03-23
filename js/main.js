@@ -733,28 +733,84 @@ if ('IntersectionObserver' in window) {
   tick();
 })();
 
-// ---- Flip cards — tilt on hover + flip on click ----
-document.querySelectorAll('.bflip-card').forEach(card => {
-  const inner = card.querySelector('.bflip-inner');
+/* ============================================================
+   BENEFITS ORB — click to expand + parallax
+   ============================================================ */
+(function initBenefitsOrb() {
+  const orbData = [
+    {
+      num: '01',
+      title: 'Mas clientes contactando su negocio',
+      desc: 'Personas interesadas en lo que usted vende, llegando directamente. Sin intermediarios.',
+      chips: ['Contacto directo', 'Clientes reales', 'Sin intermediarios']
+    },
+    {
+      num: '02',
+      title: 'Presencia profesional que genera confianza',
+      desc: 'Una pagina web que refleja la calidad de su negocio. Sus clientes confian antes de escribirle.',
+      chips: ['Entrega en 2 semanas', '100% movil', 'SEO incluido']
+    },
+    {
+      num: '03',
+      title: 'Publicidad dirigida al cliente ideal',
+      desc: 'Anuncios en Meta y Google que llegan exactamente a quienes quieren lo que usted vende, en su zona.',
+      chips: ['Meta Ads', 'Google Ads', 'Reportes semanales']
+    },
+    {
+      num: '04',
+      title: 'Un sistema que trabaja por usted',
+      desc: 'Su web y sus anuncios generan resultados todos los dias, incluso fuera del horario laboral.',
+      chips: ['Activo 24/7', '365 dias', 'Sin esfuerzo extra']
+    }
+  ];
 
-  card.addEventListener('mousemove', e => {
-    if (card.classList.contains('flipped')) return;
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top)  / r.height - 0.5;
-    inner.style.transition = 'transform 0.1s ease';
-    inner.style.transform  = `perspective(1200px) rotateY(${x * 12}deg) rotateX(${y * -12}deg)`;
-  });
+  const grid    = document.getElementById('orbGrid');
+  const overlay = document.getElementById('orbOverlay');
+  if (!grid || !overlay) return;
 
-  card.addEventListener('mouseleave', () => {
-    if (card.classList.contains('flipped')) return;
-    inner.style.transition = 'transform 0.55s ease';
-    inner.style.transform  = '';
-  });
+  const circles = grid.querySelectorAll('.orb-circle');
+  const items   = grid.querySelectorAll('.orb-item');
 
-  card.addEventListener('click', () => {
-    inner.style.transition = 'transform 0.65s cubic-bezier(0.4,0,0.2,1)';
-    inner.style.transform  = '';
-    card.classList.toggle('flipped');
-  });
-});
+  function openOrb(idx) {
+    const d = orbData[idx];
+    document.getElementById('oNum').textContent   = d.num;
+    document.getElementById('oTitle').textContent = d.title;
+    document.getElementById('oDesc').textContent  = d.desc;
+    document.getElementById('oChips').innerHTML   = d.chips.map(c => `<span>${c}</span>`).join('');
+    items.forEach((it, i) => it.classList.toggle('source-active', i === idx));
+    grid.classList.add('has-active');
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeOrb() {
+    grid.classList.remove('has-active');
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden', 'true');
+    items.forEach(it => it.classList.remove('source-active'));
+  }
+
+  circles.forEach((c, i) => c.addEventListener('click', () => openOrb(i)));
+  document.getElementById('orbClose').addEventListener('click', closeOrb);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeOrb(); });
+
+  // Parallax microinteraction
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const stage = overlay.closest('.orb-stage');
+    if (stage) {
+      stage.addEventListener('mousemove', e => {
+        if (grid.classList.contains('has-active')) return;
+        const r = stage.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        items.forEach((it, i) => {
+          const s = (i === 0 || i === 3) ? 1 : -1;
+          it.style.transform = `translate(${x * 10 * s}px, ${y * 10 * s}px)`;
+        });
+      }, { passive: true });
+      stage.addEventListener('mouseleave', () => {
+        items.forEach(it => { it.style.transform = ''; });
+      });
+    }
+  }
+})();
