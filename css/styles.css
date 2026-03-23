@@ -2519,7 +2519,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--yellow);
   margin-bottom: 16px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
 }
 
