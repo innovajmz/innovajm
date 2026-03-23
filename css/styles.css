@@ -1267,12 +1267,70 @@ input, textarea, select { font-family: inherit; }
 }
 
 /* ============================================================
-   BENEFITS
+   BENEFITS — Stars + Glowing Cards
    ============================================================ */
 .benefits {
   padding: var(--section-padding);
+  position: relative;
+  overflow: hidden;
 }
 
+.benefits-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.b-stars-s {
+  position: absolute;
+  width: 1px; height: 1px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    50px 80px 0 rgba(255,255,255,.35), 180px 30px 0 rgba(255,255,255,.25),
+    320px 120px 0 rgba(255,255,255,.4), 460px 55px 0 rgba(255,255,255,.25),
+    610px 195px 0 rgba(255,255,255,.35), 760px 22px 0 rgba(255,255,255,.25),
+    910px 145px 0 rgba(255,255,255,.4), 1060px 68px 0 rgba(255,255,255,.3),
+    1210px 165px 0 rgba(255,255,255,.25), 1360px 42px 0 rgba(255,255,255,.4),
+    1510px 135px 0 rgba(255,255,255,.25), 1660px 75px 0 rgba(255,255,255,.35),
+    1810px 175px 0 rgba(255,255,255,.25), 1960px 38px 0 rgba(255,255,255,.4),
+    85px 225px 0 rgba(255,255,255,.35), 235px 285px 0 rgba(255,255,255,.25),
+    385px 245px 0 rgba(255,255,255,.4), 525px 315px 0 rgba(255,255,255,.25),
+    675px 265px 0 rgba(255,255,255,.35), 825px 335px 0 rgba(255,255,255,.25),
+    985px 278px 0 rgba(255,255,255,.4), 1135px 355px 0 rgba(255,255,255,.25),
+    1285px 298px 0 rgba(255,255,255,.35), 1435px 385px 0 rgba(255,255,255,.25);
+  animation: twinkleS 4s ease-in-out infinite alternate;
+}
+
+.b-stars-m {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    125px 105px 0 rgba(74,143,204,.7), 405px 182px 0 rgba(255,255,255,.65),
+    705px 82px 0 rgba(74,143,204,.7), 1005px 202px 0 rgba(255,255,255,.65),
+    1305px 102px 0 rgba(74,143,204,.7), 1605px 162px 0 rgba(255,255,255,.65),
+    205px 352px 0 rgba(74,143,204,.7), 555px 422px 0 rgba(255,255,255,.65),
+    855px 392px 0 rgba(74,143,204,.7), 1155px 442px 0 rgba(255,255,255,.65),
+    1455px 402px 0 rgba(74,143,204,.7), 305px 155px 0 rgba(255,255,255,.65),
+    655px 252px 0 rgba(74,143,204,.7), 1105px 305px 0 rgba(255,255,255,.65),
+    1755px 222px 0 rgba(74,143,204,.7);
+  animation: twinkleM 5.5s ease-in-out infinite alternate;
+  animation-delay: 1.2s;
+}
+
+@keyframes twinkleS {
+  0%   { opacity: .35; }
+  100% { opacity: .9; }
+}
+@keyframes twinkleM {
+  0%   { opacity: .4; }
+  100% { opacity: 1; }
+}
+
+/* Grid */
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1280,51 +1338,122 @@ input, textarea, select { font-family: inherit; }
   margin-top: 56px;
 }
 
-.benefit-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+/* Wrapper: clip for spinning border + float */
+.benefit-card-wrap {
+  position: relative;
   border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  transition: border-color var(--transition), transform var(--transition);
+  padding: 1.5px;
+  overflow: hidden;
+  background: var(--bg-card);
+  animation: floatB 5.5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
 }
 
-.benefit-item:hover {
-  border-color: rgba(74, 143, 204, 0.4);
-  transform: translateY(-2px);
+/* Spinning gradient border */
+.benefit-card-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(
+    transparent 0deg,
+    rgba(74,143,204,0) 85deg,
+    rgba(74,143,204,.75) 135deg,
+    rgba(127,181,224,.5) 160deg,
+    rgba(74,143,204,0) 205deg,
+    transparent 360deg
+  );
+  animation: spinBorder 7s linear infinite;
+  animation-delay: var(--spin-delay, 0s);
+  z-index: 0;
 }
 
-.benefit-icon {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  background: rgba(74, 143, 204, 0.1);
-  border: 1px solid rgba(74, 143, 204, 0.2);
-  border-radius: var(--radius);
+/* Inner card */
+.benefit-card {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-card);
+  border-radius: calc(var(--radius-lg) - 1.5px);
+  padding: 36px 28px;
+  height: 100%;
+}
+
+/* Mouse-follow spotlight */
+.benefit-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(74,143,204,.09) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  z-index: 0;
+}
+.benefit-card-wrap:hover .benefit-card::after { opacity: 1; }
+
+/* Ghost number */
+.benefit-num {
+  position: absolute;
+  top: -14px; right: 18px;
+  font-size: 6rem;
+  font-weight: 800;
+  color: rgba(74,143,204,.06);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  font-family: var(--font-display);
+  z-index: 0;
+}
+
+/* Icon ring */
+.benefit-icon-ring {
+  position: relative;
+  z-index: 1;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(74,143,204,.08);
+  border: 1px solid rgba(74,143,204,.22);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
+  transition: box-shadow var(--transition), background var(--transition);
+}
+.benefit-card-wrap:hover .benefit-icon-ring {
+  background: rgba(74,143,204,.14);
+  box-shadow: 0 0 22px rgba(74,143,204,.28);
 }
 
-.benefit-text h4 {
-  font-size: 1rem;
+.benefit-card h4 {
+  position: relative; z-index: 1;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
-
-.benefit-text p {
-  font-size: 0.9rem;
+.benefit-card p {
+  position: relative; z-index: 1;
+  font-size: .9rem;
   color: var(--text-2);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-@media (max-width: 640px) {
-  .benefits-grid {
-    grid-template-columns: 1fr;
-  }
+@keyframes spinBorder {
+  to { transform: rotate(360deg); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+
+@media (max-width: 768px) {
+  .benefits-grid { grid-template-columns: 1fr; gap: 16px; }
+  .benefit-card  { padding: 28px 20px; }
+  .benefit-num   { font-size: 4.5rem; }
 }
 
 /* ============================================================

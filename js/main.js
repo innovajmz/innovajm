@@ -732,3 +732,14 @@ if ('IntersectionObserver' in window) {
   }
   tick();
 })();
+
+// ---- Benefit cards — mouse spotlight ----
+document.querySelectorAll('.benefit-card-wrap').forEach(wrap => {
+  const card = wrap.querySelector('.benefit-card');
+  if (!card) return;
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
