@@ -266,7 +266,7 @@ function triggerHeroAnimations() {
         return;
       }
     } else {
-      el.textContent = current.slice(0, charIdx - 1);
+      el.textContent = current.slice(0, charIdx - 1) || '\u00A0';
       charIdx--;
       if (charIdx === 0) {
         isDeleting = false;
@@ -733,13 +733,41 @@ if ('IntersectionObserver' in window) {
   tick();
 })();
 
-// ---- Benefit cards — mouse spotlight ----
-document.querySelectorAll('.benefit-card-wrap').forEach(wrap => {
-  const card = wrap.querySelector('.benefit-card');
-  if (!card) return;
-  wrap.addEventListener('mousemove', e => {
-    const r = wrap.getBoundingClientRect();
-    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+// ---- Benefits tabs (auto-cycle + click) ----
+(function () {
+  const tabs   = document.querySelectorAll('.btab');
+  const panels = document.querySelectorAll('.btab-panel');
+  if (!tabs.length) return;
+
+  let current = 0;
+  let timer;
+  const DURATION = 4000;
+
+  function activate(idx) {
+    tabs.forEach((t, i) => {
+      const isActive = i === idx;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+      const fill = t.querySelector('.btab-bar-fill');
+      if (fill) {
+        fill.style.animation = 'none';
+        fill.offsetHeight;
+        if (isActive) fill.style.animation = `btabProgress ${DURATION}ms linear forwards`;
+      }
+    });
+    panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+    current = idx;
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => activate((current + 1) % tabs.length), DURATION);
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => { activate(i); startTimer(); });
   });
-});
+
+  activate(0);
+  startTimer();
+})();
