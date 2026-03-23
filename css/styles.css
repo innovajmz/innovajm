@@ -1271,40 +1271,60 @@ input, textarea, select { font-family: inherit; }
    ============================================================ */
 .benefits {
   padding: var(--section-padding);
-  text-align: center;
 }
 
-.benefits-block {
-  max-width: 640px;
-  margin: 0 auto;
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 56px;
 }
 
-.benefits-list {
-  list-style: none;
-  margin: 36px auto 0;
-  display: inline-flex;
-  flex-direction: column;
-  gap: 18px;
-  text-align: left;
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  transition: border-color var(--transition), transform var(--transition);
 }
 
-.benefits-list li {
+.benefit-item:hover {
+  border-color: rgba(74, 143, 204, 0.4);
+  transform: translateY(-2px);
+}
+
+.benefit-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  background: rgba(74, 143, 204, 0.1);
+  border: 1px solid rgba(74, 143, 204, 0.2);
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 1.05rem;
-  color: var(--text-2);
+  justify-content: center;
 }
 
-.benefits-list li::before {
-  content: '';
-  display: block;
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Ccircle cx='11' cy='11' r='11' fill='%234A8FCC' opacity='0.15'/%3E%3Cpath d='M6 11l3.5 3.5L16 7' stroke='%234A8FCC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
+.benefit-text h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.benefit-text p {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================================
