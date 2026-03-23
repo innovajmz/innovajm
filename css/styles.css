@@ -2556,16 +2556,6 @@ input, textarea, select { font-family: inherit; }
 
 .plan-cta { margin-top: auto; }
 
-.plan-summary {
-  font-size: 0.78rem;
-  color: var(--text-3);
-  font-style: italic;
-  line-height: 1.55;
-  margin-bottom: 20px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-}
-
 .plans-note {
   text-align: center;
   color: var(--text-3);
