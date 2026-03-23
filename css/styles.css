@@ -470,6 +470,7 @@ input, textarea, select { font-family: inherit; }
   height: 1.2em;
   display: block;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 /* ---- SECTION HEADERS ---- */
