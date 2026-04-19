@@ -62,7 +62,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
@@ -103,39 +102,43 @@ input, textarea, select { font-family: inherit; }
 /* ---- CURSOR ---- */
 .cursor {
   position: fixed;
-  width: 12px;
-  height: 12px;
-  background: var(--blue);
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  opacity: 0;
+  transition: opacity 0.3s, width 0.25s, height 0.25s, background 0.25s;
 }
+.cursor.active { opacity: 1; }
 
 .cursor-follower {
   position: fixed;
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid rgba(4,77,140,0.45);
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(255,255,255,0.35);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: transform 0.12s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+  opacity: 0;
+  transition: opacity 0.3s, width 0.25s, height 0.25s;
 }
+.cursor-follower.active { opacity: 1; }
 
 .cursor.is-hovering {
-  width: 20px;
-  height: 20px;
-  background: var(--teal);
+  width: 18px;
+  height: 18px;
+  background: rgba(255,255,255,0.85);
 }
 
 .cursor-follower.is-hovering {
-  width: 56px;
-  height: 56px;
-  opacity: 0.4;
-  border-color: var(--teal);
+  width: 48px;
+  height: 48px;
+  opacity: 0.3;
+  border-color: rgba(255,255,255,0.5);
 }
 
 /* ---- LOADER ---- */
@@ -1624,7 +1627,7 @@ input, textarea, select { font-family: inherit; }
 
 .cases-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-bottom: 60px;
 }
@@ -2736,7 +2739,7 @@ input, textarea, select { font-family: inherit; }
   .process-steps::before { display: none; }
   .founders-grid { grid-template-columns: 1fr; }
 
-  .cases-grid { grid-template-columns: 1fr; }
+  .cases-grid { grid-template-columns: 1fr 1fr; }
 
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
 
@@ -3074,21 +3077,9 @@ input, textarea, select { font-family: inherit; }
 .loader    { z-index: 9999; }
 .hero, .services, .benefits, .plans, .about,
 .process, .cases, .contact, footer,
-.marquee-strip, .cursor, .cursor-follower { position: relative; z-index: 1; }
+.marquee-strip { position: relative; z-index: 1; }
 
-/* ============================================================
-   SCROLL SNAP — desktop only (proximity = gentle, not forced)
-   ============================================================ */
-@media (min-width: 900px) {
-  html {
-    scroll-snap-type: y proximity;
-  }
-  .hero, .services, .benefits, .about,
-  .cases, .contact {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
-  }
-}
+/* scroll-snap removed — caused unnatural scroll behavior */
 
 /* ============================================================
    GSAP ENTRANCE — initial hidden state
@@ -3135,17 +3126,28 @@ input, textarea, select { font-family: inherit; }
   border-radius: 2px;
 }
 .services-scroll-wrap .services-grid {
-  display: flex !important;
+  display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 24px;
   width: max-content;
-  grid-template-columns: none !important;
 }
 .services-scroll-wrap .service-card {
   min-width: 300px;
   max-width: 340px;
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .services-scroll-wrap { overflow-x: visible; }
+  .services-scroll-wrap .services-grid {
+    display: grid;
+    flex-direction: unset;
+    width: auto;
+    grid-template-columns: 1fr;
+  }
+  .services-scroll-wrap .service-card { min-width: unset; max-width: unset; }
+  #bgCanvas, #heroCanvas { display: none !important; }
 }
 
 /* ============================================================

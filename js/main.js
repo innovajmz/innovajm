@@ -87,11 +87,17 @@ function triggerHeroAnimations() {
   let followerX = 0, followerY = 0;
   let rafId = null;
 
+  let cursorActive = false;
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     cursor.style.left = mouseX + 'px';
     cursor.style.top  = mouseY + 'px';
+    if (!cursorActive) {
+      cursorActive = true;
+      cursor.classList.add('active');
+      follower.classList.add('active');
+    }
   }, { passive: true });
 
   function animateFollower() {
@@ -885,14 +891,14 @@ if ('IntersectionObserver' in window) {
   // NOTE: .reveal animations are handled by IntersectionObserver (initReveal).
   // GSAP only handles tilt, magnetic, parallax — no opacity overrides.
 
-  // ── Parallax on bg-orbs ───────────────────────────────────
+  // ── Parallax on bg-orbs (scrub:1 for smooth, was 2 which lagged) ──
   document.querySelectorAll('.bg-orb').forEach(orb => {
     gsap.to(orb, {
-      y: -(parseFloat(orb.dataset.speed || 10) * 6),
+      y: -(parseFloat(orb.dataset.speed || 10) * 4),
       ease: 'none',
       scrollTrigger: {
         trigger: orb.parentElement,
-        scrub: 2,
+        scrub: 1,
         start: 'top bottom',
         end: 'bottom top',
       },
