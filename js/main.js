@@ -130,22 +130,18 @@ function triggerHeroAnimations() {
 })();
 
 /* ============================================================
-   PARTICLE CANVAS
+   PARTICLE CANVAS — lightweight version
    ============================================================ */
 (function initCanvas() {
   const canvas = $('#heroCanvas');
   if (!canvas) return;
-
-  // Skip if reduce motion is preferred
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    canvas.style.display = 'none';
-    return;
+    canvas.style.display = 'none'; return;
   }
 
   const ctx = canvas.getContext('2d');
-  let W, H, particles = [], connections = [];
-  const PARTICLE_COUNT = 70;
-  const MAX_DIST = 140;
+  let W, H, particles = [];
+  const COUNT = 28;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -157,77 +153,43 @@ function triggerHeroAnimations() {
     reset(init = false) {
       this.x  = Math.random() * W;
       this.y  = init ? Math.random() * H : Math.random() * H;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
-      this.r  = Math.random() * 2.0 + 0.7;
-      this.alpha = Math.random() * 0.45 + 0.18;
+      this.vx = (Math.random() - 0.5) * 0.32;
+      this.vy = (Math.random() - 0.5) * 0.32;
+      this.r  = Math.random() * 1.6 + 0.5;
+      this.alpha = Math.random() * 0.35 + 0.12;
     }
     update() {
-      // Mouse repulsion — particles flee the cursor
       const dx = this.x - MOUSE.x;
       const dy = this.y - MOUSE.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 110 && dist > 0) {
-        const force = (1 - dist / 110) * 3.5;
-        this.vx += (dx / dist) * force * 0.055;
-        this.vy += (dy / dist) * force * 0.055;
+      if (dist < 90 && dist > 0) {
+        const force = (1 - dist / 90) * 2.2;
+        this.vx += (dx / dist) * force * 0.05;
+        this.vy += (dy / dist) * force * 0.05;
       }
-      // Speed clamp
       const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-      if (speed > 3.2) {
-        this.vx = (this.vx / speed) * 3.2;
-        this.vy = (this.vy / speed) * 3.2;
-      }
-      this.x += this.vx;
-      this.y += this.vy;
+      if (speed > 2.5) { this.vx = (this.vx / speed) * 2.5; this.vy = (this.vy / speed) * 2.5; }
+      this.x += this.vx; this.y += this.vy;
       if (this.x < 0 || this.x > W) this.vx *= -1;
       if (this.y < 0 || this.y > H) this.vy *= -1;
     }
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(4,77,140,${this.alpha})`;
+      ctx.fillStyle = `rgba(74,143,204,${this.alpha})`;
       ctx.fill();
     }
   }
 
-  function init() {
-    resize();
-    particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
-  }
+  function init() { resize(); particles = Array.from({ length: COUNT }, () => new Particle()); }
 
-  let tick = 0;
   function animate() {
     ctx.clearRect(0, 0, W, H);
-    tick++;
-
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-
-    // Draw connections
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < MAX_DIST) {
-          const opacity = (1 - dist / MAX_DIST) * 0.18;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(4,77,140,${opacity})`;
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
-      }
-    }
-
+    particles.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(animate);
   }
 
-  window.addEventListener('resize', () => { resize(); }, { passive: true });
+  window.addEventListener('resize', () => resize(), { passive: true });
   init();
   animate();
 })();
@@ -813,4 +775,176 @@ if ('IntersectionObserver' in window) {
       });
     }
   }
+})();
+
+/* ============================================================
+   AURORA BG — versión ligera: 3 capas, sin partículas, sin trail
+   ============================================================ */
+(function initAuroraBg() {
+  const canvas = document.getElementById('bgCanvas');
+  if (!canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    canvas.style.display = 'none'; return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+  let scrollRaw = 0, scrollEased = 0;
+  let mx = 0.5, my = 0.5, mxEased = 0.5, myEased = 0.5;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('scroll', () => { scrollRaw = window.scrollY; }, { passive: true });
+  document.addEventListener('mousemove', e => { mx = e.clientX / W; my = e.clientY / H; }, { passive: true });
+
+  /* ── 3 capas de ola, paso 4px (era 2px × 6 capas) ──────── */
+  function drawWave(wi, baseH) {
+    const yBase = H * (0.18 + wi * 0.28);
+    const amp   = H * (0.13 + wi * 0.04);
+    const spd   = 0.36 + wi * 0.20;
+    const freq  = 0.0015 + wi * 0.0006;
+
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 4) {
+      const y = yBase
+        + Math.sin(x * freq + t * spd + wi)    * amp
+        + Math.cos(x * 0.003 + t * 0.26)       * (amp * 0.38)
+        + (myEased - 0.5) * H * 0.055;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+    ctx.fillStyle = `hsla(${baseH + wi * 18},88%,${36 - wi * 4}%,${0.38 - wi * 0.05})`;
+    ctx.fill();
+  }
+
+  /* ── Click ripples (simple, sin sparks) ─────────────────── */
+  const ripples = [];
+  document.addEventListener('click', e => {
+    ripples.push({ x: e.clientX, y: e.clientY, r: 0, alpha: 0.75 });
+  });
+
+  function drawRipples(baseH) {
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.r    += 9; rp.alpha -= 0.025;
+      if (rp.alpha <= 0) { ripples.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `hsla(${baseH},90%,70%,${rp.alpha})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+  }
+
+  /* ── Render loop ─────────────────────────────────────────── */
+  function frame() {
+    t += 0.007;
+    scrollEased += (scrollRaw - scrollEased) * 0.04;
+    mxEased     += (mx        - mxEased)     * 0.06;
+    myEased     += (my        - myEased)     * 0.06;
+
+    const sp    = scrollEased / Math.max(1, document.body.scrollHeight - H);
+    const baseH = 210 + sp * 40;
+
+    ctx.fillStyle = `hsl(${baseH},48%,3.5%)`;
+    ctx.fillRect(0, 0, W, H);
+
+    drawWave(0, baseH);
+    drawWave(1, baseH);
+    drawWave(2, baseH);
+
+    // Cursor glow suave
+    const gx = mxEased * W, gy = myEased * H;
+    const g = ctx.createRadialGradient(gx, gy, 0, gx, gy, W * 0.22);
+    g.addColorStop(0, `hsla(${baseH},85%,65%,0.13)`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    drawRipples(baseH);
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  frame();
+})();
+
+/* ============================================================
+   GSAP SCROLL ANIMATIONS + 3D CARD TILT
+   ============================================================ */
+(function initGSAP() {
+  if (typeof gsap === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // NOTE: .reveal animations are handled by IntersectionObserver (initReveal).
+  // GSAP only handles tilt, magnetic, parallax — no opacity overrides.
+
+  // ── Parallax on bg-orbs ───────────────────────────────────
+  document.querySelectorAll('.bg-orb').forEach(orb => {
+    gsap.to(orb, {
+      y: -(parseFloat(orb.dataset.speed || 10) * 6),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: orb.parentElement,
+        scrub: 2,
+        start: 'top bottom',
+        end: 'bottom top',
+      },
+    });
+  });
+
+  // ── 3D card tilt on mouse ─────────────────────────────────
+  const tiltCards = document.querySelectorAll('.service-card, .case-card, .plan-card');
+  tiltCards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      gsap.to(card, {
+        rotateY: x * 12,
+        rotateX: -y * 12,
+        scale: 1.025,
+        ease: 'power2.out',
+        duration: 0.35,
+        transformPerspective: 900,
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        rotateY: 0,
+        rotateX: 0,
+        scale: 1,
+        ease: 'power3.out',
+        duration: 0.55,
+      });
+    });
+  });
+
+  // ── Magnetic buttons ─────────────────────────────────────
+  document.querySelectorAll('.btn-primary, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width  / 2;
+      const y = e.clientY - r.top  - r.height / 2;
+      gsap.to(btn, { x: x * 0.22, y: y * 0.22, duration: 0.35, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.55, ease: 'elastic.out(1, 0.5)' });
+    });
+  });
+
+  // ── Hero stat items stagger ──────────────────────────────
+  gsap.from('.stat-item', {
+    opacity: 0, y: 20, stagger: 0.1, duration: 0.7,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '.hero-stats', start: 'top 90%', toggleActions: 'play none none none' },
+  });
+
+  ScrollTrigger.refresh();
 })();
