@@ -8,14 +8,14 @@
 
   <!-- Security Headers via Meta -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self';" />
+    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Untitled design.png" />
-  <link rel="apple-touch-icon" href="assets/Untitled design.png" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="apple-touch-icon" href="assets/logo.png" />
 
   <!-- SEO -->
   <title>Innova JM | Diseño Web y Publicidad Digital</title>
@@ -38,6 +38,9 @@
 </head>
 
 <body>
+
+  <!-- ============ FONDO INTERACTIVO ============ -->
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
 
   <!-- ============ CURSOR PERSONALIZADO ============ -->
   <div class="cursor" id="cursor"></div>
@@ -422,7 +425,7 @@
           <strong>¿Cuál plan es el indicado para usted?</strong>
           <span>Escríbanos por WhatsApp y le recomendamos la mejor opción según su negocio.</span>
         </div>
-        <a href="https://wa.me/50686264555" class="btn btn-accent" target="_blank" rel="noopener noreferrer">Escribir
+        <a href="https://wa.me/50672352233" class="btn btn-accent" target="_blank" rel="noopener noreferrer">Escribir
           por WhatsApp</a>
       </div>
 
@@ -448,7 +451,7 @@
             <li>Sincronización completa de leads</li>
             <li>Sección de contacto completa</li>
           </ul>
-          <a href="https://wa.me/50686264555" class="btn btn-ghost btn-full plan-cta" target="_blank"
+          <a href="https://wa.me/50672352233" class="btn btn-ghost btn-full plan-cta" target="_blank"
             rel="noopener noreferrer">Quiero este plan</a>
         </div>
 
@@ -467,7 +470,7 @@
             <li>Formularios avanzados</li>
             <li>Captación de leads</li>
           </ul>
-          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
+          <a href="https://wa.me/50672352233" class="btn btn-accent btn-full plan-cta" target="_blank"
             rel="noopener noreferrer">Quiero este plan</a>
         </div>
 
@@ -485,7 +488,7 @@
             <li>Panel de administración</li>
             <li>Gestión avanzada de pedidos</li>
           </ul>
-          <a href="https://wa.me/50686264555" class="btn btn-ghost btn-full plan-cta" target="_blank"
+          <a href="https://wa.me/50672352233" class="btn btn-ghost btn-full plan-cta" target="_blank"
             rel="noopener noreferrer">Quiero este plan</a>
         </div>
 
@@ -501,7 +504,7 @@
             <li>Funcionalidades avanzadas</li>
             <li>Diseño premium</li>
           </ul>
-          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
+          <a href="https://wa.me/50672352233" class="btn btn-accent btn-full plan-cta" target="_blank"
             rel="noopener noreferrer">Quiero cotizar el Pro Plan</a>
         </div>
 
@@ -513,66 +516,34 @@
       <div class="section-header reveal plans-mkt-header">
         <div class="section-tag">Marketing Digital</div>
         <h2 class="section-title">Publicidad que <span class="gradient-text">genera resultados</span></h2>
-        <p class="section-sub">Nuevos contactos para su negocio, mes a mes.</p>
+        <p class="section-sub">Solo pagás cuando hay resultados reales.</p>
       </div>
 
-      <div class="plans-grid plans-grid--3">
+      <div class="plans-grid plans-grid--1" style="max-width:480px;margin:0 auto;">
 
-        <div class="plan-card reveal" data-delay="0">
-          <div class="plan-name">Basic Ads</div>
+        <div class="plan-card plan-featured reveal" data-delay="0" style="text-align:center;">
+          <div class="plan-badge">Sin costo fijo</div>
+          <div class="plan-name">Gestión por Comisión</div>
           <div class="plan-price">
-            <span class="price-from">Desde</span>
-            <span class="price-num">$149</span><span class="price-period">/mes</span>
+            <span class="price-num">20%</span>
+            <span class="price-period" style="font-size:1rem;"> de comisión</span>
           </div>
-          <div class="plan-focus">Para empezar a recibir mensajes y contactos.</div>
-          <ul class="plan-features">
-            <li>1 campaña activa en plataformas digitales</li>
-            <li>Segmentación local según cliente ideal</li>
-            <li>Enfoque en mensajes o tráfico</li>
-            <li>Optimización básica continua</li>
+          <div class="plan-tagline">Sobre la inversión en pauta publicitaria</div>
+          <div class="plan-focus">Sin mensualidades fijas. Gestionamos sus anuncios y cobramos solo un 20% de lo que usted invierte en pauta. Si invierte más, nosotros trabajamos más.</div>
+          <ul class="plan-features" style="text-align:left;">
+            <li>Campañas en Meta Ads y/o Google Ads</li>
+            <li>Segmentación según su cliente ideal</li>
+            <li>Optimización continua de resultados</li>
+            <li>Reportes semanales de rendimiento</li>
+            <li>Sin contratos largos</li>
           </ul>
-          <a href="https://wa.me/50686264555" class="btn btn-ghost btn-full plan-cta" target="_blank"
-            rel="noopener noreferrer">Quiero este plan</a>
-        </div>
-
-        <div class="plan-card plan-featured reveal" data-delay="150">
-          <div class="plan-badge">Más popular</div>
-          <div class="plan-name">Advanced Ads</div>
-          <div class="plan-price">
-            <span class="price-from">Desde</span>
-            <span class="price-num">$249–299</span><span class="price-period">/mes</span>
-          </div>
-          <div class="plan-focus">Para crecer de forma constante y estructurada.</div>
-          <ul class="plan-features">
-            <li>Hasta 3 campañas activas simultáneamente</li>
-            <li>Múltiples objetivos (contactos, visitas, reconocimiento)</li>
-            <li>Optimización continua basada en resultados</li>
-            <li>Ajustes estratégicos y análisis de audiencia</li>
-          </ul>
-          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
-            rel="noopener noreferrer">Quiero este plan</a>
-        </div>
-
-        <div class="plan-card plan-pro reveal" data-delay="300">
-          <div class="plan-name">Pro Ads</div>
-          <div class="plan-price">
-            <span class="price-num price-custom">A medida</span>
-          </div>
-          <div class="plan-tagline">Estrategia personalizada según sus objetivos.</div>
-          <div class="plan-focus">Para escalar y dominar su mercado.</div>
-          <ul class="plan-features">
-            <li>Campañas en múltiples plataformas digitales</li>
-            <li>Estrategia completa de adquisición de clientes</li>
-            <li>Optimización avanzada y escalado progresivo</li>
-            <li>Análisis profundo de datos y rendimiento</li>
-          </ul>
-          <a href="https://wa.me/50686264555" class="btn btn-accent btn-full plan-cta" target="_blank"
-            rel="noopener noreferrer">Cotizar estrategia</a>
+          <a href="https://wa.me/50672352233" class="btn btn-accent btn-full plan-cta" target="_blank"
+            rel="noopener noreferrer">Consultar disponibilidad</a>
         </div>
 
       </div>
 
-      <p class="plans-note reveal">La inversión en publicidad se ajusta según los objetivos y alcance de cada negocio.</p>
+      <p class="plans-note reveal">La inversión mínima en pauta se define según el negocio y los objetivos. Consultenos para más detalles.</p>
     </div>
   </section>
 
@@ -601,7 +572,7 @@
                 <span>Análisis</span>
                 <span>Desarrollo</span>
               </div>
-              <a href="https://wa.me/50686264555" class="founder-contact" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/50672352233" class="founder-contact" target="_blank" rel="noopener noreferrer"
                 aria-label="WhatsApp Matías">
                 <svg width="16" height="16" viewBox="0 0 22 22" fill="none" aria-hidden="true">
                   <path d="M11 2C6 2 2 6 2 11c0 1.6.4 3.1 1.2 4.4L2 20l4.8-1.2A9 9 0 1 0 11 2z" stroke="currentColor"
@@ -629,7 +600,7 @@
                 <span>UX/UI</span>
                 <span>Estrategia</span>
               </div>
-              <a href="https://wa.me/50686264555" class="founder-contact" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/50672352233" class="founder-contact" target="_blank" rel="noopener noreferrer"
                 aria-label="WhatsApp Julián">
                 <svg width="16" height="16" viewBox="0 0 22 22" fill="none" aria-hidden="true">
                   <path d="M11 2C6 2 2 6 2 11c0 1.6.4 3.1 1.2 4.4L2 20l4.8-1.2A9 9 0 1 0 11 2z" stroke="currentColor"
@@ -715,35 +686,41 @@
     <div class="bg-ring ring-c1" aria-hidden="true"></div>
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-tag">Clientes fundadores</div>
-        <h2 class="section-title">Sea parte de los <span class="gradient-text">primeros</span></h2>
-        <p class="section-sub">Los socios fundadores de Innova JM acceden a condiciones preferenciales de lanzamiento,
-          atención personalizada de alto nivel y el respaldo de un equipo técnico dedicado íntegramente a la excelencia
-          de su proyecto.</p>
+        <div class="section-tag">Casos de Éxito</div>
+        <h2 class="section-title">Proyectos <span class="gradient-text">reales</span></h2>
+        <p class="section-sub">Trabajamos con negocios que quieren crecer. Aquí algunos de los proyectos que hemos desarrollado.</p>
       </div>
 
       <div class="cases-grid">
-        <div class="case-card reveal" data-delay="0">
-          <div class="case-category">Gimnasios · Restaurantes · Tiendas</div>
-          <div class="case-visual case-v1" aria-hidden="true">
+        <div class="case-card reveal featured" data-delay="0" style="grid-column: span 1;">
+          <div class="featured-badge">Primer cliente</div>
+          <div class="case-category">Artes Marciales · Nosara, Costa Rica</div>
+          <div class="case-visual case-v1" aria-hidden="true" style="position:relative;overflow:hidden;">
             <div class="case-mockup">
-              <div class="cm-bar"></div>
-              <div class="cm-hero"></div>
-              <div class="cm-grid">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+              <div class="cm-bar" style="display:flex;align-items:center;gap:6px;padding:0 10px;">
+                <div style="display:flex;gap:4px;"><span style="width:7px;height:7px;border-radius:50%;background:#ff5f57;display:block"></span><span style="width:7px;height:7px;border-radius:50%;background:#febc2e;display:block"></span><span style="width:7px;height:7px;border-radius:50%;background:#28c840;display:block"></span></div>
+                <span style="flex:1;background:rgba(255,255,255,0.08);border-radius:4px;height:14px;font-size:9px;color:rgba(255,255,255,0.5);display:flex;align-items:center;padding:0 8px;">dojangnosara.com</span>
+              </div>
+              <div class="cm-hero" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;padding:12px;">
+                <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <div style="width:60%;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;"></div>
+                <div style="width:40%;height:4px;background:rgba(255,255,255,0.08);border-radius:3px;"></div>
+              </div>
+              <div class="cm-grid" style="grid-template-columns:1fr 1fr;">
+                <div style="background:rgba(255,255,255,0.05);border-radius:4px;"></div>
+                <div style="background:rgba(255,255,255,0.05);border-radius:4px;"></div>
               </div>
             </div>
           </div>
           <div class="case-info">
-            <h3>Presencia profesional en internet</h3>
-            <p>Sitio web profesional que genera contactos directamente a su WhatsApp.</p>
+            <h3>Dojang Nosara</h3>
+            <p>Academia de artes marciales en Nosara. Diseñamos su sitio web profesional para atraer nuevos estudiantes.</p>
             <div class="case-metrics">
               <div class="case-metric">
-                <strong>2 sem</strong>
-                <span>Tiempo de entrega</span>
+                <strong>Web</strong>
+                <span>Profesional</span>
               </div>
               <div class="case-metric">
                 <strong>100%</strong>
@@ -754,12 +731,17 @@
                 <span>Optimizado</span>
               </div>
             </div>
+            <a href="https://www.dojangnosara.com/" target="_blank" rel="noopener noreferrer"
+              style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:0.85rem;color:var(--blue-light);text-decoration:none;border:1px solid rgba(74,143,204,0.3);padding:6px 14px;border-radius:20px;transition:all 0.2s;"
+              onmouseover="this.style.background='rgba(74,143,204,0.1)'" onmouseout="this.style.background='transparent'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Ver sitio web
+            </a>
           </div>
         </div>
 
-        <div class="case-card reveal featured" data-delay="150">
-          <div class="featured-badge">Cliente fundador</div>
-          <div class="case-category">Barberías · Emprendimientos · Servicios</div>
+        <div class="case-card reveal" data-delay="200">
+          <div class="case-category">Su negocio podría estar aquí</div>
           <div class="case-visual case-v2" aria-hidden="true">
             <div class="case-mockup">
               <div class="cm-bar"></div>
@@ -772,56 +754,20 @@
             </div>
           </div>
           <div class="case-info">
-            <h3>Clientes nuevos cada mes</h3>
-            <p>Publicidad dirigida al perfil de cliente ideal de su negocio. Resultados medibles.</p>
+            <h3>¿El próximo caso somos con usted?</h3>
+            <p>Trabajamos con negocios de cualquier industria. Escríbanos y contamos cómo podemos ayudarle.</p>
             <div class="case-metrics">
               <div class="case-metric">
-                <strong>100%</strong>
-                <span>Medible</span>
+                <strong>Rápido</strong>
+                <span>Tiempo de entrega</span>
               </div>
               <div class="case-metric">
-                <strong>Semanal</strong>
-                <span>Reportes</span>
+                <strong>Claro</strong>
+                <span>Sin letra pequeña</span>
               </div>
               <div class="case-metric">
-                <strong>Sin</strong>
-                <span>Contratos largos</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="case-card reveal" data-delay="300">
-          <div class="case-category">Negocios con años · O recién iniciando</div>
-          <div class="case-visual case-v3" aria-hidden="true">
-            <div class="case-mockup">
-              <div class="cm-bar"></div>
-              <div class="cm-hero warm"></div>
-              <div class="cm-grid small">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-          </div>
-          <div class="case-info">
-            <h3>Todo en un solo equipo</h3>
-            <p>Nos adaptamos a la etapa de su negocio. Web, publicidad o ambos.</p>
-            <div class="case-metrics">
-              <div class="case-metric">
-                <strong>Todo</strong>
-                <span>En un paquete</span>
-              </div>
-              <div class="case-metric">
-                <strong>1 solo</strong>
-                <span>Punto de contacto</span>
-              </div>
-              <div class="case-metric">
-                <strong>Sin</strong>
-                <span>Letra pequeña</span>
+                <strong>A su</strong>
+                <span>Medida</span>
               </div>
             </div>
           </div>
@@ -842,8 +788,8 @@
           <h2 class="section-title">¿Listo para <span class="gradient-text">crecer?</span></h2>
           <p>La forma más rápida de empezar es por WhatsApp. Respondemos en minutos.</p>
 
-          <a href="https://wa.me/50686264555" class="contact-wa-hero" target="_blank" rel="noopener noreferrer"
-            aria-label="Contactar por WhatsApp +506 8626 4555">
+          <a href="https://wa.me/50672352233" class="contact-wa-hero" target="_blank" rel="noopener noreferrer"
+            aria-label="Contactar por WhatsApp +506 7235 2233">
             <svg width="28" height="28" viewBox="0 0 22 22" fill="none" aria-hidden="true" style="flex-shrink:0">
               <path d="M11 2C6 2 2 6 2 11c0 1.6.4 3.1 1.2 4.4L2 20l4.8-1.2A9 9 0 1 0 11 2z" stroke="white"
                 stroke-width="1.8" stroke-linejoin="round" />
@@ -852,7 +798,7 @@
             </svg>
             <div class="wa-text-block">
               <span class="wa-main-text">Escribir por WhatsApp</span>
-              <span class="wa-sub-text">+506 8626 4555 · Respuesta en minutos</span>
+              <span class="wa-sub-text">+506 7235 2233 · Respuesta en minutos</span>
             </div>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"
               style="flex-shrink:0;margin-left:auto;opacity:0.7">
@@ -965,25 +911,9 @@
           </a>
           <p>Diseño web y publicidad digital para negocios que quieren crecer. Costa Rica.</p>
           <div class="social-links">
-            <a href="#" aria-label="Instagram Innova JM" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/profile.php?id=61577650653843&locale=es_LA" aria-label="Facebook Innova JM" target="_blank" rel="noopener noreferrer">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2" />
-                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-              </svg>
-            </a>
-            <a href="#" aria-label="LinkedIn Innova JM" rel="noopener noreferrer">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" stroke-width="2" />
-                <path d="M7 10v8M7 7v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <path d="M11 18v-5c0-1.5 1-3 3-3s3 1.5 3 3v5" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" />
-                <path d="M11 10v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-            </a>
-            <a href="#" aria-label="Twitter/X Innova JM" rel="noopener noreferrer">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 4l16 16M4 20L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
           </div>
@@ -1013,7 +943,7 @@
           <h4>Contacto</h4>
           <ul>
             <li><a href="mailto:innovajmz@gmail.com">innovajmz@gmail.com</a></li>
-            <li><a href="https://wa.me/50686264555" rel="noopener noreferrer">+506 8626 4555</a></li>
+            <li><a href="https://wa.me/50672352233" rel="noopener noreferrer">+506 7235 2233</a></li>
             <li><span>Lun–Vie 9:00–18:00</span></li>
           </ul>
         </div>
@@ -1038,6 +968,8 @@
     </svg>
   </button>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 
