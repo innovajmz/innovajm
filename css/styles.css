@@ -104,7 +104,7 @@ input, textarea, select { font-family: inherit; }
   position: fixed;
   width: 10px;
   height: 10px;
-  background: #ffffff;
+  background: #64A8E6;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -118,7 +118,7 @@ input, textarea, select { font-family: inherit; }
   position: fixed;
   width: 32px;
   height: 32px;
-  border: 1.5px solid rgba(255,255,255,0.35);
+  border: 1.5px solid rgba(100,168,230,0.45);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
@@ -910,9 +910,9 @@ input, textarea, select { font-family: inherit; }
 }
 
 .featured-badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 14px;
   padding: 6px 14px;
   background: var(--blue);
   border-radius: 100px;
@@ -1658,12 +1658,6 @@ input, textarea, select { font-family: inherit; }
   background: rgba(37,74,89,0.05);
 }
 
-/* fix: badge fluye encima de la categoría en las case-cards */
-.case-card.featured .featured-badge {
-  position: static;
-  display: inline-block;
-  margin: 16px 16px 0;
-}
 .case-card.featured .case-category {
   margin-top: 8px;
 }
@@ -2461,9 +2455,9 @@ input, textarea, select { font-family: inherit; }
 }
 
 .plan-badge {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 14px;
   padding: 4px 12px;
   background: var(--blue);
   color: #ffffff;
@@ -2479,7 +2473,6 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
   color: var(--text);
   margin-bottom: 12px;
-  padding-right: 80px;
 }
 
 .plan-price {
