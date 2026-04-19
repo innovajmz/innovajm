@@ -905,7 +905,7 @@ input, textarea, select { font-family: inherit; }
 
 .service-card.featured {
   border-color: rgba(4,77,140,0.4);
-  border-top: 3px solid var(--red);
+  border-top: 3px solid var(--blue);
   background: rgba(4,77,140,0.12);
 }
 
@@ -914,13 +914,13 @@ input, textarea, select { font-family: inherit; }
   top: 20px;
   right: 20px;
   padding: 6px 14px;
-  background: var(--red);
+  background: var(--blue);
   border-radius: 100px;
   font-size: 0.72rem;
   font-weight: 700;
   color: white;
   letter-spacing: 0.04em;
-  box-shadow: 0 4px 12px rgba(240,180,41,0.35);
+  box-shadow: 0 4px 12px rgba(4,77,140,0.35);
 }
 
 .card-icon {
@@ -2368,7 +2368,7 @@ input, textarea, select { font-family: inherit; }
    PLANS — Planes y precios
    ============================================================ */
 .plans {
-  padding: 120px 0;
+  padding: 60px 0 0;
   background: transparent;
   position: relative;
   overflow: hidden;
@@ -2450,9 +2450,9 @@ input, textarea, select { font-family: inherit; }
 }
 
 .plan-card.plan-featured {
-  border-color: rgba(240,180,41,0.4);
-  border-top: 3px solid var(--yellow);
-  background: rgba(240,180,41,0.05);
+  border-color: rgba(4,77,140,0.4);
+  border-top: 3px solid var(--blue);
+  background: rgba(4,77,140,0.06);
 }
 
 .plan-card.plan-pro {
@@ -2465,8 +2465,8 @@ input, textarea, select { font-family: inherit; }
   top: 16px;
   right: 16px;
   padding: 4px 12px;
-  background: var(--yellow);
-  color: #07111E;
+  background: var(--blue);
+  color: #ffffff;
   border-radius: 100px;
   font-size: 0.7rem;
   font-weight: 700;
