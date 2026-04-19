@@ -65,11 +65,12 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-body);
-  background: var(--bg);
+  background: #050C18;
   color: var(--text);
   line-height: 1.6;
   cursor: none;
@@ -859,12 +860,7 @@ input, textarea, select { font-family: inherit; }
    ============================================================ */
 .services {
   padding: 120px 0;
-  background: linear-gradient(
-    to bottom,
-    var(--bg)       0%,
-    var(--bg-white) 12%,
-    var(--bg-white) 100%
-  );
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -997,7 +993,7 @@ input, textarea, select { font-family: inherit; }
    ============================================================ */
 .about {
   padding: 120px 0;
-  background: rgba(4,77,140,0.10);
+  background: transparent;
   overflow: hidden;
 }
 
@@ -1494,14 +1490,7 @@ input, textarea, select { font-family: inherit; }
    ============================================================ */
 .process {
   padding: 120px 0;
-  /* Fade in from neighbors so no harsh color cut on mobile */
-  background: linear-gradient(
-    to bottom,
-    var(--bg)        0%,
-    var(--blue-dark) 14%,
-    var(--blue-dark) 86%,
-    var(--bg)        100%
-  );
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -1627,7 +1616,7 @@ input, textarea, select { font-family: inherit; }
    ============================================================ */
 .cases {
   padding: 120px 0;
-  background: var(--bg);
+  background: transparent;
   overflow: hidden;
   position: relative;
 }
@@ -2025,7 +2014,7 @@ input, textarea, select { font-family: inherit; }
    ============================================================ */
 .contact {
   padding: 120px 0;
-  background: var(--bg);
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -2377,12 +2366,7 @@ input, textarea, select { font-family: inherit; }
    ============================================================ */
 .plans {
   padding: 120px 0;
-  background: linear-gradient(
-    to bottom,
-    var(--bg-white) 0%,
-    var(--bg-white) 88%,
-    var(--bg)       100%
-  );
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -3069,4 +3053,124 @@ input, textarea, select { font-family: inherit; }
 @keyframes dotDrift {
   0%   { background-position: 0 0; }
   100% { background-position: 30px 30px; }
+}
+
+/* ============================================================
+   BLOB BACKGROUND CANVAS
+   ============================================================ */
+#bgCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(14px) saturate(140%);
+  opacity: 1;
+}
+
+/* All sections must sit above the canvas */
+.navbar    { z-index: 200; }
+.loader    { z-index: 9999; }
+.hero, .services, .benefits, .plans, .about,
+.process, .cases, .contact, footer,
+.marquee-strip, .cursor, .cursor-follower { position: relative; z-index: 1; }
+
+/* ============================================================
+   SCROLL SNAP — desktop only (proximity = gentle, not forced)
+   ============================================================ */
+@media (min-width: 900px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+  .hero, .services, .benefits, .about,
+  .cases, .contact {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
+
+/* ============================================================
+   GSAP ENTRANCE — initial hidden state
+   ============================================================ */
+.gs-hidden {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* ============================================================
+   3D CARD TILT — smooth reset on leave
+   ============================================================ */
+.service-card,
+.case-card,
+.plan-card {
+  transition: box-shadow 0.4s ease;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+.service-card.tilting,
+.case-card.tilting,
+.plan-card.tilting {
+  transition: box-shadow 0.4s ease; /* no transform transition — JS drives it */
+}
+
+/* ============================================================
+   SERVICES HORIZONTAL SCROLL
+   ============================================================ */
+.services-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 16px;
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(74,143,204,0.3) transparent;
+}
+.services-scroll-wrap::-webkit-scrollbar {
+  height: 4px;
+}
+.services-scroll-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+.services-scroll-wrap::-webkit-scrollbar-thumb {
+  background: rgba(74,143,204,0.35);
+  border-radius: 2px;
+}
+.services-scroll-wrap .services-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 24px;
+  width: max-content;
+}
+.services-scroll-wrap .service-card {
+  min-width: 300px;
+  max-width: 340px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   CASE CARDS AS FULL LINKS
+   ============================================================ */
+a.case-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+a.case-card:hover {
+  border-color: var(--border-h);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============================================================
+   ENHANCED CURSOR
+   ============================================================ */
+.cursor.is-hovering {
+  transform: translate(-50%, -50%) scale(2.4) !important;
+}
+.cursor-follower.is-hovering {
+  transform: translate(-50%, -50%) scale(1.8) !important;
 }
