@@ -3151,6 +3151,22 @@ input, textarea, select { font-family: inherit; }
 }
 
 /* ============================================================
+   CONTACT — solo WhatsApp, sin formulario
+   ============================================================ */
+.contact-solo {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-solo .contact-wa-hero {
+  margin: 32px auto;
+}
+.contact-solo .contact-email-small,
+.contact-solo .contact-schedule {
+  justify-content: center;
+}
+
+/* ============================================================
    CASE CARDS AS FULL LINKS
    ============================================================ */
 a.case-card {
