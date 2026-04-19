@@ -129,16 +129,16 @@ input, textarea, select { font-family: inherit; }
 .cursor-follower.active { opacity: 1; }
 
 .cursor.is-hovering {
-  width: 18px;
-  height: 18px;
-  background: rgba(255,255,255,0.85);
+  width: 14px;
+  height: 14px;
+  background: #64A8E6;
 }
 
 .cursor-follower.is-hovering {
-  width: 48px;
-  height: 48px;
-  opacity: 0.3;
-  border-color: rgba(255,255,255,0.5);
+  width: 40px;
+  height: 40px;
+  opacity: 0.4;
+  border-color: rgba(100,168,230,0.6);
 }
 
 /* ---- LOADER ---- */
@@ -3172,12 +3172,3 @@ a.case-card:hover {
   box-shadow: var(--shadow-lg);
 }
 
-/* ============================================================
-   ENHANCED CURSOR
-   ============================================================ */
-.cursor.is-hovering {
-  transform: translate(-50%, -50%) scale(2.4) !important;
-}
-.cursor-follower.is-hovering {
-  transform: translate(-50%, -50%) scale(1.8) !important;
-}
