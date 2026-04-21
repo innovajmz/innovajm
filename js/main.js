@@ -954,3 +954,16 @@ if ('IntersectionObserver' in window) {
 
   ScrollTrigger.refresh();
 })();
+
+// Cookie consent
+function acceptCookies() {
+  localStorage.setItem('cookie_consent', 'accepted');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+function declineCookies() {
+  localStorage.setItem('cookie_consent', 'declined');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+if (!localStorage.getItem('cookie_consent')) {
+  document.getElementById('cookie-banner').style.display = 'block';
+}

@@ -8,10 +8,28 @@
 
   <!-- Security Headers via Meta -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';" />
+    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://connect.facebook.net; img-src 'self' data: https:; connect-src 'self' https://www.facebook.com https://connect.facebook.net;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1020785677790513');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1020785677790513&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo.png" />
@@ -859,6 +877,11 @@
 
       <div class="footer-bottom">
         <p>© <span id="footerYear"></span> Innova JM. Todos los derechos reservados.</p>
+        <p style="margin-top:8px;font-size:0.75rem;opacity:0.6;">
+          <a href="politica-privacidad.html" style="color:inherit;text-decoration:underline;">Política de Privacidad</a>
+          &nbsp;·&nbsp;
+          <a href="terminos.html" style="color:inherit;text-decoration:underline;">Términos de Uso</a>
+        </p>
         <p class="footer-made">Hecho con <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"
             aria-hidden="true" style="display:inline;vertical-align:middle;color:var(--blue)">
             <path
@@ -875,6 +898,20 @@
         stroke-linejoin="round" />
     </svg>
   </button>
+
+  <!-- Cookie consent banner -->
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:var(--bg-card);border-top:1px solid var(--border);padding:16px 24px;font-family:var(--font-body);">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between;">
+      <p style="color:var(--text-2);font-size:13px;margin:0;flex:1;min-width:260px;">
+        Utilizamos cookies de terceros (Meta Pixel) para medir el rendimiento de nuestros anuncios.
+        Al continuar, acepta su uso. <a href="politica-privacidad.html" style="color:var(--blue);text-decoration:underline;">Más información</a>.
+      </p>
+      <div style="display:flex;gap:10px;flex-shrink:0;">
+        <button onclick="declineCookies()" style="padding:8px 20px;border:1px solid var(--border-h);background:transparent;color:var(--text-2);border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:inherit;">Rechazar</button>
+        <button onclick="acceptCookies()" style="padding:8px 20px;background:var(--blue);color:#fff;border:none;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;">Aceptar</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
