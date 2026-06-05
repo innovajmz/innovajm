@@ -955,15 +955,36 @@ if ('IntersectionObserver' in window) {
   ScrollTrigger.refresh();
 })();
 
-// Cookie consent
+// Cookie consent + Meta Pixel
+function loadMetaPixel() {
+  if (window.fbq) return;
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1020785677790513');
+  fbq('track', 'PageView');
+}
+
 function acceptCookies() {
   localStorage.setItem('cookie_consent', 'accepted');
   document.getElementById('cookie-banner').style.display = 'none';
+  loadMetaPixel();
 }
 function declineCookies() {
   localStorage.setItem('cookie_consent', 'declined');
   document.getElementById('cookie-banner').style.display = 'none';
 }
-if (!localStorage.getItem('cookie_consent')) {
-  document.getElementById('cookie-banner').style.display = 'block';
-}
+
+(function() {
+  var consent = localStorage.getItem('cookie_consent');
+  if (!consent) {
+    document.getElementById('cookie-banner').style.display = 'block';
+  } else if (consent === 'accepted') {
+    loadMetaPixel();
+  }
+})();
