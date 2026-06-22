@@ -906,7 +906,7 @@ if ('IntersectionObserver' in window) {
   });
 
   // ── 3D card tilt on mouse ─────────────────────────────────
-  const tiltCards = document.querySelectorAll('.service-card, .case-card, .plan-card');
+  const tiltCards = document.querySelectorAll('.service-card, .plan-card');
   tiltCards.forEach(card => {
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
@@ -951,6 +951,55 @@ if ('IntersectionObserver' in window) {
     ease: 'power2.out',
     scrollTrigger: { trigger: '.hero-stats', start: 'top 90%', toggleActions: 'play none none none' },
   });
+
+  // ── Parallax cases section ───────────────────────────────
+  (function() {
+    const section = document.querySelector('.cases');
+    const inner   = document.getElementById('parallaxInner');
+    if (!section || !inner) return;
+
+    const rowRight = section.querySelector('.parallax-row--right');
+    const rowLeft  = section.querySelector('.parallax-row--left');
+
+    // Initial 3D tilt that flattens as user scrolls into section
+    gsap.set(inner, { transformPerspective: 1000 });
+    gsap.fromTo(inner,
+      { rotateX: 15, rotateZ: 20, opacity: 0.25, y: -80 },
+      {
+        rotateX: 0, rotateZ: 0, opacity: 1, y: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '35% top',
+          scrub: 1.2,
+        },
+      }
+    );
+
+    // Row translations across the full scroll of the section
+    gsap.to(rowRight, {
+      x: 400,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1,
+      },
+    });
+
+    gsap.to(rowLeft, {
+      x: -400,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1,
+      },
+    });
+  })();
 
   ScrollTrigger.refresh();
 })();

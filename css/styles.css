@@ -1618,12 +1618,154 @@ input, textarea, select { font-family: inherit; }
    CASES — fondo gris claro
    ============================================================ */
 .cases {
-  padding: 120px 0;
+  height: 220vh;
   background: transparent;
-  overflow: hidden;
   position: relative;
 }
 
+.parallax-scene {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 24px;
+}
+
+.parallax-header-block {
+  text-align: center;
+  padding: 48px 24px 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.parallax-inner {
+  width: 100%;
+  will-change: transform;
+}
+
+.parallax-row {
+  display: flex;
+  gap: 20px;
+  padding: 10px 40px;
+}
+
+.parallax-row--right {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.parallax-row--left {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.pcard {
+  width: 440px;
+  height: 300px;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pcard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.pcard:hover img {
+  transform: scale(1.04);
+}
+
+.pcard-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.pcard:hover .pcard-overlay {
+  opacity: 0.72;
+}
+
+.pcard-title {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.pcard:hover .pcard-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pcard--cta {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pcard-cta-inner {
+  text-align: center;
+  color: var(--text-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.3s ease;
+}
+
+.pcard-cta-inner p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.pcard-cta-inner svg {
+  opacity: 0.5;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.pcard--cta:hover .pcard-cta-inner {
+  transform: translateY(-4px);
+}
+
+.pcard--cta:hover .pcard-cta-inner svg {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.pcard--ghost {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+  opacity: 0;
+}
 
 .cases-grid {
   display: grid;
@@ -2765,7 +2907,9 @@ input, textarea, select { font-family: inherit; }
   .hero-badge { font-size: 0.75rem; padding: 6px 14px; }
 
   /* Sections */
-  .services, .about, .process, .cases, .contact { padding: 80px 0; }
+  .services, .about, .process, .contact { padding: 80px 0; }
+  .cases { height: 180vh; }
+  .pcard { width: 320px; height: 220px; }
   .plans { padding: 80px 0; }
   .section-header { margin-bottom: 48px; }
 
@@ -2865,7 +3009,7 @@ input, textarea, select { font-family: inherit; }
 .services > .container,
 .about > .container,
 .process > .container,
-.cases > .container,
+.cases > .parallax-scene,
 .testimonials > .container,
 .contact > .container {
   position: relative;
