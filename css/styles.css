@@ -1647,19 +1647,14 @@ input, textarea, select { font-family: inherit; }
 
 .parallax-row {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   gap: 20px;
-  padding: 10px 40px;
+  padding: 10px 0;
 }
 
 .parallax-row--right {
-  flex-direction: row-reverse;
-  justify-content: flex-end;
   margin-bottom: 20px;
-}
-
-.parallax-row--left {
-  flex-direction: row;
-  justify-content: flex-start;
 }
 
 .pcard {

@@ -964,6 +964,15 @@ if ('IntersectionObserver' in window) {
 
     gsap.set(inner, { transformPerspective: 1000 });
 
+    // Calcular overflow de cada fila para saber cuánto barrer
+    function rowOverflow(row) {
+      return Math.max(0, row.scrollWidth - window.innerWidth);
+    }
+    const overflowRight = rowOverflow(rowRight);
+    const overflowLeft  = rowOverflow(rowLeft);
+    const sweepRight    = overflowRight > 0 ? overflowRight / 2 : 80;
+    const sweepLeft     = overflowLeft  > 0 ? overflowLeft  / 2 : 60;
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -982,9 +991,10 @@ if ('IntersectionObserver' in window) {
       0
     );
 
-    // Phase 1–end: rows slide in opposite directions
-    tl.to(rowRight, { x:  280, ease: 'none', duration: 1 }, 0);
-    tl.to(rowLeft,  { x: -280, ease: 'none', duration: 1 }, 0);
+    // Fila 1: empieza desplazada a la derecha, barre hacia la izquierda → el usuario ve todos los cards
+    tl.fromTo(rowRight, { x:  sweepRight }, { x: -sweepRight, ease: 'none', duration: 1 }, 0);
+    // Fila 2: empieza desplazada a la izquierda, barre hacia la derecha
+    tl.fromTo(rowLeft,  { x: -sweepLeft  }, { x:  sweepLeft,  ease: 'none', duration: 1 }, 0);
   })();
 
   ScrollTrigger.refresh();
