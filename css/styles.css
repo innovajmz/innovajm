@@ -1630,7 +1630,27 @@ input, textarea, select { font-family: inherit; }
   align-items: center;
   justify-content: center;
   padding: 0 0 24px;
-  background: var(--bg);
+  position: relative;
+}
+
+.parallax-scene::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.parallax-scene::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 140px;
+  background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
 }
 
 .parallax-header-block {
@@ -1643,6 +1663,8 @@ input, textarea, select { font-family: inherit; }
 .parallax-inner {
   width: 100%;
   will-change: transform;
+  position: relative;
+  z-index: 1;
 }
 
 .parallax-row {
