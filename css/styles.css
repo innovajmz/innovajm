@@ -1664,7 +1664,6 @@ input, textarea, select { font-family: inherit; }
 
 .pcard {
   width: 440px;
-  height: 300px;
   flex-shrink: 0;
   position: relative;
   border-radius: var(--radius);
@@ -1676,9 +1675,7 @@ input, textarea, select { font-family: inherit; }
 
 .pcard img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
+  height: auto;
   display: block;
   transition: transform 0.5s ease;
 }
@@ -2906,7 +2903,7 @@ input, textarea, select { font-family: inherit; }
 
   /* Sections */
   .services, .about, .process, .contact { padding: 80px 0; }
-  .pcard { width: 300px; height: 200px; }
+  .pcard { width: 280px; }
   .plans { padding: 80px 0; }
   .section-header { margin-bottom: 48px; }
 
