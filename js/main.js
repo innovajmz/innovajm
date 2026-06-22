@@ -954,51 +954,37 @@ if ('IntersectionObserver' in window) {
 
   // ── Parallax cases section ───────────────────────────────
   (function() {
-    const section = document.querySelector('.cases');
-    const inner   = document.getElementById('parallaxInner');
-    if (!section || !inner) return;
+    const section  = document.querySelector('.cases');
+    const scene    = section && section.querySelector('.parallax-scene');
+    const inner    = document.getElementById('parallaxInner');
+    if (!section || !inner || !scene) return;
 
     const rowRight = section.querySelector('.parallax-row--right');
     const rowLeft  = section.querySelector('.parallax-row--left');
 
-    // Initial 3D tilt that flattens as user scrolls into section
     gsap.set(inner, { transformPerspective: 1000 });
-    gsap.fromTo(inner,
-      { rotateX: 15, rotateZ: 20, opacity: 0.25, y: -80 },
-      {
-        rotateX: 0, rotateZ: 0, opacity: 1, y: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '35% top',
-          scrub: 1.2,
-        },
-      }
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=130%',
+        pin: scene,
+        scrub: 1.2,
+        anticipatePin: 1,
+      },
+    });
+
+    // Phase 1 (0–30%): tilt flattens + opacity ramps up
+    tl.fromTo(inner,
+      { rotateX: 12, rotateZ: 10, opacity: 0.3 },
+      { rotateX: 0,  rotateZ: 0,  opacity: 1, ease: 'none', duration: 0.3 },
+      0
     );
 
-    // Row translations across the full scroll of the section
-    gsap.to(rowRight, {
-      x: 400,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1,
-      },
-    });
-
-    gsap.to(rowLeft, {
-      x: -400,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1,
-      },
-    });
+    // Phase 1–end: rows slide in opposite directions
+    tl.to(rowRight, { x:  280, ease: 'none', duration: 1 }, 0);
+    tl.to(rowLeft,  { x: -280, ease: 'none', duration: 1 }, 0);
   })();
 
   ScrollTrigger.refresh();
