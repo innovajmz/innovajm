@@ -329,82 +329,14 @@
         <p class="section-sub">Diseñamos su sitio web y gestionamos sus anuncios para que su negocio genere mas clientes.</p>
       </div>
 
-      <div class="orb-stage reveal">
-        <div class="orb-grid" id="orbGrid">
-
-          <!-- Orb 1 -->
-          <div class="orb-item">
-            <div class="orb-ring" style="--od:5s"><span class="orb-sat"></span></div>
-            <button class="orb-circle" data-idx="0" aria-label="Ver: Mas clientes">
-              <span class="orb-num" aria-hidden="true">01</span>
-              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-                <path d="M15 2C8 2 2 8 2 15c0 2.2.6 4.3 1.7 6L2 28l7.2-1.7A13 13 0 1 0 15 2z" stroke="url(#oi1)" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M10 14c0 4.5 4.5 7 8 7l1.2-2-2-1.3-1.2.6c-1.4 0-2.8-1.4-2.8-2.8l.6-1.2-1.3-2L10 14z" stroke="url(#oi1)" stroke-width="1.8" stroke-linecap="round"/>
-                <defs><linearGradient id="oi1" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#4A8FCC"/><stop offset="1" stop-color="#7FB5E0"/></linearGradient></defs>
-              </svg>
-              <span class="orb-label">Mas clientes</span>
-            </button>
+      <div class="ro-container reveal" id="roContainer">
+        <div class="ro-scene" id="roScene">
+          <div class="ro-center">
+            <div class="ro-center-ping ro-ping-1"></div>
+            <div class="ro-center-ping ro-ping-2"></div>
+            <div class="ro-center-core"></div>
           </div>
-
-          <!-- Orb 2 -->
-          <div class="orb-item">
-            <div class="orb-ring" style="--od:8s"><span class="orb-sat"></span></div>
-            <button class="orb-circle" data-idx="1" aria-label="Ver: Presencia profesional">
-              <span class="orb-num" aria-hidden="true">02</span>
-              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-                <rect x="2" y="5" width="26" height="18" rx="3" stroke="url(#oi2)" stroke-width="2"/>
-                <path d="M10 28h10M15 23v5" stroke="url(#oi2)" stroke-width="2" stroke-linecap="round"/>
-                <path d="M8 15l5 5 9-9" stroke="url(#oi2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <defs><linearGradient id="oi2" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#4A8FCC"/><stop offset="1" stop-color="#7FB5E0"/></linearGradient></defs>
-              </svg>
-              <span class="orb-label">Presencia profesional</span>
-            </button>
-          </div>
-
-          <!-- Orb 3 -->
-          <div class="orb-item">
-            <div class="orb-ring" style="--od:6.5s"><span class="orb-sat"></span></div>
-            <button class="orb-circle" data-idx="2" aria-label="Ver: Publicidad dirigida">
-              <span class="orb-num" aria-hidden="true">03</span>
-              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-                <circle cx="15" cy="15" r="12" stroke="url(#oi3)" stroke-width="2"/>
-                <circle cx="15" cy="15" r="6" stroke="url(#oi3)" stroke-width="2"/>
-                <circle cx="15" cy="15" r="2.5" fill="url(#oi3)"/>
-                <defs><linearGradient id="oi3" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#4A8FCC"/><stop offset="1" stop-color="#7FB5E0"/></linearGradient></defs>
-              </svg>
-              <span class="orb-label">Publicidad dirigida</span>
-            </button>
-          </div>
-
-          <!-- Orb 4 -->
-          <div class="orb-item">
-            <div class="orb-ring" style="--od:4s"><span class="orb-sat"></span></div>
-            <button class="orb-circle" data-idx="3" aria-label="Ver: Sistema automatico">
-              <span class="orb-num" aria-hidden="true">04</span>
-              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-                <path d="M3 24L10 14l6 6 5-7 6 10" stroke="url(#oi4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="25" cy="6" r="3.5" stroke="url(#oi4)" stroke-width="2"/>
-                <defs><linearGradient id="oi4" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#4A8FCC"/><stop offset="1" stop-color="#7FB5E0"/></linearGradient></defs>
-              </svg>
-              <span class="orb-label">Sistema automatico</span>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Overlay de contenido -->
-        <div class="orb-overlay" id="orbOverlay" aria-hidden="true" aria-modal="true">
-          <div class="orb-overlay-body">
-            <button class="orb-close" id="orbClose" aria-label="Cerrar">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
-            <div class="orb-overlay-num" id="oNum"></div>
-            <h3 class="orb-overlay-title" id="oTitle"></h3>
-            <p class="orb-overlay-desc" id="oDesc"></p>
-            <div class="bp-chips orb-overlay-chips" id="oChips"></div>
-          </div>
+          <div class="ro-track"></div>
         </div>
       </div>
     </div>

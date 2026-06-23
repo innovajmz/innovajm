@@ -705,82 +705,140 @@ if ('IntersectionObserver' in window) {
    BENEFITS ORB — click to expand + parallax
    ============================================================ */
 (function initBenefitsOrb() {
-  const orbData = [
+  // ── Radial Orbital Timeline ──────────────────────────────
+  const roScene = document.getElementById('roScene');
+  if (!roScene) return;
+
+  const roData = [
     {
-      num: '01',
-      title: 'Mas clientes contactando su negocio',
-      desc: 'Personas interesadas en lo que usted vende, llegando directamente. Sin intermediarios.',
-      chips: ['Contacto directo', 'Clientes reales', 'Sin intermediarios']
+      id: 0, title: 'Más Clientes', category: 'Crecimiento', energy: 92,
+      desc: 'Personas interesadas en lo que usted vende llegando directamente, sin intermediarios.',
+      chips: ['Contacto directo', 'Clientes reales', 'WhatsApp integrado'],
+      relatedIds: [2, 3],
+      icon: '<path d="M15 2C8 2 2 8 2 15c0 2.2.6 4.3 1.7 6L2 28l7.2-1.7A13 13 0 1 0 15 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 14c0 4.5 4.5 7 8 7l1.2-2-2-1.3-1.2.6c-1.4 0-2.8-1.4-2.8-2.8l.6-1.2-1.3-2L10 14z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
     },
     {
-      num: '02',
-      title: 'Presencia profesional que genera confianza',
-      desc: 'Una pagina web que refleja la calidad de su negocio. Sus clientes confian antes de escribirle.',
-      chips: ['Entrega en 2 semanas', '100% movil', 'SEO incluido']
+      id: 1, title: 'Presencia Digital', category: 'Marca', energy: 88,
+      desc: 'Una página web que refleja la calidad de su negocio y genera confianza antes de que escriban.',
+      chips: ['Diseño a medida', '100% móvil', 'Entrega en 2 semanas'],
+      relatedIds: [0, 4],
+      icon: '<rect x="2" y="5" width="26" height="18" rx="3" stroke="currentColor" stroke-width="2"/><path d="M10 28h10M15 23v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 15l5 5 9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
     },
     {
-      num: '03',
-      title: 'Publicidad dirigida al cliente ideal',
+      id: 2, title: 'Publicidad Dirigida', category: 'Marketing', energy: 85,
       desc: 'Anuncios en Meta y Google que llegan exactamente a quienes quieren lo que usted vende, en su zona.',
-      chips: ['Meta Ads', 'Google Ads', 'Reportes semanales']
+      chips: ['Meta Ads', 'Google Ads', 'Reportes semanales'],
+      relatedIds: [0, 5],
+      icon: '<circle cx="15" cy="15" r="12" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="15" r="6" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="15" r="2.5" fill="currentColor"/>'
     },
     {
-      num: '04',
-      title: 'Un sistema que trabaja por usted',
-      desc: 'Su web y sus anuncios generan resultados todos los dias, incluso fuera del horario laboral.',
-      chips: ['Activo 24/7', '365 dias', 'Sin esfuerzo extra']
+      id: 3, title: 'Sistema 24/7', category: 'Eficiencia', energy: 80,
+      desc: 'Su web y sus anuncios generan resultados todos los días, incluso fuera del horario laboral.',
+      chips: ['Activo 24/7', '365 días', 'Sin esfuerzo extra'],
+      relatedIds: [0, 5],
+      icon: '<path d="M3 24L10 14l6 6 5-7 6 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="6" r="3.5" stroke="currentColor" stroke-width="2"/>'
+    },
+    {
+      id: 4, title: 'SEO & Visibilidad', category: 'Posicionamiento', energy: 78,
+      desc: 'Su negocio aparece cuando alguien busca exactamente lo que usted ofrece en Google.',
+      chips: ['Google Search', 'Palabras clave', 'Posicionamiento local'],
+      relatedIds: [1, 3],
+      icon: '<circle cx="13" cy="13" r="9" stroke="currentColor" stroke-width="2"/><path d="M22 22l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    },
+    {
+      id: 5, title: 'Resultados Claros', category: 'Análisis', energy: 90,
+      desc: 'Reportes mensuales de cuántas visitas, consultas y conversiones genera su inversión.',
+      chips: ['Google Analytics', 'Métricas reales', 'Reportes mensuales'],
+      relatedIds: [2, 3],
+      icon: '<path d="M4 20h16M4 20V8l6 4 5-6 5 6v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
     }
   ];
 
-  const grid    = document.getElementById('orbGrid');
-  const overlay = document.getElementById('orbOverlay');
-  if (!grid || !overlay) return;
+  let rotAngle = 0, autoRotate = true, activeId = null;
+  const RADIUS = window.innerWidth < 600 ? 130 : 210;
 
-  const circles = grid.querySelectorAll('.orb-circle');
-  const items   = grid.querySelectorAll('.orb-item');
+  const nodeEls = roData.map(item => {
+    const el = document.createElement('div');
+    el.className = 'ro-node';
+    el.setAttribute('data-id', item.id);
+    el.innerHTML = `
+      <div class="ro-node-glow"></div>
+      <div class="ro-node-circle">
+        <svg width="18" height="18" viewBox="0 0 30 30" fill="none">${item.icon}</svg>
+      </div>
+      <span class="ro-node-label">${item.title}</span>
+      <div class="ro-card">
+        <div class="ro-card-category">${item.category}</div>
+        <div class="ro-card-title">${item.title}</div>
+        <p class="ro-card-desc">${item.desc}</p>
+        <div class="ro-card-bar">
+          <div class="ro-card-bar-header"><span>Impacto</span><span>${item.energy}%</span></div>
+          <div class="ro-card-bar-track"><div class="ro-card-bar-fill"></div></div>
+        </div>
+        <div class="ro-card-chips">${item.chips.map(c => `<span class="ro-card-chip">${c}</span>`).join('')}</div>
+      </div>`;
+    el.addEventListener('click', e => { e.stopPropagation(); toggleNode(item.id); });
+    roScene.appendChild(el);
+    return { el, item };
+  });
 
-  function openOrb(idx) {
-    const d = orbData[idx];
-    document.getElementById('oNum').textContent   = d.num;
-    document.getElementById('oTitle').textContent = d.title;
-    document.getElementById('oDesc').textContent  = d.desc;
-    document.getElementById('oChips').innerHTML   = d.chips.map(c => `<span>${c}</span>`).join('');
-    items.forEach((it, i) => it.classList.toggle('source-active', i === idx));
-    grid.classList.add('has-active');
-    overlay.classList.add('active');
-    overlay.setAttribute('aria-hidden', 'false');
+  function getPos(i, total, angle) {
+    const a = ((i / total) * 360 + angle) % 360;
+    const rad = (a * Math.PI) / 180;
+    return {
+      x: RADIUS * Math.cos(rad),
+      y: RADIUS * Math.sin(rad),
+      zIdx: Math.round(100 + 50 * Math.cos(rad)),
+      opacity: Math.max(0.35, Math.min(1, 0.35 + 0.65 * ((1 + Math.sin(rad)) / 2)))
+    };
   }
 
-  function closeOrb() {
-    grid.classList.remove('has-active');
-    overlay.classList.remove('active');
-    overlay.setAttribute('aria-hidden', 'true');
-    items.forEach(it => it.classList.remove('source-active'));
+  function updatePositions() {
+    nodeEls.forEach(({ el }, i) => {
+      const { x, y, zIdx, opacity } = getPos(i, roData.length, rotAngle);
+      el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+      el.style.zIndex = el.classList.contains('active') ? 200 : zIdx;
+      if (!el.classList.contains('active')) el.style.opacity = opacity;
+    });
   }
 
-  circles.forEach((c, i) => c.addEventListener('click', () => openOrb(i)));
-  document.getElementById('orbClose').addEventListener('click', closeOrb);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeOrb(); });
-
-  // Parallax microinteraction
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const stage = overlay.closest('.orb-stage');
-    if (stage) {
-      stage.addEventListener('mousemove', e => {
-        if (grid.classList.contains('has-active')) return;
-        const r = stage.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width  - 0.5;
-        const y = (e.clientY - r.top)  / r.height - 0.5;
-        items.forEach((it, i) => {
-          const s = (i === 0 || i === 3) ? 1 : -1;
-          it.style.transform = `translate(${x * 10 * s}px, ${y * 10 * s}px)`;
-        });
-      }, { passive: true });
-      stage.addEventListener('mouseleave', () => {
-        items.forEach(it => { it.style.transform = ''; });
-      });
-    }
+  function toggleNode(id) {
+    if (activeId === id) { deactivateAll(); return; }
+    deactivateAll();
+    activeId = id;
+    autoRotate = false;
+    const item = roData.find(d => d.id === id);
+    nodeEls.forEach(({ el, item: d }) => {
+      if (d.id === id) {
+        el.classList.add('active');
+        el.style.opacity = 1;
+        setTimeout(() => { el.querySelector('.ro-card-bar-fill').style.width = item.energy + '%'; }, 50);
+      } else if (item.relatedIds.includes(d.id)) {
+        el.classList.add('related'); el.style.opacity = 0.85;
+      } else {
+        el.style.opacity = 0.2;
+      }
+    });
+    const idx = roData.findIndex(d => d.id === id);
+    rotAngle = 270 - (idx / roData.length) * 360;
+    updatePositions();
   }
+
+  function deactivateAll() {
+    activeId = null; autoRotate = true;
+    nodeEls.forEach(({ el }) => {
+      el.classList.remove('active', 'related');
+      const fill = el.querySelector('.ro-card-bar-fill');
+      if (fill) fill.style.width = '0%';
+    });
+  }
+
+  roScene.addEventListener('click', () => { if (activeId !== null) deactivateAll(); });
+
+  (function tick() {
+    if (autoRotate) { rotAngle = (rotAngle + 0.18) % 360; updatePositions(); }
+    requestAnimationFrame(tick);
+  })();
 })();
 
 /* ============================================================
