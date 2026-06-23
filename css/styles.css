@@ -859,10 +859,14 @@ input, textarea, select { font-family: inherit; }
 }
 
 /* ============================================================
-   CINEMATIC HERO (ch-*)
+   CINEMATIC HERO (cin-*)
    ============================================================ */
 
-.ch-hero {
+/* All GSAP-animated elements start hidden */
+.gsap-reveal { visibility: hidden; }
+
+/* ─── Container ─────────────────────────────────────────── */
+.cin-hero {
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -870,7 +874,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 /* Particle canvas */
-.ch-hero .hero-canvas {
+.cin-hero .hero-canvas {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -878,403 +882,627 @@ input, textarea, select { font-family: inherit; }
   opacity: 0.7;
 }
 
-/* Film grain */
-.ch-grain {
+/* ─── Film grain ──────────────────────────────────────── */
+.cin-grain {
   position: absolute;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
-  z-index: 20;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200%25' height='200%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: chGrainAnim 0.4s steps(2) infinite;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
 }
 
-@keyframes chGrainAnim {
-  0%   { transform: translate(0, 0); }
-  25%  { transform: translate(-2px, -3px); }
-  50%  { transform: translate(3px, 2px); }
-  75%  { transform: translate(-3px, 3px); }
-  100% { transform: translate(2px, -2px); }
-}
-
-/* Background grid */
-.ch-grid {
+/* ─── Background grid ─────────────────────────────────── */
+.cin-grid {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  pointer-events: none;
   background-image:
     linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 40%, transparent 100%);
 }
 
-/* Background blurred text */
-.ch-bg-text {
+/* ─── Background hero text ────────────────────────────── */
+.cin-text-wrapper {
   position: absolute;
   inset: 0;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 2;
   pointer-events: none;
-  opacity: 0;
+  text-align: center;
+  padding: 0 24px;
 }
 
-.ch-bg-text p {
+.cin-text-track {
   font-family: var(--font-display);
-  font-size: clamp(5rem, 14vw, 12rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: rgba(255,255,255,0.055);
-  line-height: 1;
-  filter: blur(3px);
-  margin: 0;
-  user-select: none;
-}
-
-/* Expanding card — starts hidden (GSAP sets clip-path + opacity after load) */
-.ch-card {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(148deg, #06101C 0%, #0D2035 45%, #152D47 100%);
-  overflow: hidden;
-  will-change: clip-path;
-  z-index: 5;
-  opacity: 0;
-}
-
-/* Label pill */
-.ch-card-label {
-  position: absolute;
-  top: 28px;
-  left: 50%;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 18px;
-  background: rgba(4,77,140,0.22);
-  border: 1px solid rgba(4,77,140,0.5);
-  border-radius: 100px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #5B9FD4;
-  white-space: nowrap;
-  z-index: 10;
-  /* GSAP will set xPercent: -50 for centering */
-}
-
-.ch-label-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #F0B429;
-  animation: pulse 2s infinite;
-  flex-shrink: 0;
-}
-
-/* Browser mockup wrapper */
-.ch-browser-wrap {
-  position: absolute;
-  width: 380px;
-  top: 50%;
-  left: 50%;
-  z-index: 6;
-  /* GSAP sets xPercent: -50, yPercent: -50 for centering */
-}
-
-.ch-browser {
-  background: #0A1929;
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 12px;
-  overflow: visible;
-  box-shadow: 0 32px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(240,180,41,0.07);
-}
-
-.ch-browser-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: #0F1D2E;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px 12px 0 0;
-}
-
-.ch-browser-dots {
-  display: flex;
-  gap: 5px;
-  flex-shrink: 0;
-}
-
-.ch-browser-dots span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-}
-
-.ch-browser-dots span:nth-child(1) { background: #ff5f57; }
-.ch-browser-dots span:nth-child(2) { background: #febc2e; }
-.ch-browser-dots span:nth-child(3) { background: #28c840; }
-
-.ch-browser-url {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  border-radius: 5px;
-  padding: 4px 10px;
-  font-size: 0.71rem;
-  color: rgba(255,255,255,0.38);
-  font-family: monospace;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ch-browser-content {
-  position: relative;
-  height: 240px;
-  overflow: hidden;
-  border-radius: 0 0 12px 12px;
-}
-
-.ch-site-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-}
-
-/* Floating metric badges inside browser */
-.ch-badge {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 13px;
-  background: rgba(255,255,255,0.96);
-  border: 1px solid rgba(0,0,0,0.07);
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
-  font-size: 0.73rem;
-  color: #1A2F45;
-  backdrop-filter: blur(4px);
-}
-
-.ch-badge strong {
-  display: block;
-  font-size: 0.82rem;
-  color: #07111E;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.ch-badge small {
-  color: #5A7A90;
-  font-size: 0.66rem;
-  display: block;
-}
-
-.ch-badge-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(34,197,94,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-style: normal;
-}
-
-.ch-badge-star {
-  background: rgba(240,180,41,0.15);
-  color: #F0B429;
-  font-size: 1rem;
-}
-
-.ch-badge-1 {
-  top: 20px;
-  right: -8px;
-  animation: chBadgeFloat1 5s ease-in-out infinite;
-}
-
-.ch-badge-2 {
-  bottom: -8px;
-  left: -8px;
-  animation: chBadgeFloat2 6s ease-in-out infinite;
-}
-
-@keyframes chBadgeFloat1 {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-7px); }
-}
-
-@keyframes chBadgeFloat2 {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(7px); }
-}
-
-/* Text overlay (left side, visible when card is full-screen) */
-.ch-text-wrap {
-  position: absolute;
-  top: 50%;
-  left: 6%;
-  width: 38%;
-  transform: translateY(-50%);
-  z-index: 8;
-}
-
-.ch-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 18px;
-  background: rgba(4,77,140,0.20);
-  border: 1px solid rgba(4,77,140,0.45);
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: #5B9FD4;
-  margin-bottom: 28px;
-}
-
-.ch-headline {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4.2vw, 3.8rem);
+  font-size: clamp(2.8rem, 7vw, 6rem);
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--text);
-  margin-bottom: 20px;
-}
-
-.ch-hl {
-  display: block;
-}
-
-.ch-hl-accent {
-  background: var(--grad);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.4) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.ch-sub {
-  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
-  color: var(--text-2);
-  line-height: 1.7;
-  margin-bottom: 36px;
-  max-width: 440px;
+.cin-text-days {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0;
+  display: inline-block;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.4) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.ch-cta-row {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-/* Mouse-tracking sheen */
-.ch-sheen {
+/* ─── Final CTA layer ─────────────────────────────────── */
+.cin-cta-wrapper {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  z-index: 9;
-  background: radial-gradient(
-    500px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(255,255,255,0.022),
-    transparent 65%
-  );
-}
-
-/* Scroll hint */
-.ch-scroll-hint {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 30;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  z-index: 15;
-  color: var(--text-3);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
 }
 
-/* Reuse the existing .scroll-line animation */
+.cin-cta-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin: 0 0 16px;
+}
 
-/* ── Tablet/mobile: static layout, no animation ──────── */
-@media (max-width: 1023px) {
-  .ch-hero {
-    height: auto;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
+.cin-cta-desc {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: var(--text-2);
+  max-width: 480px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.cin-cta-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Physical tactile buttons */
+.cin-btn-light,
+.cin-btn-dark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.cin-btn-light {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E8F0FE 100%);
+  color: #0A101D;
+  box-shadow: 0 4px 15px rgba(255,255,255,0.15),
+              0 1px 0 rgba(255,255,255,0.5),
+              inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.cin-btn-dark {
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1),
+              0 4px 15px rgba(0,0,0,0.3);
+}
+
+.cin-btn-light:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,255,255,0.25); }
+.cin-btn-dark:hover  { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+.cin-btn-light:active, .cin-btn-dark:active { transform: translateY(0); }
+
+.cin-btn-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.cin-btn-sub  { font-size: 0.72rem; opacity: 0.6; text-align: left; line-height: 1.2; }
+.cin-btn-main { font-size: 0.95rem; font-weight: 700; text-align: left; }
+
+/* ─── Card outer + main card ─────────────────────────── */
+.cin-card-outer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  perspective: 1500px;
+}
+
+.cin-main-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 85vw;
+  height: 85vh;
+  border-radius: 40px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #162C6D 0%, #0A101D 100%);
+  box-shadow:
+    0 100px 200px rgba(0,0,0,0.8),
+    0 50px 100px rgba(0,0,0,0.6),
+    0 25px 50px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.03),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  transform-style: preserve-3d;
+  will-change: transform, width, height, border-radius;
+}
+
+/* Mouse-tracking sheen */
+.cin-card-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06) 0%, transparent 40%);
+  mix-blend-mode: screen;
+  border-radius: inherit;
+}
+
+/* ─── 3-column card grid ─────────────────────────────── */
+.cin-card-grid {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 40px 24px;
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+}
+
+@media (min-width: 1024px) {
+  .cin-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    padding: 0 48px;
     align-items: center;
-    justify-content: center;
-    padding: 100px 20px 60px;
+  }
+}
+
+/* Column order — mobile: brand top, mockup mid, text bottom */
+.cin-right-col     { order: 1; }
+.cin-mockup-wrapper { order: 2; }
+.cin-left-col      { order: 3; }
+
+@media (min-width: 1024px) {
+  .cin-right-col     { order: 3; }
+  .cin-mockup-wrapper { order: 2; }
+  .cin-left-col      { order: 1; }
+}
+
+/* ─── Right col: Brand name ──────────────────────────── */
+.cin-card-right-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .cin-card-right-text { justify-content: flex-end; padding-right: 40px; }
+}
+
+.cin-brand-name {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  text-align: right;
+  background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Center col: Mockup ─────────────────────────────── */
+.cin-mockup-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.cin-mockup-inner {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Phone-shaped browser frame */
+.cin-phone-frame {
+  width: 280px;
+  height: 580px;
+  background: #111;
+  border-radius: 52px;
+  position: relative;
+  box-shadow:
+    inset 0 0 0 2px #52525B,
+    inset 0 0 0 7px #000,
+    0 40px 80px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(0,0,0,0.9);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Hardware buttons — left side */
+.cin-hw-btn {
+  position: absolute;
+  left: -3px;
+  width: 3px;
+  background: linear-gradient(90deg, #404040, #171717);
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  border-radius: 2px 0 0 2px;
+}
+
+/* Hardware button — right side */
+.cin-hw-right {
+  left: auto;
+  right: -3px;
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(90deg, #171717, #404040);
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+}
+
+/* Screen */
+.cin-screen {
+  position: absolute;
+  inset: 14px;
+  border-radius: 40px;
+  background: #050A14;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cin-screen-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, rgba(255,255,255,0.08) 0%, transparent 45%);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ─── Browser chrome inside screen ───────────────────── */
+.cin-browser-chrome {
+  flex-shrink: 0;
+  background: #0D1117;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.cin-chrome-notch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0 4px;
+}
+
+.cin-notch-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1A1A2E;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.cin-chrome-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 8px;
+}
+
+.cin-chrome-dots {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.cin-chrome-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: block;
+}
+
+.cin-chrome-url {
+  flex: 1;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 3px 8px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── App UI inside screen ───────────────────────────── */
+.cin-app-ui {
+  flex: 1;
+  overflow: hidden;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cin-phone-widget {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.3);
+  border-radius: 16px;
+  padding: 10px;
+}
+
+.cin-app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cin-app-label {
+  display: block;
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cin-app-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+}
+
+.cin-app-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6, #7C3AED);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* Progress ring widget */
+.cin-ring-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.cin-ring-svg {
+  width: 120px;
+  height: 120px;
+  display: block;
+}
+
+.cin-progress-ring {
+  transform: rotate(-90deg);
+  transform-origin: 88px 88px;
+  stroke-dasharray: 402;
+  stroke-dashoffset: 402;
+  stroke-linecap: round;
+}
+
+.cin-ring-center {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cin-counter-val {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cin-ring-label {
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cin-widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cin-widget-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.cin-widget-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cin-icon-blue  { background: rgba(59,130,246,0.15); }
+.cin-icon-green { background: rgba(52,211,153,0.15); }
+
+.cin-widget-bars { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+.cin-bar-1,
+.cin-bar-2 {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+}
+
+.cin-bar-1 { width: 80%; }
+.cin-bar-2 { width: 6rem; }
+
+.cin-home-bar {
+  margin: auto 0 4px;
+  width: 80px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.2);
+  align-self: center;
+}
+
+/* ─── Floating glass badges ──────────────────────────── */
+.cin-float-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(15,22,54,0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.06);
+  border-radius: 20px;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.cin-fbadge-1 { top: -12px; right: -28px; }
+.cin-fbadge-2 { bottom: -12px; left: -28px; }
+
+.cin-fbadge-icon {
+  font-size: 1.1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(34,197,94,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cin-fbadge-icon--indigo { background: rgba(99,102,241,0.2); }
+
+.cin-fbadge-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cin-fbadge-sub {
+  font-size: 0.64rem;
+  color: rgba(255,255,255,0.45);
+  margin: 0;
+}
+
+/* ─── Left col: Card text ────────────────────────────── */
+.cin-card-left-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .cin-card-left-text { padding-left: 40px; }
+}
+
+.cin-card-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cin-card-desc {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.cin-card-brand {
+  color: rgba(255,255,255,0.8);
+}
+
+/* ─── Mobile (≤767px) ────────────────────────────────── */
+@media (max-width: 767px) {
+  .cin-main-card {
+    width: 92vw;
+    height: 92vh;
+    border-radius: 32px;
   }
 
-  .ch-card {
-    position: static !important;
-    clip-path: none !important;
-    opacity: 1 !important;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 36px;
-    width: 100%;
-    overflow: visible;
+  .cin-phone-frame {
+    width: 220px;
+    height: 450px;
+    border-radius: 42px;
   }
 
-  .ch-card-label { display: none; }
+  .cin-fbadge-1 { top: -8px; right: -10px; }
+  .cin-fbadge-2 { bottom: -8px; left: -10px; }
 
-  .ch-browser-wrap {
-    position: static !important;
-    transform: none !important;
-    width: 100%;
-    max-width: 340px;
-  }
+  .cin-brand-name { font-size: clamp(2rem, 10vw, 3rem); }
 
-  .ch-text-wrap {
-    position: static !important;
-    transform: none !important;
-    width: 100%;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  .ch-cta-row {
-    opacity: 1 !important;
-    visibility: visible !important;
-    justify-content: center;
-  }
-
-  .ch-hl {
-    opacity: 1 !important;
-    transform: none !important;
-    visibility: visible !important;
-  }
-
-  .ch-headline { font-size: clamp(1.9rem, 7vw, 2.6rem); }
-
-  .ch-sub { max-width: 100%; }
-
-  .ch-sheen,
-  .ch-bg-text,
-  .ch-grid,
-  .ch-scroll-hint,
-  .ch-badge { display: none; }
-
-  .ch-hero-badge { font-size: 0.76rem; }
+  .cin-card-grid { gap: 24px; padding: 24px 16px; }
 }
 
 /* ============================================================
