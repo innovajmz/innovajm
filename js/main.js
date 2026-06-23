@@ -1074,7 +1074,7 @@ if ('IntersectionObserver' in window) {
         { y: 40, autoAlpha: 0, scale: 0.95 },
         { y: 0, autoAlpha: 1, scale: 1, stagger: 0.15, ease: 'back.out(1.2)', duration: 1.5 }, '-=1.5')
       .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 2, ease: 'power3.inOut' }, '-=1.2')
-      .to('.cin-counter-val', { innerHTML: 20, snap: { innerHTML: 1 }, duration: 2, ease: 'expo.out' }, '-=2.0')
+      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 2, ease: 'expo.out' }, '-=2.0')
       .fromTo('.cin-float-badge',
         { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 },
         { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.5, stagger: 0.2 }, '-=2.0')

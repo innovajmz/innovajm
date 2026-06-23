@@ -111,8 +111,8 @@
 
     <!-- LAYER 1: Background hero taglines -->
     <div class="cin-text-wrapper">
-      <h1 class="cin-text-track gsap-reveal">Creamos páginas web</h1>
-      <h1 class="cin-text-days gsap-reveal">que traen clientes.</h1>
+      <h1 class="cin-text-track gsap-reveal">Tu negocio, lleno</h1>
+      <h1 class="cin-text-days gsap-reveal">de clientes nuevos.</h1>
     </div>
 
     <!-- LAYER 2: Final CTA (z-10, behind card) -->
@@ -149,9 +149,13 @@
         <!-- RESPONSIVE GRID: flex-col mobile / 3-col desktop -->
         <div class="cin-card-grid">
 
-          <!-- 1. TOP mobile / RIGHT desktop: Brand name -->
+          <!-- 1. TOP mobile / RIGHT desktop: Impact claim -->
           <div class="cin-card-right-text gsap-reveal">
-            <h2 class="cin-brand-name">INNOVA<br>JM</h2>
+            <div class="cin-impact-block">
+              <span class="cin-impact-plus">+</span>
+              <span class="cin-impact-word">CLIENTES</span>
+              <span class="cin-impact-sub">para tu negocio</span>
+            </div>
           </div>
 
           <!-- 2. CENTER: iPhone mockup -->
@@ -180,7 +184,7 @@
                     <div class="cin-phone-widget cin-app-header">
                       <div>
                         <span class="cin-app-label">Hoy</span>
-                        <span class="cin-app-title">Proyectos</span>
+                        <span class="cin-app-title">Nuevos clientes</span>
                       </div>
                       <div class="cin-app-avatar">IJ</div>
                     </div>
@@ -193,28 +197,28 @@
                       </svg>
                       <div class="cin-ring-center">
                         <span class="cin-counter-val">0</span>
-                        <span class="cin-ring-label">Proyectos</span>
+                        <span class="cin-ring-label">Leads hoy</span>
                       </div>
                     </div>
 
-                    <!-- Stat widgets -->
+                    <!-- Notification widgets — incoming client messages -->
                     <div class="cin-widgets">
                       <div class="cin-phone-widget cin-widget-depth cin-widget-item">
                         <div class="cin-widget-icon cin-icon-blue" aria-hidden="true">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z"/></svg>
                         </div>
-                        <div class="cin-widget-bars">
-                          <div class="cin-bar-1"></div>
-                          <div class="cin-bar-2"></div>
+                        <div class="cin-widget-notif">
+                          <span class="cin-notif-name">María G.</span>
+                          <span class="cin-notif-msg">¿Cuánto cuesta una web?</span>
                         </div>
                       </div>
                       <div class="cin-phone-widget cin-widget-depth cin-widget-item">
                         <div class="cin-widget-icon cin-icon-green" aria-hidden="true">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z"/></svg>
                         </div>
-                        <div class="cin-widget-bars">
-                          <div class="cin-bar-1"></div>
-                          <div class="cin-bar-2" style="width:6rem;"></div>
+                        <div class="cin-widget-notif">
+                          <span class="cin-notif-name">Carlos V.</span>
+                          <span class="cin-notif-msg">Quiero una cotización</span>
                         </div>
                       </div>
                     </div>
@@ -226,14 +230,14 @@
 
               <!-- Floating glass badges -->
               <div class="cin-float-badge cin-fbadge-1">
-                <div class="cin-fbadge-icon cin-fbadge-icon--blue" aria-hidden="true">🚀</div>
+                <div class="cin-fbadge-icon cin-fbadge-icon--blue" aria-hidden="true">📩</div>
                 <div>
-                  <p class="cin-fbadge-title">Sitio lanzado</p>
-                  <p class="cin-fbadge-sub">En tiempo y forma</p>
+                  <p class="cin-fbadge-title">Nuevo contacto</p>
+                  <p class="cin-fbadge-sub">Acaba de escribirte</p>
                 </div>
               </div>
               <div class="cin-float-badge cin-fbadge-2">
-                <div class="cin-fbadge-icon cin-fbadge-icon--indigo" aria-hidden="true">🤝</div>
+                <div class="cin-fbadge-icon cin-fbadge-icon--indigo" aria-hidden="true">📈</div>
                 <div>
                   <p class="cin-fbadge-title">+40% clientes</p>
                   <p class="cin-fbadge-sub">Mes tras mes</p>
@@ -244,8 +248,8 @@
 
           <!-- 3. BOTTOM mobile / LEFT desktop: Card text -->
           <div class="cin-card-left-text gsap-reveal">
-            <h3 class="cin-card-heading">Presencia digital,<br>resultados reales.</h3>
-            <p class="cin-card-desc"><span class="cin-card-brand">InnovaJM</span> diseña su sitio web y gestiona su publicidad para que su negocio reciba más clientes todos los meses.</p>
+            <h3 class="cin-card-heading">Más clientes.<br>Todos los días.</h3>
+            <p class="cin-card-desc"><span class="cin-card-brand">InnovaJM</span> diseña tu web y maneja tu publicidad digital. Tu teléfono no va a parar de sonar con clientes nuevos.</p>
           </div>
         </div>
       </div>
