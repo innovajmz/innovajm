@@ -103,123 +103,84 @@
   </header>
   <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 
-  <!-- ============ HERO / HOME ============ -->
-  <section class="hero" id="home" aria-label="Inicio">
+  <!-- ============ HERO / HOME — CINEMATIC ============ -->
+  <section class="ch-hero" id="home" aria-label="Inicio">
+    <!-- Particle canvas (position: fixed, behind everything) -->
     <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
-    <div class="hero-grid" aria-hidden="true"></div>
 
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        <span>Costa Rica · Sitios Web & Publicidad Digital</span>
-      </div>
+    <!-- Film grain overlay -->
+    <div class="ch-grain" aria-hidden="true"></div>
 
-      <h1 class="hero-title">
-        <span class="line-reveal">Creamos</span>
-        <span class="line-reveal delay-1 typing-line">
-          <span class="gradient-text" id="typingText"></span>
-        </span>
-        <span class="line-reveal delay-2">para traerle</span>
-        <span class="line-reveal delay-3">clientes.</span>
-      </h1>
+    <!-- Subtle background grid -->
+    <div class="ch-grid" aria-hidden="true"></div>
 
-      <p class="hero-subtitle line-reveal delay-4">
-        Diseñamos su página web y gestionamos sus anuncios para que su negocio reciba mas clientes.
-      </p>
-
-      <div class="hero-actions line-reveal delay-5">
-        <a href="#casos" class="btn btn-primary">
-          <span>Ver Casos de Éxito</span>
-          <div class="btn-glow"></div>
-        </a>
-        <a href="#nosotros" class="btn btn-ghost">
-          <span>Conocer el Equipo</span>
-        </a>
-      </div>
-
-      <div class="hero-stats line-reveal delay-6">
-        <div class="stat-item">
-          <span class="stat-static">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4.5 16.5c-1.5 1.5-2 4-2 4s2.5-.5 4-2l8.5-8.5-2-2-8.5 8.5z" />
-              <path d="M14 4l6 6-1.5 5.5L17 14l-1.5-1.5L14 4z" />
-              <circle cx="15.5" cy="8.5" r="1" fill="currentColor" stroke="none" />
-            </svg>
-          </span>
-          <span class="stat-label">Experiencia empresarial real</span>
-        </div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat-item">
-          <span class="stat-static">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <circle cx="12" cy="12" r="6" />
-              <circle cx="12" cy="12" r="2" />
-              <path d="M22 12h-4M6 12H2M12 6V2M12 22v-4" />
-            </svg>
-          </span>
-          <span class="stat-label">Enfoque total en resultados</span>
-        </div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat-item">
-          <span class="stat-static">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-              <circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none" />
-            </svg>
-          </span>
-          <span class="stat-label">Adaptados a sus necesidades</span>
-        </div>
-      </div>
+    <!-- Stage-1 background text (blurred, behind card) -->
+    <div class="ch-bg-text" id="chBgText" aria-hidden="true">
+      <p>Diseñamos.</p>
+      <p>Conectamos.</p>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="mockup-browser">
-        <div class="browser-bar">
-          <div class="browser-dots">
-            <span></span><span></span><span></span>
+    <!-- Premium expanding card -->
+    <div class="ch-card" id="chCard">
+
+      <!-- Browser mockup (centered → moves right as card expands) -->
+      <div class="ch-browser-wrap" id="chBrowserWrap">
+        <div class="ch-browser">
+          <div class="ch-browser-bar">
+            <div class="ch-browser-dots"><span></span><span></span><span></span></div>
+            <div class="ch-browser-url">su-empresa.com</div>
           </div>
-          <div class="browser-url">innovajm.com/su-empresa</div>
-        </div>
-        <div class="browser-content">
-          <div class="mock-hero-bg"></div>
-          <div class="mock-nav"></div>
-          <div class="mock-title"></div>
-          <div class="mock-title short"></div>
-          <div class="mock-btn"></div>
-          <div class="mock-cards">
-            <div class="mock-card"></div>
-            <div class="mock-card"></div>
-            <div class="mock-card"></div>
+          <div class="ch-browser-content">
+            <img src="assets/websites/dojangNosara.png"
+                 alt="Sitio web cliente InnovaJM"
+                 class="ch-site-img"
+                 loading="eager">
           </div>
         </div>
-      </div>
-      <div class="floating-badge badge-1">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M10 2L12.4 7.5H18L13.8 11.1L15.5 17L10 13.7L4.5 17L6.2 11.1L2 7.5H7.6L10 2Z" fill="#FFD700" />
-        </svg>
-        <div>
-          <strong>4.9/5</strong>
-          <small>Rating clientes</small>
+        <!-- Badges outside browser so overflow:hidden doesn't clip them -->
+        <div class="ch-badge ch-badge-1">
+          <div class="ch-badge-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7L5.5 10.5L12 4" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div><strong>Proyecto entregado</strong><small>eCommerce &middot; 2 semanas</small></div>
+        </div>
+        <div class="ch-badge ch-badge-2">
+          <div class="ch-badge-icon ch-badge-star" aria-hidden="true">★</div>
+          <div><strong>4.9 / 5.0</strong><small>Satisfacción clientes</small></div>
         </div>
       </div>
-      <div class="floating-badge badge-2">
-        <div class="badge-icon-green">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M3 9L7 13L15 5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+
+      <!-- Text overlay — appears when card is full-screen -->
+      <div class="ch-text-wrap" id="chTextWrap">
+        <div class="ch-hero-badge">
+          <span class="badge-dot"></span>
+          Costa Rica &middot; Sitios Web &amp; Publicidad Digital
         </div>
-        <div>
-          <strong>Proyecto entregado</strong>
-          <small>eCommerce — 2 semanas</small>
+        <h1 class="ch-headline">
+          <span class="ch-hl">Creamos sitios web</span>
+          <span class="ch-hl">que atraen clientes</span>
+          <span class="ch-hl ch-hl-accent">de verdad.</span>
+        </h1>
+        <p class="ch-sub">Diseñamos su presencia digital y gestionamos su publicidad para que su negocio crezca sin parar.</p>
+        <div class="ch-cta-row" id="chCtaRow">
+          <a href="#contacto" class="btn btn-primary">
+            <span>Empezar proyecto</span>
+            <div class="btn-glow"></div>
+          </a>
+          <a href="#casos" class="btn btn-ghost">
+            <span>Ver proyectos</span>
+          </a>
         </div>
       </div>
+
+      <!-- Mouse-tracking sheen -->
+      <div class="ch-sheen" id="chSheen" aria-hidden="true"></div>
     </div>
 
-    <div class="scroll-indicator" aria-hidden="true">
+    <!-- Scroll hint (fades out early in animation) -->
+    <div class="ch-scroll-hint" id="chScrollHint" aria-hidden="true">
       <span>Scroll</span>
       <div class="scroll-line"></div>
     </div>

@@ -1003,12 +1003,104 @@ if ('IntersectionObserver' in window) {
     });
   });
 
-  // ── Hero stat items stagger ──────────────────────────────
-  gsap.from('.stat-item', {
-    opacity: 0, y: 20, stagger: 0.1, duration: 0.7,
-    ease: 'power2.out',
-    scrollTrigger: { trigger: '.hero-stats', start: 'top 90%', toggleActions: 'play none none none' },
-  });
+  // ── Cinematic Hero ────────────────────────────────────────
+  (function initCinematicHero() {
+    const hero        = document.getElementById('home');
+    const card        = document.getElementById('chCard');
+    const bgText      = document.getElementById('chBgText');
+    const chGrid      = hero && hero.querySelector('.ch-grid');
+    const browserWrap = document.getElementById('chBrowserWrap');
+    const textWrap    = document.getElementById('chTextWrap');
+    const ctaRow      = document.getElementById('chCtaRow');
+    const scrollHint  = document.getElementById('chScrollHint');
+    const sheen       = document.getElementById('chSheen');
+    const hls         = document.querySelectorAll('.ch-hl');
+
+    if (!card) return;
+
+    // Tablet/mobile: static layout, bail before GSAP setup
+    if (window.innerWidth < 1024) return;
+
+    function getCardClip() {
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+      var cw = Math.min(420, Math.floor(vw * 0.86));
+      var ch = Math.min(570, Math.floor(vh * 0.80));
+      var t  = Math.floor((vh - ch) / 2);
+      var r  = Math.floor((vw - cw) / 2);
+      return 'inset(' + t + 'px ' + r + 'px ' + t + 'px ' + r + 'px round 20px)';
+    }
+
+    // Snap initial state (clip-path + show card)
+    gsap.set(card, { clipPath: getCardClip(), opacity: 1 });
+    gsap.set(browserWrap, { xPercent: -50, yPercent: -50 });
+    gsap.set(bgText,  { opacity: 0, scale: 1.3 });
+    if (chGrid) gsap.set(chGrid, { opacity: 0 });
+    gsap.set(textWrap, { autoAlpha: 0 });
+    gsap.set(ctaRow, { autoAlpha: 0 });
+    gsap.set(hls, { y: 32, autoAlpha: 0 });
+    gsap.set(sheen, { opacity: 0 });
+
+    var tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top top',
+        end: '+=500%',
+        pin: true,
+        scrub: 1.5,
+        anticipatePin: 1,
+      },
+    });
+
+    // Grid fades in
+    if (chGrid) tl.to(chGrid, { opacity: 1, duration: 1.5 }, 0);
+    // Background text scales down from 1.3 → 1 and fades in
+    tl.to(bgText,    { opacity: 1,  scale: 1, duration: 1.7 }, 0.3);
+    // Scroll hint fades out quickly
+    tl.to(scrollHint, { autoAlpha: 0, y: 8, duration: 1.8 }, 0.2);
+
+    // Background text fades out as card begins to expand
+    tl.to(bgText,    { opacity: 0,  scale: 0.88, duration: 2 }, 2.8);
+
+    // Card expands via clip-path (heart of the effect)
+    tl.to(card, { clipPath: 'inset(0px 0px 0px 0px round 0px)', duration: 4.5 }, 1.8);
+
+    // Browser mockup moves to right side as card expands
+    tl.to(browserWrap, { left: '65%', duration: 3.8 }, 2.6);
+
+    // Sheen appears
+    tl.to(sheen,     { opacity: 1,  duration: 1 }, 5.8);
+
+    // Text wrap fades in
+    tl.to(textWrap,  { autoAlpha: 1, duration: 1.5 }, 5.8);
+
+    // Headline lines stagger in
+    hls.forEach(function(hl, i) {
+      tl.to(hl, { y: 0, autoAlpha: 1, duration: 1.2 }, 6.3 + i * 0.5);
+    });
+
+    // CTA row appears last
+    tl.to(ctaRow,    { autoAlpha: 1, duration: 1.5 }, 8.2);
+
+    // Mouse-tracking sheen
+    hero.addEventListener('mousemove', function(e) {
+      var rect = hero.getBoundingClientRect();
+      sheen.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%');
+      sheen.style.setProperty('--my', ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%');
+    }, { passive: true });
+
+    // Recalculate clip on resize before scroll has started
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        if (window.scrollY < 20 && window.innerWidth >= 1024) {
+          gsap.set(card, { clipPath: getCardClip() });
+        }
+        ScrollTrigger.refresh();
+      }, 150);
+    }, { passive: true });
+  })();
 
   // ── Parallax cases section ───────────────────────────────
   (function() {
