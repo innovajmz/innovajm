@@ -106,11 +106,7 @@
   <!-- ============ HERO / HOME — CINEMATIC ============ -->
   <section class="cin-hero" id="home" aria-label="Inicio">
     <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
-
-    <!-- Film grain (mix-blend-mode overlay) -->
     <div class="cin-grain" aria-hidden="true"></div>
-
-    <!-- Background grid -->
     <div class="cin-grid" aria-hidden="true"></div>
 
     <!-- LAYER 1: Background hero taglines -->
@@ -119,24 +115,23 @@
       <h1 class="cin-text-days gsap-reveal">que traen clientes.</h1>
     </div>
 
-    <!-- LAYER 2: Final CTA (appears at end of scroll) -->
+    <!-- LAYER 2: Final CTA (z-10, behind card) -->
     <div class="cin-cta-wrapper gsap-reveal">
       <h2 class="cin-cta-heading">Empezar es simple.</h2>
       <p class="cin-cta-desc">Diseñamos su sitio web y gestionamos su publicidad digital. Todo para que su negocio crezca.</p>
       <div class="cin-cta-btns">
-        <a href="#contacto" class="cin-btn-light" aria-label="Empezar proyecto">
-          <svg class="cin-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        <a href="#contacto" class="cin-btn-light">
+          <svg class="cin-btn-icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14.5l-4-4 1.414-1.414L11 13.672l5.586-5.586L18 9.5l-7 7z"/>
           </svg>
           <div>
             <div class="cin-btn-sub">¿Listo para crecer?</div>
             <div class="cin-btn-main">Empezar proyecto</div>
           </div>
         </a>
-        <a href="#casos" class="cin-btn-dark" aria-label="Ver proyectos">
-          <svg class="cin-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+        <a href="#casos" class="cin-btn-dark">
+          <svg class="cin-btn-icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5C7.264 5 3.258 7.734 1.404 11.734a1 1 0 000 .532C3.258 16.266 7.264 19 12 19s8.742-2.734 10.596-6.734a1 1 0 000-.532C20.742 7.734 16.736 5 12 5zm0 10a4 4 0 110-8 4 4 0 010 8zm0-6a2 2 0 100 4 2 2 0 000-4z"/>
           </svg>
           <div>
             <div class="cin-btn-sub">Nuestro trabajo</div>
@@ -146,59 +141,54 @@
       </div>
     </div>
 
-    <!-- LAYER 3: The physical expanding card -->
+    <!-- LAYER 3: Physical deep card (z-20, above everything) -->
     <div class="cin-card-outer">
       <div class="cin-main-card gsap-reveal" id="cinMainCard">
         <div class="cin-card-sheen" aria-hidden="true"></div>
 
-        <!-- Responsive grid: flex-col mobile / 3-col desktop -->
+        <!-- RESPONSIVE GRID: flex-col mobile / 3-col desktop -->
         <div class="cin-card-grid">
 
-          <!-- Col 3 (right desktop / top mobile): Brand name -->
-          <div class="cin-right-col cin-card-right-text gsap-reveal">
-            <span class="cin-brand-name">INNOVA<br>JM</span>
+          <!-- 1. TOP mobile / RIGHT desktop: Brand name -->
+          <div class="cin-card-right-text gsap-reveal">
+            <h2 class="cin-brand-name">INNOVA<br>JM</h2>
           </div>
 
-          <!-- Col 2 (center both): Browser-phone mockup -->
+          <!-- 2. CENTER: iPhone mockup -->
           <div class="cin-mockup-wrapper">
-            <div class="cin-mockup-inner">
+            <div class="cin-mockup-scale">
 
-              <!-- Phone-shaped browser frame -->
-              <div class="cin-phone-frame" id="cinBrowser">
+              <!-- iPhone bezel (3D tilt target) -->
+              <div class="cin-phone-frame" id="cinMockup">
                 <div class="cin-hw-btn" style="top:120px;height:25px;" aria-hidden="true"></div>
                 <div class="cin-hw-btn" style="top:160px;height:45px;" aria-hidden="true"></div>
                 <div class="cin-hw-btn" style="top:220px;height:45px;" aria-hidden="true"></div>
                 <div class="cin-hw-btn cin-hw-right" style="top:170px;height:70px;" aria-hidden="true"></div>
 
+                <!-- Inner screen -->
                 <div class="cin-screen">
                   <div class="cin-screen-glare" aria-hidden="true"></div>
 
-                  <!-- Browser chrome: dynamic-island notch + URL bar -->
-                  <div class="cin-browser-chrome">
-                    <div class="cin-chrome-notch" aria-hidden="true">
-                      <div class="cin-notch-dot"></div>
-                    </div>
-                    <div class="cin-chrome-row">
-                      <div class="cin-chrome-dots">
-                        <span></span><span></span><span></span>
-                      </div>
-                      <div class="cin-chrome-url">su-empresa.com</div>
-                    </div>
+                  <!-- Dynamic Island -->
+                  <div class="cin-dynamic-island" aria-hidden="true">
+                    <div class="cin-island-dot"></div>
                   </div>
 
-                  <!-- Website stats dashboard UI -->
+                  <!-- App interface -->
                   <div class="cin-app-ui">
+                    <!-- Header widget -->
                     <div class="cin-phone-widget cin-app-header">
                       <div>
-                        <span class="cin-app-label">Tu sitio web</span>
-                        <span class="cin-app-title">Dashboard</span>
+                        <span class="cin-app-label">Hoy</span>
+                        <span class="cin-app-title">Proyectos</span>
                       </div>
                       <div class="cin-app-avatar">IJ</div>
                     </div>
 
+                    <!-- Progress ring + counter -->
                     <div class="cin-phone-widget cin-ring-wrap">
                       <svg class="cin-ring-svg" viewBox="0 0 176 176" aria-hidden="true">
-                        <circle cx="88" cy="88" r="64" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12"/>
+                        <circle cx="88" cy="88" r="64" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="12"/>
                         <circle class="cin-progress-ring" cx="88" cy="88" r="64" fill="none" stroke="#3B82F6" stroke-width="12"/>
                       </svg>
                       <div class="cin-ring-center">
@@ -207,27 +197,24 @@
                       </div>
                     </div>
 
+                    <!-- Stat widgets -->
                     <div class="cin-widgets">
-                      <div class="cin-phone-widget cin-widget-item">
+                      <div class="cin-phone-widget cin-widget-depth cin-widget-item">
                         <div class="cin-widget-icon cin-icon-blue" aria-hidden="true">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                          </svg>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <div class="cin-widget-bars">
                           <div class="cin-bar-1"></div>
                           <div class="cin-bar-2"></div>
                         </div>
                       </div>
-                      <div class="cin-phone-widget cin-widget-item">
+                      <div class="cin-phone-widget cin-widget-depth cin-widget-item">
                         <div class="cin-widget-icon cin-icon-green" aria-hidden="true">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                          </svg>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                         </div>
                         <div class="cin-widget-bars">
                           <div class="cin-bar-1"></div>
-                          <div class="cin-bar-2" style="width:5.5rem;"></div>
+                          <div class="cin-bar-2" style="width:6rem;"></div>
                         </div>
                       </div>
                     </div>
@@ -239,14 +226,14 @@
 
               <!-- Floating glass badges -->
               <div class="cin-float-badge cin-fbadge-1">
-                <div class="cin-fbadge-icon" aria-hidden="true">🚀</div>
+                <div class="cin-fbadge-icon cin-fbadge-icon--blue" aria-hidden="true">🚀</div>
                 <div>
                   <p class="cin-fbadge-title">Sitio lanzado</p>
                   <p class="cin-fbadge-sub">En tiempo y forma</p>
                 </div>
               </div>
               <div class="cin-float-badge cin-fbadge-2">
-                <div class="cin-fbadge-icon cin-fbadge-icon--indigo" aria-hidden="true">📈</div>
+                <div class="cin-fbadge-icon cin-fbadge-icon--indigo" aria-hidden="true">🤝</div>
                 <div>
                   <p class="cin-fbadge-title">+40% clientes</p>
                   <p class="cin-fbadge-sub">Mes tras mes</p>
@@ -255,10 +242,10 @@
             </div>
           </div>
 
-          <!-- Col 1 (left desktop / bottom mobile): Card text -->
-          <div class="cin-left-col cin-card-left-text gsap-reveal">
-            <h3 class="cin-card-heading">Presencia digital que convierte.</h3>
-            <p class="cin-card-desc"><strong class="cin-card-brand">InnovaJM</strong> diseña su sitio web y gestiona su publicidad para que su negocio reciba más clientes reales todos los meses.</p>
+          <!-- 3. BOTTOM mobile / LEFT desktop: Card text -->
+          <div class="cin-card-left-text gsap-reveal">
+            <h3 class="cin-card-heading">Presencia digital,<br>resultados reales.</h3>
+            <p class="cin-card-desc"><span class="cin-card-brand">InnovaJM</span> diseña su sitio web y gestiona su publicidad para que su negocio reciba más clientes todos los meses.</p>
           </div>
         </div>
       </div>

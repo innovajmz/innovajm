@@ -1010,47 +1010,38 @@ if ('IntersectionObserver' in window) {
     var mainCard = document.getElementById('cinMainCard');
     if (!mainCard) return;
 
-    var sheen    = mainCard.querySelector('.cin-card-sheen');
-    var browser  = document.getElementById('cinBrowser');
+    var mockup   = document.getElementById('cinMockup');  // iPhone bezel — 3D tilt target
     var isMobile = window.innerWidth < 768;
-    var cardRect = null;
     var rafId    = null;
-    var mouseX   = 0, mouseY = 0;
 
-    // ── Mouse tracking: sheen + 3D browser tilt ──────────
-    function applyMouse() {
-      rafId = null;
-      if (!cardRect) cardRect = mainCard.getBoundingClientRect();
-      var rx   = mouseX - cardRect.left;
-      var ry   = mouseY - cardRect.top;
-      var pctX = (rx / cardRect.width)  * 100;
-      var pctY = (ry / cardRect.height) * 100;
-      if (sheen) {
-        sheen.style.setProperty('--mouse-x', pctX.toFixed(1) + '%');
-        sheen.style.setProperty('--mouse-y', pctY.toFixed(1) + '%');
-      }
-      if (browser) {
-        var rotY = ((rx / cardRect.width)  - 0.5) * 15;
-        var rotX = ((ry / cardRect.height) - 0.5) * -10;
-        gsap.to(browser, { rotationY: rotY, rotationX: rotX, duration: 0.8, ease: 'power2.out' });
-      }
-    }
+    // ── Mouse tracking (window listener, matching React original) ──
+    window.addEventListener('mousemove', function(e) {
+      if (window.scrollY > window.innerHeight * 2) return;
 
-    hero.addEventListener('mousemove', function(e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      if (!rafId) rafId = requestAnimationFrame(applyMouse);
-    }, { passive: true });
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(function() {
+        var rect   = mainCard.getBoundingClientRect();
+        var mouseX = e.clientX - rect.left;
+        var mouseY = e.clientY - rect.top;
 
-    hero.addEventListener('mouseleave', function() {
-      if (browser) gsap.to(browser, { rotationY: 0, rotationX: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' });
-      cardRect = null;
+        // Sheen: set in px (card-relative) so radial-gradient positions correctly
+        mainCard.style.setProperty('--mouse-x', mouseX + 'px');
+        mainCard.style.setProperty('--mouse-y', mouseY + 'px');
+
+        // 3D tilt: based on window position, ±12° like original
+        if (mockup) {
+          var xVal = (e.clientX / window.innerWidth  - 0.5) * 2;
+          var yVal = (e.clientY / window.innerHeight - 0.5) * 2;
+          gsap.to(mockup, { rotationY: xVal * 12, rotationX: -yVal * 12, ease: 'power3.out', duration: 1.2 });
+        }
+      });
     }, { passive: true });
 
     // ── GSAP initial states ───────────────────────────────
     gsap.set('.cin-text-track', { autoAlpha: 0, y: 60, scale: 0.85, filter: 'blur(20px)', rotationX: -20 });
     gsap.set('.cin-text-days',  { autoAlpha: 1, clipPath: 'inset(0 100% 0 0)' });
-    gsap.set(mainCard, { xPercent: -50, yPercent: -50, y: window.innerHeight + 200 });
+    // Card is centered by flex — just push it below the viewport
+    gsap.set(mainCard, { y: window.innerHeight + 200, autoAlpha: 1 });
     gsap.set(['.cin-card-left-text', '.cin-card-right-text', '.cin-mockup-wrapper', '.cin-float-badge', '.cin-phone-widget'], { autoAlpha: 0 });
     gsap.set('.cin-cta-wrapper', { autoAlpha: 0, scale: 0.8, filter: 'blur(30px)' });
 
@@ -1073,53 +1064,31 @@ if ('IntersectionObserver' in window) {
     });
 
     scrollTl
-      // bg text + grid blur out as card rises
       .to(['.cin-text-wrapper', '.cin-grid'], { scale: 1.15, filter: 'blur(20px)', opacity: 0.2, ease: 'power2.inOut', duration: 2 }, 0)
-      // card rises from below
       .to(mainCard, { y: 0, ease: 'power3.inOut', duration: 2 }, 0)
-      // card expands to full screen
       .to(mainCard, { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 1.5 })
-      // mockup 3D entrance
       .fromTo('.cin-mockup-wrapper',
         { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: 0.6 },
         { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 2.5 }, '-=0.8')
-      // widgets pop in
       .fromTo('.cin-phone-widget',
         { y: 40, autoAlpha: 0, scale: 0.95 },
         { y: 0, autoAlpha: 1, scale: 1, stagger: 0.15, ease: 'back.out(1.2)', duration: 1.5 }, '-=1.5')
-      // progress ring fills
       .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 2, ease: 'power3.inOut' }, '-=1.2')
-      // counter 0 → 20
       .to('.cin-counter-val', { innerHTML: 20, snap: { innerHTML: 1 }, duration: 2, ease: 'expo.out' }, '-=2.0')
-      // floating badges bounce in
       .fromTo('.cin-float-badge',
         { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 },
         { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.5, stagger: 0.2 }, '-=2.0')
-      // card text reveals
       .fromTo('.cin-card-left-text',  { x: -50, autoAlpha: 0 },            { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.5 }, '-=1.5')
       .fromTo('.cin-card-right-text', { x:  50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.5 }, '<')
-      // dwell on full card
       .to({}, { duration: 2.5 })
-      // swap: bg text off, CTA on
-      .set('.cin-text-wrapper',  { autoAlpha: 0 })
-      .set('.cin-cta-wrapper',   { autoAlpha: 1 })
+      .set('.cin-text-wrapper', { autoAlpha: 0 })
+      .set('.cin-cta-wrapper',  { autoAlpha: 1 })
       .to({}, { duration: 1.5 })
-      // card contents exit
       .to(['.cin-mockup-wrapper', '.cin-float-badge', '.cin-card-left-text', '.cin-card-right-text'],
         { scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: 'power3.in', duration: 1.2, stagger: 0.05 })
-      // card pulls back (pullback label — CTA scales in simultaneously)
       .to(mainCard, { width: isMobile ? '92vw' : '85vw', height: isMobile ? '92vh' : '85vh', borderRadius: isMobile ? '32px' : '40px', ease: 'expo.inOut', duration: 1.8 }, 'pullback')
       .to('.cin-cta-wrapper', { scale: 1, filter: 'blur(0px)', ease: 'expo.inOut', duration: 1.8 }, 'pullback')
-      // card exits upward
-      .to(mainCard, { y: -(window.innerHeight + 300), ease: 'power3.in', duration: 1.5 });
-
-    // Invalidate cached cardRect whenever the card's position changes
-    ScrollTrigger.create({
-      trigger: hero,
-      start: 'top top',
-      end: '+=7000',
-      onUpdate: function() { cardRect = null; },
-    });
+      .to(mainCard, { y: -window.innerHeight - 300, ease: 'power3.in', duration: 1.5 });
   })();
 
   // ── Parallax cases section ───────────────────────────────
