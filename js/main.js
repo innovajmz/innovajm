@@ -1125,18 +1125,15 @@ if ('IntersectionObserver' in window) {
     }, { passive: true });
 
     // ── GSAP initial states ───────────────────────────────
-    gsap.set('.cin-text-track', { autoAlpha: 0, y: 60, scale: 0.85, filter: 'blur(20px)', rotationX: -20 });
-    gsap.set('.cin-text-days',  { autoAlpha: 1, clipPath: 'inset(0 100% 0 0)' });
-    // Card is centered by flex — just push it below the viewport
+    // Only cin-text-days remains (cin-text-track was removed from HTML)
+    gsap.set('.cin-text-days', { autoAlpha: 0, y: 40, filter: 'blur(12px)' });
     gsap.set(mainCard, { y: window.innerHeight + 200, autoAlpha: 1 });
     gsap.set(['.cin-card-left-text', '.cin-card-right-text', '.cin-mockup-wrapper', '.cin-float-badge', '.cin-phone-widget'], { autoAlpha: 0 });
     gsap.set('.cin-cta-wrapper', { autoAlpha: 0, scale: 0.8, filter: 'blur(30px)' });
 
     // ── Intro timeline (timed, not scroll-driven) ─────────
-    var introTl = gsap.timeline({ delay: 0.3 });
-    introTl
-      .to('.cin-text-track', { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationX: 0, ease: 'expo.out' })
-      .to('.cin-text-days',  { duration: 1.4, clipPath: 'inset(0 0% 0 0)', ease: 'power4.inOut' }, '-=1.0');
+    var introTl = gsap.timeline({ delay: 0.2 });
+    introTl.to('.cin-text-days', { duration: 1.6, autoAlpha: 1, y: 0, filter: 'blur(0px)', ease: 'expo.out' });
 
     // ── Scroll timeline (7000px pin, scrub) ───────────────
     var scrollTl = gsap.timeline({
