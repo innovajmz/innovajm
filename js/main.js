@@ -1143,7 +1143,7 @@ if ('IntersectionObserver' in window) {
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
-        end: '+=7000',
+        end: '+=4000',
         pin: true,
         scrub: 1,
         anticipatePin: 1,
@@ -1167,10 +1167,10 @@ if ('IntersectionObserver' in window) {
         { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.5, stagger: 0.2 }, '-=2.0')
       .fromTo('.cin-card-left-text',  { x: -50, autoAlpha: 0 },            { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.5 }, '-=1.5')
       .fromTo('.cin-card-right-text', { x:  50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.5 }, '<')
-      .to({}, { duration: 2.5 })
+      .to({}, { duration: 1.0 })
       .set('.cin-text-wrapper', { autoAlpha: 0 })
       .set('.cin-cta-wrapper',  { autoAlpha: 1 })
-      .to({}, { duration: 1.5 })
+      .to({}, { duration: 0.6 })
       .to(['.cin-mockup-wrapper', '.cin-float-badge', '.cin-card-left-text', '.cin-card-right-text'],
         { scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: 'power3.in', duration: 1.2, stagger: 0.05 })
       .to(mainCard, { width: isMobile ? '92vw' : '85vw', height: isMobile ? '92vh' : '85vh', borderRadius: isMobile ? '32px' : '40px', ease: 'expo.inOut', duration: 1.8 }, 'pullback')
