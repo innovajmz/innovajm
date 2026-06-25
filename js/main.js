@@ -227,19 +227,19 @@ function triggerHeroAnimations() {
     H = canvas.height = zone.offsetHeight || 160;
   }
 
-  const COUNT = window.innerWidth < 768 ? 220 : 500;
+  const COUNT = window.innerWidth < 768 ? 500 : 1400;
 
   class Sparkle {
     constructor() { this.init(); }
     init() {
       this.x    = Math.random() * (W || 640);
-      this.y    = Math.random() * (H || 160);
-      this.r    = Math.random() * 0.9 + 0.3;
-      this.a    = Math.random() * 0.7 + 0.1;
+      this.y    = Math.random() * (H || 240);
+      this.r    = Math.random() * 1.1 + 0.3;
+      this.a    = Math.random() * 0.85 + 0.15;
       this.aDir = Math.random() > 0.5 ? 1 : -1;
-      this.aSpd = Math.random() * 0.02 + 0.004;
-      this.vx   = (Math.random() - 0.5) * 0.1;
-      this.vy   = (Math.random() - 0.5) * 0.1;
+      this.aSpd = Math.random() * 0.025 + 0.004;
+      this.vx   = (Math.random() - 0.5) * 0.08;
+      this.vy   = (Math.random() - 0.5) * 0.08;
     }
     tick() {
       this.a += this.aSpd * this.aDir;
@@ -262,27 +262,26 @@ function triggerHeroAnimations() {
     ctx.save();
     ctx.globalCompositeOperation = 'destination-out';
 
-    // Bottom fade: sparkles disappear toward the bottom
-    var bGrad = ctx.createLinearGradient(0, H * 0.15, 0, H);
+    // Bottom fade: starts at 60% so top 60% is fully visible
+    var bGrad = ctx.createLinearGradient(0, H * 0.6, 0, H);
     bGrad.addColorStop(0, 'rgba(0,0,0,0)');
-    bGrad.addColorStop(0.55, 'rgba(0,0,0,0.55)');
-    bGrad.addColorStop(1,    'rgba(0,0,0,1)');
+    bGrad.addColorStop(1, 'rgba(0,0,0,1)');
     ctx.fillStyle = bGrad;
-    ctx.fillRect(0, H * 0.15, W, H);
+    ctx.fillRect(0, H * 0.6, W, H * 0.4);
 
-    // Left fade
-    var lGrad = ctx.createLinearGradient(0, 0, W * 0.22, 0);
+    // Left fade — narrow 15% strip
+    var lGrad = ctx.createLinearGradient(0, 0, W * 0.15, 0);
     lGrad.addColorStop(0, 'rgba(0,0,0,1)');
     lGrad.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = lGrad;
-    ctx.fillRect(0, 0, W * 0.22, H);
+    ctx.fillRect(0, 0, W * 0.15, H);
 
-    // Right fade
-    var rGrad = ctx.createLinearGradient(W * 0.78, 0, W, 0);
+    // Right fade — narrow 15% strip
+    var rGrad = ctx.createLinearGradient(W * 0.85, 0, W, 0);
     rGrad.addColorStop(0, 'rgba(0,0,0,0)');
     rGrad.addColorStop(1, 'rgba(0,0,0,1)');
     ctx.fillStyle = rGrad;
-    ctx.fillRect(W * 0.78, 0, W * 0.22, H);
+    ctx.fillRect(W * 0.85, 0, W * 0.15, H);
 
     ctx.restore();
   }
