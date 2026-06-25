@@ -1143,43 +1143,44 @@ if ('IntersectionObserver' in window) {
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
-        end: '+=3200',
+        end: '+=2400',
         pin: true,
         scrub: 1,
         anticipatePin: 1,
       },
     });
 
+    // All three things happen at once at t=0:
+    // text fades, card slides up, card expands to fullscreen
+    // Content starts appearing at t=0.4 so card is partially there but not empty
     scrollTl
-      // Phase 1: hero text blurs out + card slides up (simultaneous)
-      .to(['.cin-text-wrapper', '.cin-grid'], { scale: 1.15, filter: 'blur(20px)', opacity: 0.2, ease: 'power2.inOut', duration: 2 }, 0)
-      .to(mainCard, { y: 0, ease: 'power3.inOut', duration: 2 }, 0)
-      // Phase 2: card expands — mockup starts at same moment (-=1.0 = starts 1s before expansion ends)
-      .to(mainCard, { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 1.0 })
+      .to(['.cin-text-wrapper', '.cin-grid'], { filter: 'blur(20px)', opacity: 0, ease: 'power2.inOut', duration: 1.2 }, 0)
+      .to(mainCard, { y: 0, ease: 'power3.inOut', duration: 1.5 }, 0)
+      .to(mainCard, { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 1.5 }, 0)
+      // Content fades in as card arrives — no empty state
       .fromTo('.cin-mockup-wrapper',
-        { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: 0.6 },
-        { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 2.0 }, '-=1.0')
+        { y: 180, z: -300, rotationX: 30, rotationY: -15, autoAlpha: 0, scale: 0.75 },
+        { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.4 }, 0.4)
       .fromTo('.cin-phone-widget',
-        { y: 40, autoAlpha: 0, scale: 0.95 },
-        { y: 0, autoAlpha: 1, scale: 1, stagger: 0.15, ease: 'back.out(1.2)', duration: 1.2 }, '-=1.2')
-      .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 1.5, ease: 'power3.inOut' }, '-=1.0')
-      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 1.5, ease: 'expo.out' }, '-=1.5')
+        { y: 30, autoAlpha: 0, scale: 0.95 },
+        { y: 0, autoAlpha: 1, scale: 1, stagger: 0.1, ease: 'back.out(1.2)', duration: 1.0 }, 0.6)
+      .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 1.2, ease: 'power3.inOut' }, 0.6)
+      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 1.2, ease: 'expo.out' }, 0.6)
       .fromTo('.cin-float-badge',
-        { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 },
-        { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.2, stagger: 0.15 }, '-=1.5')
-      .fromTo('.cin-card-left-text',  { x: -50, autoAlpha: 0 },            { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.2 }, '-=1.2')
-      .fromTo('.cin-card-right-text', { x:  50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.2 }, '<')
-      // Brief hold so user can read the card content
-      .to({}, { duration: 0.5 })
+        { y: 60, autoAlpha: 0, scale: 0.8, rotationZ: -8 },
+        { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.0, stagger: 0.12 }, 0.6)
+      .fromTo('.cin-card-left-text',  { x: -40, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.0 }, 0.7)
+      .fromTo('.cin-card-right-text', { x:  40, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'expo.out',   duration: 1.0 }, 0.7)
+      // Brief hold — user reads the card
+      .to({}, { duration: 0.4 })
       .set('.cin-text-wrapper', { autoAlpha: 0 })
       .set('.cin-cta-wrapper',  { autoAlpha: 1 })
-      .to({}, { duration: 0.2 })
-      // Phase 3: content exits, card pulls back, CTA reveals — all overlapping
+      // Content exits + card pulls back + CTA appears — all at once
       .to(['.cin-mockup-wrapper', '.cin-float-badge', '.cin-card-left-text', '.cin-card-right-text'],
-        { scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: 'power3.in', duration: 1.0, stagger: 0.04 })
-      .to(mainCard, { width: isMobile ? '92vw' : '85vw', height: isMobile ? '92vh' : '85vh', borderRadius: isMobile ? '32px' : '40px', ease: 'expo.inOut', duration: 1.5 }, 'pullback')
-      .to('.cin-cta-wrapper', { scale: 1, filter: 'blur(0px)', ease: 'expo.inOut', duration: 1.5 }, 'pullback')
-      .to(mainCard, { y: -window.innerHeight - 300, ease: 'power3.in', duration: 1.2 });
+        { autoAlpha: 0, y: -30, scale: 0.95, ease: 'power2.in', duration: 0.8 })
+      .to(mainCard, { width: isMobile ? '92vw' : '85vw', height: isMobile ? '92vh' : '85vh', borderRadius: isMobile ? '32px' : '40px', ease: 'expo.inOut', duration: 1.4 }, 'pullback')
+      .to('.cin-cta-wrapper', { scale: 1, filter: 'blur(0px)', ease: 'expo.inOut', duration: 1.4 }, 'pullback')
+      .to(mainCard, { y: -window.innerHeight - 300, ease: 'power3.in', duration: 1.0 });
   })();
 
   // ── Parallax cases section ───────────────────────────────
