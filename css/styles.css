@@ -946,9 +946,9 @@ input, textarea, select { font-family: inherit; }
 /* ─── Gradient beam accent — sparkles zone below hero text ── */
 .cin-sparkle-zone {
   position: relative;
-  width: min(40rem, 90vw);
-  height: 160px;
-  margin: 4px auto 0;
+  width: min(56rem, 92vw);
+  height: 200px;
+  margin: 6px auto 0;
   pointer-events: none;
   flex-shrink: 0;
   overflow: hidden;
@@ -975,8 +975,8 @@ input, textarea, select { font-family: inherit; }
   position: absolute;
   inset: 0;
   background: #000000;
-  -webkit-mask-image: radial-gradient(350px 200px at top, transparent 20%, white);
-  mask-image: radial-gradient(350px 200px at top, transparent 20%, white);
+  -webkit-mask-image: radial-gradient(500px 220px at top, transparent 20%, white);
+  mask-image: radial-gradient(500px 220px at top, transparent 20%, white);
   pointer-events: none;
   z-index: 3;
 }
@@ -1080,7 +1080,7 @@ input, textarea, select { font-family: inherit; }
 
 .cin-text-days {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 6rem);
+  font-size: clamp(4rem, 10vw, 10rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.95;
