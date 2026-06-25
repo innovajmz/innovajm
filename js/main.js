@@ -208,105 +208,80 @@ function triggerHeroAnimations() {
 
 /* ============================================================
    SPARKLE ZONE CANVAS — dense sparkles inside cin-sparkle-zone
-   Fade applied via canvas destination-out (no CSS mask-image needed)
+   Fade is handled by .cin-sparkle-mask CSS overlay (Aceternity technique):
+   black div + radial-gradient mask reveals center-top only
    ============================================================ */
 (function initSparkleZone() {
-  const canvas = document.getElementById('sparkleZoneCanvas');
+  var canvas = document.getElementById('sparkleZoneCanvas');
   if (!canvas) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     canvas.style.display = 'none'; return;
   }
 
-  const ctx = canvas.getContext('2d');
-  let W = 0, H = 0, particles = [], rafId;
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, particles = [], rafId;
 
   function resize() {
-    const zone = canvas.parentElement;
-    // offsetWidth/Height are reliable after layout; fall back to CSS min size
+    var zone = canvas.parentElement;
     W = canvas.width  = zone.offsetWidth  || 640;
     H = canvas.height = zone.offsetHeight || 160;
   }
 
-  const COUNT = window.innerWidth < 768 ? 500 : 1400;
+  // tsparticles density=1200 in 400×400px → for 640×160: (640*160)/(400*400)*1200 ≈ 768
+  var COUNT = window.innerWidth < 768 ? 280 : 768;
 
-  class Sparkle {
-    constructor() { this.init(); }
-    init() {
-      this.x    = Math.random() * (W || 640);
-      this.y    = Math.random() * (H || 240);
-      this.r    = Math.random() * 1.1 + 0.3;
-      this.a    = Math.random() * 0.85 + 0.15;
-      this.aDir = Math.random() > 0.5 ? 1 : -1;
-      this.aSpd = Math.random() * 0.025 + 0.004;
-      this.vx   = (Math.random() - 0.5) * 0.08;
-      this.vy   = (Math.random() - 0.5) * 0.08;
-    }
-    tick() {
-      this.a += this.aSpd * this.aDir;
-      if (this.a > 1 || this.a < 0) this.aDir *= -1;
-      this.x += this.vx; this.y += this.vy;
-      if (this.x < 0 || this.x > W) this.vx *= -1;
-      if (this.y < 0 || this.y > H) this.vy *= -1;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,' + Math.max(0, Math.min(1, this.a)).toFixed(3) + ')';
-      ctx.fill();
-    }
-  }
-
-  /* Apply radial fade using destination-out compositing —
-     erases sparkles at edges/bottom, keeping them visible at top-center */
-  function applyFade() {
-    ctx.save();
-    ctx.globalCompositeOperation = 'destination-out';
-
-    // Bottom fade: starts at 60% so top 60% is fully visible
-    var bGrad = ctx.createLinearGradient(0, H * 0.6, 0, H);
-    bGrad.addColorStop(0, 'rgba(0,0,0,0)');
-    bGrad.addColorStop(1, 'rgba(0,0,0,1)');
-    ctx.fillStyle = bGrad;
-    ctx.fillRect(0, H * 0.6, W, H * 0.4);
-
-    // Left fade — narrow 15% strip
-    var lGrad = ctx.createLinearGradient(0, 0, W * 0.15, 0);
-    lGrad.addColorStop(0, 'rgba(0,0,0,1)');
-    lGrad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = lGrad;
-    ctx.fillRect(0, 0, W * 0.15, H);
-
-    // Right fade — narrow 15% strip
-    var rGrad = ctx.createLinearGradient(W * 0.85, 0, W, 0);
-    rGrad.addColorStop(0, 'rgba(0,0,0,0)');
-    rGrad.addColorStop(1, 'rgba(0,0,0,1)');
-    ctx.fillStyle = rGrad;
-    ctx.fillRect(W * 0.85, 0, W * 0.15, H);
-
-    ctx.restore();
-  }
+  function Sparkle() { this.init(); }
+  Sparkle.prototype.init = function() {
+    this.x    = Math.random() * (W || 640);
+    this.y    = Math.random() * (H || 160);
+    this.r    = Math.random() * 0.6 + 0.4;   // 0.4–1.0px radius (minSize 0.4, maxSize 1)
+    this.a    = Math.random();                 // opacity 0.1–1.0 random start
+    this.aDir = Math.random() > 0.5 ? 1 : -1;
+    this.aSpd = (Math.random() * 4 + 1) * 0.006; // speed≈4 in tsparticles → ~0.006-0.03/frame
+    this.vx   = (Math.random() - 0.5) * 0.6; // speed min:0.1 max:1 → avg ~0.3
+    this.vy   = (Math.random() - 0.5) * 0.6;
+  };
+  Sparkle.prototype.tick = function() {
+    this.a += this.aSpd * this.aDir;
+    if (this.a > 1) { this.a = 1; this.aDir = -1; }
+    if (this.a < 0.1) { this.a = 0.1; this.aDir = 1; }
+    this.x += this.vx; this.y += this.vy;
+    // outModes: "out" — wrap around like tsparticles
+    if (this.x < -2) this.x = W + 2;
+    if (this.x > W + 2) this.x = -2;
+    if (this.y < -2) this.y = H + 2;
+    if (this.y > H + 2) this.y = -2;
+  };
+  Sparkle.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,' + this.a.toFixed(3) + ')';
+    ctx.fill();
+  };
 
   function frame() {
     ctx.clearRect(0, 0, W, H);
-    particles.forEach(function(p) { p.tick(); p.draw(); });
-    applyFade();
+    for (var i = 0; i < particles.length; i++) {
+      particles[i].tick();
+      particles[i].draw();
+    }
     rafId = requestAnimationFrame(frame);
   }
 
   function start() {
     if (rafId) cancelAnimationFrame(rafId);
     resize();
-    if (W === 0) { setTimeout(start, 50); return; } // retry if zone not laid out yet
-    particles = Array.from({ length: COUNT }, function() { return new Sparkle(); });
+    if (W === 0) { setTimeout(start, 50); return; }
+    particles = [];
+    for (var i = 0; i < COUNT; i++) particles.push(new Sparkle());
     frame();
   }
 
   window.addEventListener('resize', function() {
     resize();
-    particles.forEach(function(p) { p.init(); });
+    for (var i = 0; i < particles.length; i++) particles[i].init();
   }, { passive: true });
 
-  // Double rAF after load ensures layout is computed before reading offsetWidth
   window.addEventListener('load', function() {
     requestAnimationFrame(function() { requestAnimationFrame(start); });
   }, { once: true });
