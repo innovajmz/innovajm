@@ -1150,26 +1150,27 @@ if ('IntersectionObserver' in window) {
     });
 
     scrollTl
-      // Phase 1 (0→2): hero fades + card slides up
-      .to(['.cin-text-wrapper', '.cin-grid'], { scale: 1.15, filter: 'blur(20px)', opacity: 0.2, ease: 'power2.inOut', duration: 2 }, 0)
-      .to(mainCard, { y: 0, ease: 'power3.inOut', duration: 2 }, 0)
-      // Phase 2 (2→3.5): card expands to full screen
-      .to(mainCard, { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 1.5 })
-      // Phase 3: ALL content starts at t=2.0 (during expansion) so card is never empty when full-screen
+      // Phase 1 (0→1.5): hero fades + card slides up
+      .to(['.cin-text-wrapper', '.cin-grid'], { scale: 1.15, filter: 'blur(20px)', opacity: 0.2, ease: 'power2.inOut', duration: 1.5 }, 0)
+      .to(mainCard, { y: 0, ease: 'power3.inOut', duration: 1.5 }, 0)
+      // Phase 2 (1.5→2.3): card expands to full screen
+      .to(mainCard, { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 0.8 })
+      // All content starts at t=0 alongside the card slide — expo.out means content is ~90% visible
+      // by the time the card enters the viewport, so the card is never empty
       .fromTo('.cin-mockup-wrapper',
         { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: 0.6 },
-        { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.8 }, '-=1.5')
+        { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 2.0 }, 0)
       .fromTo('.cin-phone-widget',
         { y: 40, autoAlpha: 0, scale: 0.95 },
-        { y: 0, autoAlpha: 1, scale: 1, stagger: 0.1, ease: 'back.out(1.2)', duration: 1.3 }, '<')
-      .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 1.5, ease: 'power3.inOut' }, '<')
-      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 1.5, ease: 'expo.out' }, '<')
+        { y: 0, autoAlpha: 1, scale: 1, stagger: 0.1, ease: 'back.out(1.2)', duration: 1.8 }, 0)
+      .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 2.0, ease: 'power3.inOut' }, 0)
+      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 2.0, ease: 'expo.out' }, 0)
       .fromTo('.cin-float-badge',
         { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 },
-        { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.3, stagger: 0.15 }, '<')
-      .fromTo('.cin-card-left-text',  { x: -50, autoAlpha: 0 },            { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.3 }, '<')
-      .fromTo('.cin-card-right-text', { x:  50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.3 }, '<')
-      // Short hold with content visible
+        { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.8, stagger: 0.12 }, 0)
+      .fromTo('.cin-card-left-text',  { x: -50, autoAlpha: 0 },            { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.8 }, 0)
+      .fromTo('.cin-card-right-text', { x:  50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.8 }, 0)
+      // Hold content visible briefly before exiting
       .to({}, { duration: 0.3 })
       .set('.cin-text-wrapper', { autoAlpha: 0 })
       .set('.cin-cta-wrapper',  { autoAlpha: 1 })
