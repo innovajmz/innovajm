@@ -1125,59 +1125,57 @@ if ('IntersectionObserver' in window) {
     }, { passive: true });
 
     // ── GSAP initial states ───────────────────────────────
-    // clipPath hides text without breaking -webkit-background-clip:text (filter/autoAlpha would)
-    gsap.set('.cin-text-days', { clipPath: 'inset(0 100% 0 0)' });
+    gsap.set('.cin-text-track', { autoAlpha: 0, y: 60, scale: 0.85, filter: 'blur(20px)', rotationX: -20 });
+    gsap.set('.cin-text-days',  { autoAlpha: 1, clipPath: 'inset(0 100% 0 0)' });
+    // Card is centered by flex — just push it below the viewport
     gsap.set(mainCard, { y: window.innerHeight + 200, autoAlpha: 1 });
     gsap.set(['.cin-card-left-text', '.cin-card-right-text', '.cin-mockup-wrapper', '.cin-float-badge', '.cin-phone-widget'], { autoAlpha: 0 });
     gsap.set('.cin-cta-wrapper', { autoAlpha: 0, scale: 0.8, filter: 'blur(30px)' });
 
     // ── Intro timeline (timed, not scroll-driven) ─────────
     var introTl = gsap.timeline({ delay: 0.3 });
-    introTl.to('.cin-text-days', { duration: 1.6, clipPath: 'inset(0 0% 0 0)', ease: 'power4.inOut' });
+    introTl
+      .to('.cin-text-track', { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationX: 0, ease: 'expo.out' })
+      .to('.cin-text-days',  { duration: 1.4, clipPath: 'inset(0 0% 0 0)', ease: 'power4.inOut' }, '-=1.0');
 
     // ── Scroll timeline (7000px pin, scrub) ───────────────
     var scrollTl = gsap.timeline({
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
-        end: '+=2400',
+        end: '+=4000',
         pin: true,
         scrub: 1,
         anticipatePin: 1,
       },
     });
 
-    // All three things happen at once at t=0:
-    // text fades, card slides up, card expands to fullscreen
-    // Content starts appearing at t=0.4 so card is partially there but not empty
     scrollTl
-      .to(['.cin-text-wrapper', '.cin-grid'], { filter: 'blur(20px)', opacity: 0, ease: 'power2.inOut', duration: 1.2 }, 0)
-      .to(mainCard, { y: 0, ease: 'power3.inOut', duration: 1.5 }, 0)
-      .to(mainCard, { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 1.5 }, 0)
-      // Content fades in as card arrives — no empty state
+      .to(['.cin-text-wrapper', '.cin-grid'], { scale: 1.15, filter: 'blur(20px)', opacity: 0.2, ease: 'power2.inOut', duration: 2 }, 0)
+      .to(mainCard, { y: 0, ease: 'power3.inOut', duration: 2 }, 0)
+      .to(mainCard, { width: '100%', height: '100%', borderRadius: '0px', ease: 'power3.inOut', duration: 1.5 })
       .fromTo('.cin-mockup-wrapper',
-        { y: 180, z: -300, rotationX: 30, rotationY: -15, autoAlpha: 0, scale: 0.75 },
-        { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.4 }, 0.4)
+        { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: 0.6 },
+        { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 2.5 }, '-=0.8')
       .fromTo('.cin-phone-widget',
-        { y: 30, autoAlpha: 0, scale: 0.95 },
-        { y: 0, autoAlpha: 1, scale: 1, stagger: 0.1, ease: 'back.out(1.2)', duration: 1.0 }, 0.6)
-      .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 1.2, ease: 'power3.inOut' }, 0.6)
-      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 1.2, ease: 'expo.out' }, 0.6)
+        { y: 40, autoAlpha: 0, scale: 0.95 },
+        { y: 0, autoAlpha: 1, scale: 1, stagger: 0.15, ease: 'back.out(1.2)', duration: 1.5 }, '-=1.5')
+      .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 2, ease: 'power3.inOut' }, '-=1.2')
+      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 2, ease: 'expo.out' }, '-=2.0')
       .fromTo('.cin-float-badge',
-        { y: 60, autoAlpha: 0, scale: 0.8, rotationZ: -8 },
-        { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.0, stagger: 0.12 }, 0.6)
-      .fromTo('.cin-card-left-text',  { x: -40, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.0 }, 0.7)
-      .fromTo('.cin-card-right-text', { x:  40, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'expo.out',   duration: 1.0 }, 0.7)
-      // Brief hold — user reads the card
-      .to({}, { duration: 0.4 })
+        { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 },
+        { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.5, stagger: 0.2 }, '-=2.0')
+      .fromTo('.cin-card-left-text',  { x: -50, autoAlpha: 0 },            { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.5 }, '-=1.5')
+      .fromTo('.cin-card-right-text', { x:  50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.5 }, '<')
+      .to({}, { duration: 1.0 })
       .set('.cin-text-wrapper', { autoAlpha: 0 })
       .set('.cin-cta-wrapper',  { autoAlpha: 1 })
-      // Content exits + card pulls back + CTA appears — all at once
+      .to({}, { duration: 0.6 })
       .to(['.cin-mockup-wrapper', '.cin-float-badge', '.cin-card-left-text', '.cin-card-right-text'],
-        { autoAlpha: 0, y: -30, scale: 0.95, ease: 'power2.in', duration: 0.8 })
-      .to(mainCard, { width: isMobile ? '92vw' : '85vw', height: isMobile ? '92vh' : '85vh', borderRadius: isMobile ? '32px' : '40px', ease: 'expo.inOut', duration: 1.4 }, 'pullback')
-      .to('.cin-cta-wrapper', { scale: 1, filter: 'blur(0px)', ease: 'expo.inOut', duration: 1.4 }, 'pullback')
-      .to(mainCard, { y: -window.innerHeight - 300, ease: 'power3.in', duration: 1.0 });
+        { scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: 'power3.in', duration: 1.2, stagger: 0.05 })
+      .to(mainCard, { width: isMobile ? '92vw' : '85vw', height: isMobile ? '92vh' : '85vh', borderRadius: isMobile ? '32px' : '40px', ease: 'expo.inOut', duration: 1.8 }, 'pullback')
+      .to('.cin-cta-wrapper', { scale: 1, filter: 'blur(0px)', ease: 'expo.inOut', duration: 1.8 }, 'pullback')
+      .to(mainCard, { y: -window.innerHeight - 300, ease: 'power3.in', duration: 1.5 });
   })();
 
   // ── Parallax cases section ───────────────────────────────
