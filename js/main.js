@@ -1125,10 +1125,15 @@ if ('IntersectionObserver' in window) {
     }, { passive: true });
 
     // ── GSAP initial states ───────────────────────────────
-    // cin-text-days is visible from CSS — no GSAP hide (filter breaks -webkit-background-clip:text)
+    // clipPath hides text without breaking -webkit-background-clip:text (filter/autoAlpha would)
+    gsap.set('.cin-text-days', { clipPath: 'inset(0 100% 0 0)' });
     gsap.set(mainCard, { y: window.innerHeight + 200, autoAlpha: 1 });
     gsap.set(['.cin-card-left-text', '.cin-card-right-text', '.cin-mockup-wrapper', '.cin-float-badge', '.cin-phone-widget'], { autoAlpha: 0 });
     gsap.set('.cin-cta-wrapper', { autoAlpha: 0, scale: 0.8, filter: 'blur(30px)' });
+
+    // ── Intro timeline (timed, not scroll-driven) ─────────
+    var introTl = gsap.timeline({ delay: 0.3 });
+    introTl.to('.cin-text-days', { duration: 1.6, clipPath: 'inset(0 0% 0 0)', ease: 'power4.inOut' });
 
     // ── Scroll timeline (7000px pin, scrub) ───────────────
     var scrollTl = gsap.timeline({
