@@ -953,6 +953,71 @@ input, textarea, select { font-family: inherit; }
   will-change: transform;
 }
 
+/* ─── Gradient beam accent — sparkles zone below hero text ── */
+.cin-sparkle-zone {
+  position: relative;
+  width: min(44rem, 90vw);
+  height: 160px;
+  margin: 12px auto 0;
+  pointer-events: none;
+  flex-shrink: 0;
+  overflow: hidden;
+  animation: cin-zone-in 1.4s 0.4s ease both;
+}
+
+@keyframes cin-zone-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Canvas: dense sparkles, fade handled via JS destination-out */
+.cin-sparkle-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Gradient beams sit above the canvas */
+.cin-beam {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* Wide blurred beam — primary blue */
+.cin-beam--b1 {
+  width: 75%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3B82F6 40%, #3B82F6 60%, transparent);
+  filter: blur(3px);
+}
+
+/* Sharp 1px beam — primary blue */
+.cin-beam--b2 {
+  width: 75%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #3B82F6 40%, #3B82F6 60%, transparent);
+}
+
+/* Wide blurred beam — sky accent */
+.cin-beam--b3 {
+  width: 25%;
+  height: 5px;
+  background: linear-gradient(90deg, transparent, #60A5FA 30%, #60A5FA 70%, transparent);
+  filter: blur(5px);
+}
+
+/* Sharp 1px beam — sky accent */
+.cin-beam--b4 {
+  width: 25%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #60A5FA 30%, #60A5FA 70%, transparent);
+}
+
 .cin-text-track {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 6rem);
@@ -4435,5 +4500,99 @@ a.case-card:hover {
   border-color: var(--border-h);
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
+}
+
+/* ============================================================
+   RESPONSIVE — CINEMATIC HERO (cin-*)
+   ============================================================ */
+
+/* ── ≤ 767px: Mobile ──────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Remove the "+CLIENTES" impact block — reduces stacked height */
+  .cin-card-right-text { display: none; }
+
+  /* Two-item centered stack */
+  .cin-card-grid { gap: 12px; padding: 20px 16px; justify-content: center; }
+
+  /* Constrain wrapper to the 0.65 scaled visual height */
+  .cin-mockup-wrapper { height: 340px; }
+
+  /* CTA */
+  .cin-cta-desc { font-size: 0.92rem; margin-bottom: 28px; }
+  .cin-cta-btns { gap: 14px; }
+}
+
+/* ── ≤ 480px: Small mobile ────────────────────────────────── */
+@media (max-width: 480px) {
+  .cin-mockup-scale { transform: scale(0.52); }
+  .cin-mockup-wrapper { height: 255px; }
+  .cin-card-grid { gap: 8px; padding: 16px; }
+  .cin-card-heading { font-size: 1.25rem; margin-bottom: 6px; }
+  .cin-cta-heading { font-size: clamp(1.7rem, 6vw, 2.4rem); }
+  .cin-cta-desc { font-size: 0.88rem; margin-bottom: 20px; }
+}
+
+/* ── ≤ 380px: Tiny ────────────────────────────────────────── */
+@media (max-width: 380px) {
+  .cin-mockup-scale { transform: scale(0.43); }
+  .cin-mockup-wrapper { height: 210px; }
+  .cin-card-grid { padding: 12px; gap: 6px; }
+  .cin-card-heading { font-size: 1rem; line-height: 1.2; margin-bottom: 0; }
+  .cin-cta-heading { font-size: 1.5rem; }
+}
+
+/* ============================================================
+   RESPONSIVE — PROYECTOS (parallax / cases)
+   ============================================================ */
+
+@media (max-width: 767px) {
+  /* Let section grow beyond fixed 100vh on mobile */
+  .parallax-scene { height: auto; min-height: 80vh; padding-bottom: 40px; }
+  /* Shorter fades so card rows get more visible vertical space */
+  .parallax-scene::before,
+  .parallax-scene::after  { height: 80px; }
+  .parallax-header-block  { padding: 48px 20px 20px; }
+  .parallax-row           { gap: 12px; }
+  .pcard                  { width: 220px; }
+}
+
+@media (max-width: 480px) {
+  .parallax-scene { min-height: 65vh; }
+  .pcard          { width: 180px; }
+}
+
+/* ============================================================
+   RESPONSIVE — RESULTADOS CONCRETOS (orbital)
+   ============================================================ */
+
+/* Tablet — intermediate step before the existing 600px breakpoint */
+@media (max-width: 767px) {
+  .ro-container { height: 440px; margin-top: 40px; }
+  .ro-scene     { width: 400px; height: 400px; }
+  .ro-track     { width: 320px; height: 320px; }
+}
+
+/* ≤ 600px — override the existing breakpoint with tighter values */
+@media (max-width: 600px) {
+  .ro-container { height: 360px; margin-top: 32px; }
+  .ro-scene     { width: 320px; height: 320px; }
+  .ro-track     { width: 255px; height: 255px; }
+  .ro-card      { width: 160px; font-size: 0.68rem; }
+}
+
+/* ≤ 480px */
+@media (max-width: 480px) {
+  .ro-container { height: 315px; margin-top: 24px; }
+  .ro-scene     { width: 275px; height: 275px; }
+  .ro-track     { width: 215px; height: 215px; }
+  .ro-card      { width: 145px; font-size: 0.65rem; }
+}
+
+/* ≤ 380px */
+@media (max-width: 380px) {
+  .ro-container { height: 280px; margin-top: 16px; }
+  .ro-scene     { width: 240px; height: 240px; }
+  .ro-track     { width: 185px; height: 185px; }
+  .ro-card      { width: 130px; font-size: 0.6rem; }
 }
 

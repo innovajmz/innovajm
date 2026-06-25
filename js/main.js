@@ -147,7 +147,7 @@ function triggerHeroAnimations() {
 
   const ctx = canvas.getContext('2d');
   let W, H, particles = [];
-  const COUNT = 28;
+  const COUNT = window.innerWidth < 768 ? 80 : 180;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -157,16 +157,22 @@ function triggerHeroAnimations() {
   class Particle {
     constructor() { this.reset(true); }
     reset(init = false) {
-      this.x  = Math.random() * W;
-      this.y  = init ? Math.random() * H : Math.random() * H;
-      this.vx = (Math.random() - 0.5) * 0.32;
-      this.vy = (Math.random() - 0.5) * 0.32;
-      this.r  = Math.random() * 1.6 + 0.5;
-      this.alpha = Math.random() * 0.35 + 0.12;
+      this.x        = Math.random() * W;
+      this.y        = init ? Math.random() * H : Math.random() * H;
+      this.vx       = (Math.random() - 0.5) * 0.18;
+      this.vy       = (Math.random() - 0.5) * 0.18;
+      this.r        = Math.random() * 1.0 + 0.4;
+      this.alpha    = Math.random() * 0.5 + 0.1;
+      this.alphaDir = Math.random() > 0.5 ? 1 : -1;
+      this.alphaSpd = Math.random() * 0.007 + 0.002;
     }
     update() {
-      const dx = this.x - MOUSE.x;
-      const dy = this.y - MOUSE.y;
+      // Twinkle: alpha oscillates independently per particle
+      this.alpha += this.alphaSpd * this.alphaDir;
+      if (this.alpha > 0.9 || this.alpha < 0.05) this.alphaDir *= -1;
+
+      // Mouse repulsion
+      const dx = this.x - MOUSE.x, dy = this.y - MOUSE.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < 90 && dist > 0) {
         const force = (1 - dist / 90) * 2.2;
@@ -174,7 +180,7 @@ function triggerHeroAnimations() {
         this.vy += (dy / dist) * force * 0.05;
       }
       const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-      if (speed > 2.5) { this.vx = (this.vx / speed) * 2.5; this.vy = (this.vy / speed) * 2.5; }
+      if (speed > 1.5) { this.vx = (this.vx / speed) * 1.5; this.vy = (this.vy / speed) * 1.5; }
       this.x += this.vx; this.y += this.vy;
       if (this.x < 0 || this.x > W) this.vx *= -1;
       if (this.y < 0 || this.y > H) this.vy *= -1;
@@ -182,7 +188,7 @@ function triggerHeroAnimations() {
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(74,143,204,${this.alpha})`;
+      ctx.fillStyle = `rgba(255,255,255,${this.alpha.toFixed(3)})`;
       ctx.fill();
     }
   }
@@ -198,6 +204,113 @@ function triggerHeroAnimations() {
   window.addEventListener('resize', () => resize(), { passive: true });
   init();
   animate();
+})();
+
+/* ============================================================
+   SPARKLE ZONE CANVAS — dense sparkles inside cin-sparkle-zone
+   Fade applied via canvas destination-out (no CSS mask-image needed)
+   ============================================================ */
+(function initSparkleZone() {
+  const canvas = document.getElementById('sparkleZoneCanvas');
+  if (!canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    canvas.style.display = 'none'; return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, particles = [], rafId;
+
+  function resize() {
+    const zone = canvas.parentElement;
+    // offsetWidth/Height are reliable after layout; fall back to CSS min size
+    W = canvas.width  = zone.offsetWidth  || 640;
+    H = canvas.height = zone.offsetHeight || 160;
+  }
+
+  const COUNT = window.innerWidth < 768 ? 220 : 500;
+
+  class Sparkle {
+    constructor() { this.init(); }
+    init() {
+      this.x    = Math.random() * (W || 640);
+      this.y    = Math.random() * (H || 160);
+      this.r    = Math.random() * 0.9 + 0.3;
+      this.a    = Math.random() * 0.7 + 0.1;
+      this.aDir = Math.random() > 0.5 ? 1 : -1;
+      this.aSpd = Math.random() * 0.02 + 0.004;
+      this.vx   = (Math.random() - 0.5) * 0.1;
+      this.vy   = (Math.random() - 0.5) * 0.1;
+    }
+    tick() {
+      this.a += this.aSpd * this.aDir;
+      if (this.a > 1 || this.a < 0) this.aDir *= -1;
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > W) this.vx *= -1;
+      if (this.y < 0 || this.y > H) this.vy *= -1;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + Math.max(0, Math.min(1, this.a)).toFixed(3) + ')';
+      ctx.fill();
+    }
+  }
+
+  /* Apply radial fade using destination-out compositing —
+     erases sparkles at edges/bottom, keeping them visible at top-center */
+  function applyFade() {
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+
+    // Bottom fade: sparkles disappear toward the bottom
+    var bGrad = ctx.createLinearGradient(0, H * 0.15, 0, H);
+    bGrad.addColorStop(0, 'rgba(0,0,0,0)');
+    bGrad.addColorStop(0.55, 'rgba(0,0,0,0.55)');
+    bGrad.addColorStop(1,    'rgba(0,0,0,1)');
+    ctx.fillStyle = bGrad;
+    ctx.fillRect(0, H * 0.15, W, H);
+
+    // Left fade
+    var lGrad = ctx.createLinearGradient(0, 0, W * 0.22, 0);
+    lGrad.addColorStop(0, 'rgba(0,0,0,1)');
+    lGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = lGrad;
+    ctx.fillRect(0, 0, W * 0.22, H);
+
+    // Right fade
+    var rGrad = ctx.createLinearGradient(W * 0.78, 0, W, 0);
+    rGrad.addColorStop(0, 'rgba(0,0,0,0)');
+    rGrad.addColorStop(1, 'rgba(0,0,0,1)');
+    ctx.fillStyle = rGrad;
+    ctx.fillRect(W * 0.78, 0, W * 0.22, H);
+
+    ctx.restore();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(function(p) { p.tick(); p.draw(); });
+    applyFade();
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (rafId) cancelAnimationFrame(rafId);
+    resize();
+    if (W === 0) { setTimeout(start, 50); return; } // retry if zone not laid out yet
+    particles = Array.from({ length: COUNT }, function() { return new Sparkle(); });
+    frame();
+  }
+
+  window.addEventListener('resize', function() {
+    resize();
+    particles.forEach(function(p) { p.init(); });
+  }, { passive: true });
+
+  // Double rAF after load ensures layout is computed before reading offsetWidth
+  window.addEventListener('load', function() {
+    requestAnimationFrame(function() { requestAnimationFrame(start); });
+  }, { once: true });
 })();
 
 /* ============================================================
