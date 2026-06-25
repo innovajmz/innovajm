@@ -1020,6 +1020,47 @@ input, textarea, select { font-family: inherit; }
   background: linear-gradient(90deg, transparent, #60A5FA 30%, #60A5FA 70%, transparent);
 }
 
+/* ─── Scroll hint — mouse icon at bottom of hero ─── */
+.cin-scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  opacity: 0;
+  animation: cin-scroll-fade-in 1s 1.8s ease forwards;
+}
+@keyframes cin-scroll-fade-in {
+  to { opacity: 0.45; }
+}
+.cin-scroll-mouse {
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+  box-sizing: border-box;
+}
+.cin-scroll-dot {
+  width: 3px;
+  height: 7px;
+  background: #fff;
+  border-radius: 2px;
+  animation: cin-scroll-dot 1.8s ease infinite;
+}
+@keyframes cin-scroll-dot {
+  0%   { transform: translateY(0);    opacity: 1; }
+  75%  { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 0; }
+}
+
 .cin-text-track {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 2.8vw, 2.8rem);
