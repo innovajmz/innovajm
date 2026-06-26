@@ -1159,8 +1159,9 @@ if ('IntersectionObserver' in window) {
       .fromTo('.cin-mockup-wrapper',
         { y: 180, rotationX: 18, rotationY: -10, autoAlpha: 0, scale: 0.75 },
         { y: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: 'power3.out', duration: 1.2 }, 0.4)
-      .to('.cin-progress-ring', { strokeDashoffset: 60, duration: 1.4, ease: 'power3.inOut' }, 0.4)
-      .to('.cin-counter-val', { innerHTML: 47, snap: { innerHTML: 1 }, duration: 1.4, ease: 'expo.out' }, 0.4)
+      // Ring + counter start after card is full-screen so user sees them animate live
+      .fromTo('.cin-progress-ring', { strokeDashoffset: 402 }, { strokeDashoffset: 60, ease: 'power3.inOut', duration: 0.5 }, 1.8)
+      .fromTo('.cin-counter-val', { innerHTML: 0 }, { innerHTML: 47, snap: { innerHTML: 1 }, ease: 'expo.out', duration: 0.5 }, 1.8)
       // Left/right text slightly after mockup (t=0.8)
       .fromTo('.cin-card-left-text',  { x: -40, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'power3.out', duration: 0.7 }, 0.8)
       .fromTo('.cin-card-right-text', { x:  40, autoAlpha: 0, scale: 0.9 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'power3.out', duration: 0.7 }, 0.8)

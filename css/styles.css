@@ -1264,7 +1264,7 @@ input, textarea, select { font-family: inherit; }
   width: 85vw;
   height: 85vh;
   border-radius: 40px;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
