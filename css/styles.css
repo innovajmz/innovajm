@@ -1741,12 +1741,12 @@ input, textarea, select { font-family: inherit; }
     inset 0 -1px 1px rgba(0,0,0,0.5);
 }
 
-.cin-fbadge-1 { top: 20%; left: 8px; }
-.cin-fbadge-2 { bottom: 20%; right: 8px; }
+.cin-fbadge-1 { top: 35%; left: 8px; }
+.cin-fbadge-2 { bottom: 30%; right: 8px; }
 
 @media (min-width: 1024px) {
-  .cin-fbadge-1 { top: 25%; left: 40px; border-radius: 20px; padding: 16px; gap: 16px; }
-  .cin-fbadge-2 { bottom: 25%; right: 40px; border-radius: 20px; padding: 16px; gap: 16px; }
+  .cin-fbadge-1 { top: 22%; left: calc(50% - 280px); border-radius: 20px; padding: 16px; gap: 16px; }
+  .cin-fbadge-2 { bottom: 22%; right: calc(50% - 280px); border-radius: 20px; padding: 16px; gap: 16px; }
 }
 
 .cin-fbadge-icon {
