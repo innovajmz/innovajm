@@ -435,8 +435,13 @@ input, textarea, select { font-family: inherit; }
 .btn-danger:hover,
 .btn-accent:hover {
   background: linear-gradient(180deg, #60A5FA 0%, #2563EB 100%);
-  transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(59,130,246,0.45);
+}
+
+.btn-ghost:hover {
+  border-color: rgba(59,130,246,0.6);
+  color: #FFFFFF;
+  background: rgba(59,130,246,0.12);
 }
 
 .btn-glow {
@@ -451,6 +456,62 @@ input, textarea, select { font-family: inherit; }
 
 .btn-arrow { transition: transform var(--transition); }
 .btn:hover .btn-arrow { transform: translateX(4px); }
+
+/* ---- Interactive Hover Button animation ---- */
+.ihb-text {
+  display: inline-block;
+  transition: transform 300ms ease, opacity 300ms ease;
+  position: relative;
+  z-index: 1;
+}
+.btn:hover .ihb-text {
+  transform: translateX(48px);
+  opacity: 0;
+}
+
+.ihb-hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transform: translateX(48px);
+  opacity: 0;
+  transition: transform 300ms ease, opacity 300ms ease;
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.btn:hover .ihb-hover {
+  transform: translateX(-4px);
+  opacity: 1;
+}
+
+.ihb-blob {
+  position: absolute;
+  left: 20%;
+  top: 40%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: scale(1);
+  transition: left 300ms ease, top 300ms ease, width 300ms ease, height 300ms ease,
+              transform 300ms ease, border-radius 300ms ease;
+  z-index: 0;
+  pointer-events: none;
+}
+.btn:hover .ihb-blob {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transform: scale(1.8);
+}
+.btn-accent .ihb-blob,
+.btn-danger .ihb-blob  { background: rgba(255,255,255,0.15); }
+.btn-ghost .ihb-blob   { background: rgba(59,130,246,0.4); }
 
 /* ---- REVEAL ANIMATIONS ---- */
 .reveal {

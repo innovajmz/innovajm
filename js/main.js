@@ -1258,6 +1258,19 @@ function declineCookies() {
   document.getElementById('cookie-banner').style.display = 'none';
 }
 
+// ---- Interactive Hover Button ----
+(function() {
+  var ARROW_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+  document.querySelectorAll('.btn').forEach(function(btn) {
+    var text = btn.textContent.trim().replace(/\s+/g, ' ');
+    btn.innerHTML =
+      '<span class="ihb-text">' + text + '</span>' +
+      '<div class="ihb-hover"><span>' + text + '</span>' + ARROW_SVG + '</div>' +
+      '<div class="ihb-blob"></div>';
+  });
+})();
+
 (function() {
   var consent = localStorage.getItem('cookie_consent');
   if (!consent) {
