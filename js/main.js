@@ -1271,6 +1271,163 @@ function declineCookies() {
   });
 })();
 
+/* ============================================================
+   FEATURE CAROUSEL
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var FEATURES = [
+    {
+      id: 'web',
+      label: 'Página Web',
+      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80',
+      tag: '01 · Página Web',
+      description: 'Diseñamos sitios que convierten visitantes en clientes reales.',
+      iconPath: 'M4 6h16M4 10h16M4 14h10M3 3h18a1 1 0 011 1v14a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zM8 21h8M12 19v2'
+    },
+    {
+      id: 'publicidad',
+      label: 'Publicidad Digital',
+      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80',
+      tag: '02 · Publicidad Digital',
+      description: 'Campañas en Meta Ads y Google Ads que traen clientes a su negocio.',
+      iconPath: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z'
+    },
+    {
+      id: 'estrategia',
+      label: 'Estrategia Digital',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+      tag: '03 · Estrategia Digital',
+      description: 'Plan integral de crecimiento: web, publicidad y seguimiento constante.',
+      iconPath: 'M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z'
+    }
+  ];
+
+  var pillsEl  = document.getElementById('fcPills');
+  var cardsEl  = document.getElementById('fcCards');
+  var leftEl   = document.querySelector('.fcarousel-left');
+
+  if (!pillsEl || !cardsEl) return;
+
+  var activeIdx = 0;
+  var total     = FEATURES.length;
+  var timer     = null;
+  var paused    = false;
+
+  /* ---- Build pills ---- */
+  FEATURES.forEach(function (feat, i) {
+    var btn = document.createElement('button');
+    btn.className    = 'fcarousel-pill' + (i === 0 ? ' active' : '');
+    btn.type         = 'button';
+    btn.setAttribute('aria-label', feat.label);
+    btn.innerHTML =
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + feat.iconPath + '"/></svg>' +
+      '<span class="fcarousel-pill-label">' + feat.label + '</span>';
+
+    btn.addEventListener('click', function () {
+      var diff = ((i - activeIdx) % total + total) % total;
+      if (diff === 0) return;
+      if (diff > total / 2) diff -= total; // shortest path
+      stepBy(diff);
+    });
+
+    pillsEl.appendChild(btn);
+  });
+
+  /* ---- Build cards ---- */
+  FEATURES.forEach(function (feat, i) {
+    var a      = document.createElement('a');
+    a.href     = '#contacto';
+    a.className = 'fcarousel-card';
+    a.setAttribute('data-status', i === 0 ? 'active' : (i === 1 ? 'next' : 'hidden'));
+    a.setAttribute('aria-label', feat.tag);
+
+    a.innerHTML =
+      '<img src="' + feat.image + '" alt="' + feat.tag + '" loading="lazy">' +
+      '<div class="fcarousel-card-live" aria-hidden="true">' +
+        '<span class="fcarousel-card-live-dot"></span>' +
+        '<span class="fcarousel-card-live-text">INNOVA JM</span>' +
+      '</div>' +
+      '<div class="fcarousel-card-overlay">' +
+        '<span class="fcarousel-card-tag">' + feat.tag + '</span>' +
+        '<p class="fcarousel-card-desc">' + feat.description + '</p>' +
+      '</div>';
+
+    cardsEl.appendChild(a);
+  });
+
+  /* ---- Render state ---- */
+  function render() {
+    var pills = pillsEl.querySelectorAll('.fcarousel-pill');
+    var cards = cardsEl.querySelectorAll('.fcarousel-card');
+
+    pills.forEach(function (pill, i) {
+      var dist = i - activeIdx;
+      // Wrap around for shortest visual distance
+      if (dist > total / 2) dist -= total;
+      if (dist < -total / 2) dist += total;
+
+      var ty      = dist * 65;           // 65px per slot
+      var opacity = Math.max(0, 1 - Math.abs(dist) * 0.25);
+
+      pill.style.transform = 'translate(-50%, calc(-50% + ' + ty + 'px))';
+      pill.style.opacity   = opacity;
+      pill.classList.toggle('active', i === activeIdx);
+    });
+
+    cards.forEach(function (card, i) {
+      var diff = ((i - activeIdx) % total + total) % total;
+      var status;
+      if (diff === 0) {
+        status = 'active';
+      } else if (diff === 1) {
+        status = 'next';
+      } else if (diff === total - 1) {
+        status = 'prev';
+      } else {
+        status = 'hidden';
+      }
+      card.setAttribute('data-status', status);
+    });
+  }
+
+  /* ---- Step forward/backward ---- */
+  function stepBy(n) {
+    activeIdx = ((activeIdx + n) % total + total) % total;
+    render();
+  }
+
+  /* ---- Auto-play ---- */
+  function startTimer() {
+    timer = setInterval(function () {
+      if (!paused) stepBy(1);
+    }, 3000);
+  }
+
+  if (leftEl) {
+    leftEl.addEventListener('mouseenter', function () { paused = true; });
+    leftEl.addEventListener('mouseleave', function () { paused = false; });
+  }
+
+  /* ---- Touch / swipe on right panel ---- */
+  var rightEl = document.querySelector('.fcarousel-right');
+  if (rightEl) {
+    var touchStartX = 0;
+    rightEl.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    rightEl.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) < 30) return;
+      stepBy(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
+  render();
+  startTimer();
+})();
+
 (function() {
   var consent = localStorage.getItem('cookie_consent');
   if (!consent) {

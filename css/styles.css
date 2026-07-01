@@ -4709,3 +4709,292 @@ a.case-card:hover {
   .ro-card      { width: 130px; font-size: 0.6rem; }
 }
 
+/* ============================================================
+   FEATURE CAROUSEL — .fcarousel
+   ============================================================ */
+
+.fcarousel {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  margin-top: 3rem;
+}
+
+/* ---- Left panel ---- */
+.fcarousel-left {
+  position: relative;
+  width: 40%;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, #0A1628 0%, #0C1E3D 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Top & bottom soft-clip overlays */
+.fcarousel-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 30%;
+  pointer-events: none;
+  z-index: 5;
+}
+.fcarousel-fade--top {
+  top: 0;
+  background: linear-gradient(to bottom, #0A1628 0%, transparent 100%);
+}
+.fcarousel-fade--bot {
+  bottom: 0;
+  background: linear-gradient(to top, #0C1E3D 0%, transparent 100%);
+}
+
+/* Pills track */
+.fcarousel-pills {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  z-index: 2;
+  height: 100%;
+}
+
+.fcarousel-pill {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+              background 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease;
+  white-space: nowrap;
+  user-select: none;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(186, 215, 255, 0.55);
+}
+
+.fcarousel-pill svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.fcarousel-pill-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.fcarousel-pill.active {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #0A1628;
+}
+
+/* ---- Right panel ---- */
+.fcarousel-right {
+  position: relative;
+  flex: 1;
+  background: #050C18;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Cards stack */
+.fcarousel-cards {
+  position: relative;
+  width: 340px;
+  max-width: 90%;
+  aspect-ratio: 4 / 5;
+}
+
+.fcarousel-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+  display: block;
+}
+
+.fcarousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.55s ease;
+}
+
+/* Card states */
+.fcarousel-card[data-status="active"] {
+  transform: translateX(0) scale(1) rotate(0deg);
+  opacity: 1;
+  z-index: 20;
+  pointer-events: auto;
+}
+.fcarousel-card[data-status="active"] img {
+  filter: grayscale(0) blur(0) brightness(1);
+}
+
+.fcarousel-card[data-status="prev"] {
+  transform: translateX(-90px) scale(0.85) rotate(-3deg);
+  opacity: 0.35;
+  z-index: 10;
+  pointer-events: none;
+}
+.fcarousel-card[data-status="prev"] img {
+  filter: grayscale(0.4) blur(2px) brightness(0.65);
+}
+
+.fcarousel-card[data-status="next"] {
+  transform: translateX(90px) scale(0.85) rotate(3deg);
+  opacity: 0.35;
+  z-index: 10;
+  pointer-events: none;
+}
+.fcarousel-card[data-status="next"] img {
+  filter: grayscale(0.4) blur(2px) brightness(0.65);
+}
+
+.fcarousel-card[data-status="hidden"] {
+  transform: scale(0.7);
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.fcarousel-card[data-status="hidden"] img {
+  filter: grayscale(0.4) blur(2px) brightness(0.65);
+}
+
+/* Card overlay — only on active */
+.fcarousel-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 12, 24, 0.92) 0%, rgba(5, 12, 24, 0.3) 45%, transparent 70%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.fcarousel-card[data-status="active"] .fcarousel-card-overlay {
+  opacity: 1;
+}
+
+.fcarousel-card-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(186, 215, 255, 0.7);
+  margin-bottom: 0.45rem;
+}
+
+.fcarousel-card-desc {
+  font-size: 0.95rem;
+  color: #ffffff;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* Live indicator (top-left, active card only) */
+.fcarousel-card-live {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(5, 12, 24, 0.65);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 0.3rem 0.65rem;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.fcarousel-card[data-status="active"] .fcarousel-card-live {
+  opacity: 1;
+}
+
+.fcarousel-card-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+.fcarousel-card-live-text {
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+/* ---- Mobile responsive ---- */
+@media (max-width: 768px) {
+  .fcarousel {
+    flex-direction: column;
+    aspect-ratio: unset;
+    border-radius: 1.5rem;
+  }
+
+  .fcarousel-left {
+    width: 100%;
+    min-height: 130px;
+    border-left: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .fcarousel-right {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2rem 1rem;
+    min-height: 340px;
+  }
+
+  .fcarousel-cards {
+    width: 220px;
+    max-width: 80%;
+  }
+
+  .fcarousel-card[data-status="prev"] {
+    transform: translateX(-55px) scale(0.85) rotate(-3deg);
+  }
+
+  .fcarousel-card[data-status="next"] {
+    transform: translateX(55px) scale(0.85) rotate(3deg);
+  }
+}
+
