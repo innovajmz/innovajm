@@ -4622,11 +4622,14 @@ a.case-card:hover {
 
 /* ── ≤ 767px: Mobile ──────────────────────────────────────── */
 @media (max-width: 767px) {
+  /* Badges only work on desktop — hide on mobile */
+  .cin-float-badge { display: none; }
+
   /* Remove the "+CLIENTES" impact block — reduces stacked height */
   .cin-card-right-text { display: none; }
 
-  /* Two-item centered stack */
-  .cin-card-grid { gap: 12px; padding: 20px 16px; justify-content: center; }
+  /* Two-item stack — space-evenly distributes the empty card space */
+  .cin-card-grid { gap: 12px; padding: 24px 16px; justify-content: space-evenly; }
 
   /* Constrain wrapper to the 0.65 scaled visual height */
   .cin-mockup-wrapper { height: 340px; }
